@@ -1,18 +1,25 @@
 {
   "manifest_version": 2,
-  "name": "pastel-tab",
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_shortName__",
   "version": "0.1",
-  
   "chrome_url_overrides" : {
     "newtab": "index.html"
   },
-  
   "icons": { 
-    "16": "icon16.png",
-    "48": "icon48.png",
-    "128": "icon128.png" 
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png" 
   },
-  
+  "background": {
+    "scripts": ["js/bg.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "img/icon48.png"
+  },
+  "default_locale": "en",
+  "offline_enabled": true,
   "permissions": [
     "storage"
   ]

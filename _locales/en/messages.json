@@ -1,0 +1,14 @@
+{
+  "appName": {
+    "message": "Pastel New Tab with a clock",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "A minimalist new tab page with a pastel background and a clock",
+    "description": "The description of the application"
+  },
+  "shortName": {
+    "message": "Pastel New Tab",
+    "description": "Short name of the application"
+  }
+}

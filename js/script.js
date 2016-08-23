@@ -18,6 +18,7 @@ $(document).ready(function() {
   speed = 3;
   
   //setup stored variables
+/*  
   chrome.storage.sync.get('auto', function(data) {
     auto = data.auto || auto;
     console.log(auto);
@@ -60,7 +61,7 @@ $(document).ready(function() {
     e.preventDefault();
     $('#clock').toggleClass('hide');
   });
-  
+*/  
   clock();
 });
 
@@ -69,7 +70,7 @@ function clock() {
   setTimeout(function() { clock(); }, 500);
 }
 
-function updateButtons() {
+/*function updateButtons() {
   if (!auto) {
     $('#tog').html('auto');
     $('#gen').html('generate');
@@ -83,12 +84,12 @@ function updateButtons() {
       changeColor();
     } 
   }
-}
+}*/
 
-function setValues() {
+/*function setValues() {
   chrome.storage.sync.set({'auto': auto });
   chrome.storage.sync.set({'speed': speed });
-}
+}*/
 
 function changeColor() {
   col = parseInt(Math.random() * 360); //randomize color
