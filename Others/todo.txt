@@ -1,0 +1,46 @@
+Original: https://github.com/williamyeny/pastel-tab
+
+------------------------
+  
+
+ver 0.2
+  
+  -- NEXT VERSION -- OPTIONS: Show / hide clock
+  
+  -- NEXT VERSION -- OPTIONS: 12/24 hour clock
+  
+  -- NEXT VERSION -- NEW FEATURE: Restore original buttons in bottom corner
+  
+  
+------------------------
+  
+
+ver 0.1.1
+  
+  -- NEXT VERSION -- Update: Write CWS description
+  
+  [DONE] Update: Create new icon (specially for browser button)
+  
+  [DONE] Update: Add screen shots
+  
+  [DONE] Update: Small promo shot
+  
+  [DONE] Update: Make public
+  
+  [DONE] Update: Set uninstall URL
+  
+  [DONE] Update: Change clock to 24 hr format
+  
+  [DONE] Update: Added extension description string to manifest
+  
+  
+------------------------
+  
+
+ver 0.1
+  
+  [DONE] UPDATE: Remove buttons with options on new tab page
+  
+  [DONE] NEW FEATURE: Add browser action to open new tab
+  
+  

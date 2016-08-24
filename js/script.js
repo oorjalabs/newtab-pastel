@@ -66,7 +66,7 @@ $(document).ready(function() {
 });
 
 function clock() {
-  $('#clock').html(moment().format('h:mm A'));
+  $('#clock').html(moment().format("HH:mm"));
   setTimeout(function() { clock(); }, 500);
 }
 
