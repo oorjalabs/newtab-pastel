@@ -3,7 +3,7 @@ Original: https://github.com/williamyeny/pastel-tab
 ------------------------
   
 
-ver 0.2
+ver 2016.1123.0.3
   
   -- NEXT VERSION -- OPTIONS: Show / hide clock
   
@@ -15,9 +15,24 @@ ver 0.2
 ------------------------
   
 
+ver 2016.1123.0.2
+  
+  [DONE] OPTIONS: Remove link
+  
+  [DONE] OPTIONS: Feedback link 
+  
+  [DONE] OPTIONS: Source code link
+  
+  [DONE] OPTIONS: Donation link
+  
+  [DONE] Add settings link to NTP
+  
+------------------------
+  
+
 ver 0.1.1
   
-  -- NEXT VERSION -- Update: Write CWS description
+  [DONE] Update: Write CWS description
   
   [DONE] Update: Create new icon (specially for browser button)
   

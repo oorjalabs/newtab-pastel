@@ -63,6 +63,12 @@ $(document).ready(function() {
   });
 */  
   clock();
+  
+  
+  
+  $("#settings_link").on("click", function(){
+    chrome.runtime.openOptionsPage();
+  });
 });
 
 function clock() {

@@ -68,3 +68,20 @@ body {
 .button_links{
   display: none;
 }
+
+
+#settings_link{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 0.15;
+  font-size: 14px;
+  padding: 0.5em;
+  border: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#settings_link:hover{
+  opacity:0.8;
+}
