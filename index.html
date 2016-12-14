@@ -8,16 +8,19 @@
     <script src='js/tinycolor.js'></script>
     <script src='js/clipboard.min.js'></script>
     <script src='js/moment.js'></script>
+    <script src='js/ls.js'></script>
     <script src='js/script.js'></script>
   </head>
   <body>
     <div id='center'>
       <p id='clock'></p>
-      <p id='text' data-clipboard-target='#text'>loading...</p>
-        <a class='button_links' id='gen' href=''>generate</a>
-        <a class='button_links' id='tog' href=''>auto</a>
-        <a class='button_links' id='clock-tog' href=''> <i class="material-icons">access_time</i></a>
     </div>
-    <a id="settings_link" title="Options"><img src="img/ic_settings_black_24px.svg"></a>
+    <div id="bottomHalf">
+      <a class="bottom_links" id="settings_link" title="Options"><img src="img/ic_settings_black_24px.svg"></a>
+      <a class="bottom_links non_settings_link" id="clock_link" title="Show/hide Clock"><img src="img/ic_access_time_black_24px.svg"></a>
+      <a class="bottom_links non_settings_link" id="hr_link" title="12/24 Hour Clock"><img src="img/24hr.png"></a>
+      <a class="top_links non_settings_link" id="pin_colour_link" title="If you like a colour, pin it"><img src="img/pin.svg"></a>
+      <!-- <a class="bottom_links" id="hr_link" title="24 Hour Clock"><img src="img/ic_access_time_black_24px.svg"></a> -->
+    </div>
   </body>
 </html>

@@ -31,13 +31,6 @@ a:hover {
   transition-duration: 0.5s;
 }
 
-#text {
-  font-size:16px;
-  cursor:pointer;
-  margin-bottom:25px;
-  display: none;
-}
-
 .copied::after {
   content: ' - copied';
   overflow:hidden;
@@ -65,23 +58,84 @@ body {
   margin-bottom:15px;
 }
 
-.button_links{
-  display: none;
+
+#bottomHalf{
+  position:fixed;
+  height: 35%;
+  width: 100%;
+  bottom:0;
+  left:0;
 }
 
+  .bottom_links{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    opacity: 0.15;
+    font-size: 14px;
+    padding: 0.5em;
+    border: 0;
+    text-decoration: none;
+    cursor: pointer;
+  }
+    
+    .bottom_links:hover{
+      opacity:0.8 !important;
+    }
+    
+    #settings_link{
+      left: 0.5em;
+    }
+    
+    #clock_link{
+      left: calc(1.5em + 24px);
+    }
+    
+    #hr_link{
+      left: calc(2.5em + 48px);
+    }
+      
+      #hr_link img{
+        height: 22px;
+        padding: 1px;
+      }
+    
+    
+  .top_links{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    opacity: 0.15;
+    font-size: 14px;
+    padding: 0.5em;
+    margin: 0;
+    border: 0;
+    text-decoration: none;
+    cursor: pointer;
+  }
+    
+    .top_links:hover{
+      opacity:0.8 !important;
+    }
+    
+    #pin_colour_link.pinned{
+      border-radius: 0.5em;
+      border: 1px solid #888;
+      margin: 1px;
+      padding: calc(0.5em - 2px);
+      opacity: 0.5;
+    }
+    
 
-#settings_link{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  opacity: 0.15;
-  font-size: 14px;
-  padding: 0.5em;
-  border: 0;
-  text-decoration: none;
-  cursor: pointer;
-}
+  .non_settings_link{
+    opacity: 0;
+  }
 
-#settings_link:hover{
-  opacity:0.8;
-}
+  #bottomHalf:hover .non_settings_link{
+    opacity: 0.15;
+  }
+    
+    #bottomHalf:hover #hr_link{
+      opacity: 0.25;
+    }
+    

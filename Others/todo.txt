@@ -3,13 +3,27 @@ Original: https://github.com/williamyeny/pastel-tab
 ------------------------
   
 
-ver 2016.1123.0.3
+ver 2016.1214.0.4
   
-  -- NEXT VERSION -- OPTIONS: Show / hide clock
+  -- NEXT VERSION -- FEATURE: User defined colour
   
-  -- NEXT VERSION -- OPTIONS: 12/24 hour clock
   
-  -- NEXT VERSION -- NEW FEATURE: Restore original buttons in bottom corner
+------------------------
+  
+
+ver 2016.1214.0.3
+  
+  [DONE] OPTIONS: Show / hide clock
+  
+  [DONE] OPTIONS: 12/24 hour clock
+  
+  [DONE] OPTIONS: Pin colour
+  
+  [DONE] UPDATE: New colour generating method
+  
+  [DONE] OPTIONS: Pin, clock and 12/24 buttons show only when hovering on bottom 3rd of page
+  
+  [DONE] UPDATE: Install & update notifications with changelog button
   
   
 ------------------------
