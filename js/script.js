@@ -7,7 +7,8 @@ $(document).ready(function() {
     $("body").css('background-color', localStorage.pinnedColour); //set color
     $("#pin_colour_link").addClass("pinned");
   } else
-    gen2();
+    // gen2();
+    changeColor();
     
   ls.get({
     twentyfourhourclock: true,
@@ -102,7 +103,8 @@ chrome.storage.onChanged.addListener(function(changes, area){
       $("body").css('background-color', localStorage.pinnedColour); //set color
       $("#pin_colour_link").addClass("pinned");
     } else {
-      gen2();
+      // gen2();
+      changeColor();
       $("#pin_colour_link").removeClass("pinned");
     }
   }

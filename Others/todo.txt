@@ -3,9 +3,19 @@ Original: https://github.com/williamyeny/pastel-tab
 ------------------------
   
 
-ver 2016.1214.0.4
+ver 2016.1214.0.5
   
   -- NEXT VERSION -- FEATURE: User defined colour
+  
+  
+------------------------
+  
+
+ver 2016.1215.0.4
+  
+  [DONE] UPDATE: Switch back to old colour function
+  
+  [DONE] UPDATE: Remove notifications, and permission
   
   
 ------------------------

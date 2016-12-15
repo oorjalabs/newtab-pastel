@@ -26,39 +26,39 @@ chrome.runtime.onInstalled.addListener(function(details){
     
     // Show install/update notification
     if(details.reason === "install" || UPDATE_NOTIFICATION){
-      showNotification({
-        title: chrome.i18n.getMessage("shortName") + " " + (details.reason == 'install' ? "Installed" : "Updated"),
-        message: (details.reason === "install" ? "Installed version " + version : "Upgraded to ver " + version) + ".",
-        id: EXTENSION_UPDATED_NOTIFICATION_ID,
-        buttons: [{
-          title: details.reason === "install" ? "See recent update notes" : "See what's new in this update",
-          iconUrl: CHANGES_ICON
-        }],
-      });
+      // showNotification({
+      //   title: chrome.i18n.getMessage("shortName") + " " + (details.reason == 'install' ? "Installed" : "Updated"),
+      //   message: (details.reason === "install" ? "Installed version " + version : "Upgraded to ver " + version) + ".",
+      //   id: EXTENSION_UPDATED_NOTIFICATION_ID,
+      //   buttons: [{
+      //     title: details.reason === "install" ? "See recent update notes" : "See what's new in this update",
+      //     iconUrl: CHANGES_ICON
+      //   }],
+      // });
     }
     
   }  
 });
 
 
-chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex){
+// chrome.notifications.onButtonClicked.addListener(function(notificationId, buttonIndex){
   
-  switch(notificationId){
+//   switch(notificationId){
     
-    case EXTENSION_UPDATED_NOTIFICATION_ID:
-      switch(buttonIndex){
-        case 0: // Show changes
-          chrome.tabs.create({url: UPDATE_NOTES_URL});
-          // trackButton(GA_NOTIFICATION_TRACK, EXTENSION_UPDATED_NOTIFICATION_ID, BUTTON_SHOW_CHANGES);
-          break;
+//     case EXTENSION_UPDATED_NOTIFICATION_ID:
+//       switch(buttonIndex){
+//         case 0: // Show changes
+//           chrome.tabs.create({url: UPDATE_NOTES_URL});
+//           // trackButton(GA_NOTIFICATION_TRACK, EXTENSION_UPDATED_NOTIFICATION_ID, BUTTON_SHOW_CHANGES);
+//           break;
           
-      }
-      break;
-  }
+//       }
+//       break;
+//   }
   
-  // Clear notification
-  chrome.notifications.clear(notificationId);  
-});
+//   // Clear notification
+//   chrome.notifications.clear(notificationId);  
+// });
 
 
 
@@ -68,23 +68,23 @@ chrome.notifications.onButtonClicked.addListener(function(notificationId, button
  * @param {object} notif Object with details of notification - title, message, context, iconType
  * @return {null} null
  */
-function showNotification(notif){
-  var options = {
-    type: notif.type || "basic",
-    title: notif.title || "",
-    message: notif.message,
-    contextMessage: notif.contextMessage || "",
-    iconUrl: notif.iconUrl || NOTIFICATION_ICON,
-    isClickable: notif.isClickable || false,
-    requireInteraction: notif.requireInteraction || false,
-  };
+// function showNotification(notif){
+//   var options = {
+//     type: notif.type || "basic",
+//     title: notif.title || "",
+//     message: notif.message,
+//     contextMessage: notif.contextMessage || "",
+//     iconUrl: notif.iconUrl || NOTIFICATION_ICON,
+//     isClickable: notif.isClickable || false,
+//     requireInteraction: notif.requireInteraction || false,
+//   };
   
-  if(notif.buttons)
-    options.buttons = notif.buttons;
+//   if(notif.buttons)
+//     options.buttons = notif.buttons;
   
-  chrome.notifications.create(notif.id || "", options, function(id){
-    console.log("notification: ", id);
-  });
-}
+//   chrome.notifications.create(notif.id || "", options, function(id){
+//     console.log("notification: ", id);
+//   });
+// }
 
 

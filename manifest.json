@@ -1,6 +1,6 @@
 {
-  "version": "2016.1214.0.3",
-  "version_name": "2016.1214.0.3 release",
+  "version": "2016.1215.0.4",
+  "version_name": "2016.1215.0.4 release",
   "manifest_version": 2,
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
@@ -28,7 +28,6 @@
     "chrome_style": false
   },
   "permissions": [
-    "storage",
-    "notifications"
+    "storage"
   ]
 }
