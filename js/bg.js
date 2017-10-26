@@ -4,19 +4,17 @@ const UPDATE_NOTES_URL = "https://c306.net/apps/updates/app/pastel-new-tab/?utm_
 const CHANGES_ICON = chrome.extension.getURL("img/ic_history_black_24px.svg");
 const NOTIFICATION_ICON = chrome.extension.getURL("img/icon128.png");
 
-const UPDATE_NOTIFICATION = true;
+const UPDATE_NOTIFICATION = false;
 const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
 
-chrome.browserAction.onClicked.addListener(function(tab){
-  chrome.tabs.create({});
-});
+chrome.browserAction.onClicked.addListener(tab => chrome.tabs.create({}));
 
 // On install/update handler
-chrome.runtime.onInstalled.addListener(function(details){
+chrome.runtime.onInstalled.addListener(details => {
   if(details.reason !== "chrome_update"){
     
     //Log versions to Google Analytics
-    var version = chrome.app.getDetails().version;
+    let version = chrome.app.getDetails().version;
     
     // Set uninstall url, if not local/dev install
     chrome.management.getSelf(function(e){

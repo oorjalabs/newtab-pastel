@@ -3,9 +3,21 @@ Original: https://github.com/williamyeny/pastel-tab
 ------------------------
   
 
-ver 2016.1214.0.5
+ver 2017.1026.0.6
+  
+  -- NEXT VERSION -- NEW FEATURE: Show controls on first use
   
   -- NEXT VERSION -- FEATURE: User defined colour
+  
+  
+------------------------
+  
+
+ver 2017.1026.0.5
+  
+  [DONE] UPDATE: 12 hour clock as default
+  
+  [DONE] UPDATE: Toggle 12/24 hour icon based on selected clock format
   
   
 ------------------------

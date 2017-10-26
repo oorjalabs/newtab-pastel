@@ -7,6 +7,10 @@
   color:#333333;
 }
 
+body {
+  transition-duration:1s;
+}
+
 .hide {
   display:none;
 }
@@ -21,19 +25,14 @@ a {
   color:#333333;
 }
 
+  a:hover {
+    background-color:rgba(255, 255, 255, .3);
+    transition-duration: 0.5s;
+  }
+
 .material-icons {
   font-size: 14px;
   vertical-align: text-bottom; /* center icon. Don't ask my how this works because I don't know either */
-}
-
-a:hover {
-  background-color:rgba(255, 255, 255, .3);
-  transition-duration: 0.5s;
-}
-
-.copied::after {
-  content: ' - copied';
-  overflow:hidden;
 }
 
 #center {
@@ -46,10 +45,6 @@ a:hover {
   /*margin-left:-150px;*/
   margin-left:-25%;
   margin-top:-65px;
-}
-
-body {
-  transition-duration:1s;
 }
 
 #clock {
@@ -67,7 +62,7 @@ body {
   left:0;
 }
 
-  .bottom_links{
+  .bottom_left_links{
     position: fixed;
     bottom: 0;
     left: 0;
@@ -79,7 +74,7 @@ body {
     cursor: pointer;
   }
     
-    .bottom_links:hover{
+    .bottom_left_links:hover{
       opacity:0.8 !important;
     }
     
@@ -95,13 +90,23 @@ body {
       left: calc(2.5em + 48px);
     }
       
-      #hr_link img{
-        height: 22px;
-        padding: 1px;
+      #ic_clock_type{
+        display: inline-block;
+        height: 21px;
+        width: 21px;
+        margin: 2px;
+        background-image: url(../img/24hr.png);
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
       }
-    
-    
-  .top_links{
+        
+        #ic_clock_type.twelve{
+          background-image: url(../img/12hr.png);
+        }
+  
+  
+  .bottom_right_links{
     position: fixed;
     bottom: 0;
     right: 0;
@@ -114,7 +119,7 @@ body {
     cursor: pointer;
   }
     
-    .top_links:hover{
+    .bottom_right_links:hover{
       opacity:0.8 !important;
     }
     

@@ -1,0 +1,7 @@
+const DEFAULT_SHOW_CLOCK = true;
+const DEFAULT_TWENTY_FOUR_HOUR_CLOCK = false;
+const DEFAULT_PINNED_COLOUR = "";
+
+const TWENTY_FOUR_HOUR_FORMAT = "HH:mm";
+const TWELVE_HOUR_FORMAT = "h:mm A";
+

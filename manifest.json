@@ -1,10 +1,11 @@
 {
-  "version": "2016.1215.0.4",
-  "version_name": "2016.1215.0.4 release",
-  "manifest_version": 2,
+  "version": "2017.1026.0.5",
+  "version_name": "2017.1026.0.5 release",
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
+  "manifest_version": 2,
+  "minimum_chrome_version": "49",
   "chrome_url_overrides" : {
     "newtab": "index.html"
   },
