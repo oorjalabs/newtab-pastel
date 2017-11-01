@@ -1,7 +1,3 @@
-// var lightness = "84%";
-// var saturation = "94%";
-// var lightness = "90%";
-// var saturation = "95%";
 var lightness = "95%";
 var saturation = "100%";
 var clockTimeout;
@@ -13,8 +9,10 @@ $(document).ready(() => {
   setPinnedColour(localStorage.pinnedColour);
   
   ls.get({
-    twentyfourhourclock: DEFAULT_TWENTY_FOUR_HOUR_CLOCK,
-    showClock: DEFAULT_SHOW_CLOCK,
+    "twentyfourhourclock": DEFAULT_TWENTY_FOUR_HOUR_CLOCK,
+    "showClock": DEFAULT_SHOW_CLOCK,
+    "showTopSites": DEFAULT_SHOW_TOP_SITES,
+    "topSitesPermission_firstAsk": false
   }, st => {
     
     // Set clock format
@@ -22,24 +20,84 @@ $(document).ready(() => {
     
     // Show/hide clock
     showClock(st.showClock);
+    
+    // Show top sites
+    if(!st.topSitesPermission_firstAsk)
+      $("#top_sites_link").addClass("grab_attention");
+    else
+      showTopSites(st.showTopSites);
   });
+  
   
   // Open options page
   $("#settings_link").on("click", () => chrome.runtime.openOptionsPage());
   
+  
+  // Toggle site visibility in storage
+  $("#top_sites_link").on("click", () => {
+    
+    ls.set({"topSitesPermission_firstAsk": true});
+    $("#top_sites_link").removeClass("grab_attention");
+    
+    ls.get({showTopSites: DEFAULT_SHOW_TOP_SITES}, st => {
+      
+      let newShowTopSites = !st.showTopSites;
+      
+      // If changing from false to true, check if we have permission
+      if(!st.showTopSites) {
+        chrome.permissions.contains({
+          permissions: ["topSites"]
+        }, result => {
+          
+          // The extension has the permissions.
+          // Save setting as true, action will happen in storage change handler
+          if(result)
+            ls.set({showTopSites: newShowTopSites});
+          
+          
+          else {
+            // The extension doesn't have the permissions.
+            // Request permission. 
+            chrome.permissions.request({
+              permissions: ["topSites"]
+            }, granted => {
+              
+              // If granted, set setting as true, 
+              if (granted)
+                ls.set({showTopSites: newShowTopSites});
+              
+              // If not granted, do nothing (or show modal)
+              else {
+                console.warn("Permission not granted");
+              }
+              
+            });
+          }
+        });
+      }
+      
+      // Setting it off, so just save the new setting
+      else
+        ls.set({showTopSites: newShowTopSites});
+    });
+  });
+  
+  
   // Toggle clock visibility in storage
   $("#clock_link").on("click", () =>
-    ls.get({showClock: true}, st =>
+    ls.get({showClock: DEFAULT_SHOW_CLOCK}, st =>
       ls.set({showClock: !st.showClock})
     )
   );
   
+  
   // Toggle clock type in storage
   $("#hr_link").on("click", () =>
-    ls.get({twentyfourhourclock: true}, st =>
+    ls.get({twentyfourhourclock: DEFAULT_TWENTY_FOUR_HOUR_CLOCK}, st =>
       ls.set({twentyfourhourclock: !st.twentyfourhourclock})
     )
   );
+  
   
   // Save pinned colour to storage.
   // Actual pinning happens in storage.onchanged handler
@@ -62,6 +120,7 @@ $(document).ready(() => {
     })
   );
   
+  
   chrome.storage.onChanged.addListener((changes, area) => {
     
     if(changes.twentyfourhourclock)
@@ -69,6 +128,9 @@ $(document).ready(() => {
     
     if(changes.showClock)
       showClock(changes.showClock.newValue);
+    
+    if(changes.showTopSites)
+      showTopSites(changes.showTopSites.newValue);
     
     if(changes.pinnedColour)
       setPinnedColour(localStorage.pinnedColour);
@@ -108,12 +170,49 @@ function setClockFormat(isTwentyFourHour){
 }
 
 
+function showTopSites(show){
+  
+  if(show) {
+    
+    // Fetch top sites from API, and show
+    chrome.topSites.get(topSites => {
+      let err = chrome.runtime.lastError;
+      if(err){
+        console.warn("Error: ", err);
+        return;
+      }
+      
+      topSites = topSites
+        .filter(site => !/^chrome(\-extension)?\:\/\//.test(site.url));
+      
+      topSites
+        .slice(0, Math.min(topSites.length, 8))
+        .forEach(site => {
+          $("#topSites").append(`<li class="top_site_item"><a href="${site.url}" class="top_site_link">${site.title}</a></li>`);
+          console.log(site);
+        });
+      
+      $("#topSites").fadeIn("fast");
+      $("#top_sites_link").addClass("showing");
+      
+    });
+    
+  }
+  
+  else {
+    
+    $("#topSites").text("").fadeOut("fast");
+    $("#top_sites_link").removeClass("showing");
+    
+  }
+}
+
+
 function setPinnedColour(colour){
   if(!!colour){
     $("body").css("background-color", colour); //set color
     $("#pin_colour_link").addClass("pinned");
   } else {
-    // gen2();
     changeColor();
     $("#pin_colour_link").removeClass("pinned");
   }
@@ -138,138 +237,8 @@ function changeColor(){
 }
 
 
-// function gen2(s,v){
-//   s = s || (0.2 + Math.random()*0.3); //0.2 - 0.50
-//   v = v || (0.9 + Math.random()*0.1); //0.9 - 1.00
-  
-//   let golden_ratio_conjugate = 0.618033988749895;
-//   let h = Math.random(); // use random start value
-  
-//   let multiplier = (Math.random()+0.5)%1+Math.random()
-//   h += golden_ratio_conjugate*(multiplier < 0.67 ? 0 : multiplier > 1.33 ? 2 : 1);
-//   h %= 1;
-//   let retCol = HSVtoRGB(h, s || 0.3, v || 0.99);
-  
-//   let iLuma = 0.2126 * retCol.r + 0.7152 * retCol.g + 0.0722 * retCol.b; // per ITU-R BT.709
-  
-//   if(iLuma > 240)
-//     gen2();
-//   else {
-//     let colorString = "#" + parseInt(retCol.r).toString(16) + parseInt(retCol.g).toString(16) + parseInt(retCol.b).toString(16);
-//     $("body").css("background-color", colorString); //set color
-//     console.log("gen2", colorString, parseInt(iLuma), "hsv(" + parseInt(h*360) + ", " + parseInt(s*100) + ", " + parseInt(v*100) + ")");
-//   }
-// }
-
-// sb2sl({h: 312, s: 0.3, b: 0.99});
-// sl2sb({h: 312, s: 1, l: 0.95});
-
-// function sl2sb(SL) {
-//   let SB = {h: SL.h};
-//   let t = SL.s * (SL.l<0.5 ? SL.l : 1-SL.l);
-//   SB.v = SL.l+t;
-//   SB.s = SL.l>0 ? 2*t/SB.v : SB.s ;
-//   console.log(SB);
-// }
-
-// function sb2sl(SB) {
-//   let SL = {h: SB.h};
-//   SL.l = (2 - SB.s) * SB.b / 2;
-//   SL.s = SL.l&&SL.l<1 ? SB.s*SB.b/(SL.l<0.5 ? SL.l*2 : 2-SL.l*2) : SL.s;
-//   console.log(SL);
-// }
-
-
-// Divide h/360, s&v/100
-// function HSVtoRGB(h, s, v) {
-//   let r, g, b, i, f, p, q, t;
-  
-//   if(arguments.length === 1) {
-//     s = h.s, v = h.v, h = h.h;
-//   }
-  
-//   i = Math.floor(h * 6);
-//   f = h * 6 - i;
-//   p = v * (1 - s);
-//   q = v * (1 - f * s);
-//   t = v * (1 - (1 - f) * s);
-//   switch (i % 6) {
-//     case 0: r = v, g = t, b = p; break;
-//     case 1: r = q, g = v, b = p; break;
-//     case 2: r = p, g = v, b = t; break;
-//     case 3: r = p, g = q, b = v; break;
-//     case 4: r = t, g = p, b = v; break;
-//     case 5: r = v, g = p, b = q; break;
-//   }
-  
-//   return {
-//     r: Math.round(r * 255),
-//     g: Math.round(g * 255),
-//     b: Math.round(b * 255)
-//   };
-// }
-
-
-// function generateRandomColor(mix) {
-//   var red = Math.random()*256;
-//   var green = Math.random()*256;
-//   var blue = Math.random()*256;
-  
-//   mix = mix || {
-//     red: 255,
-//     green: 255,
-//     blue: 255,
-//   }
-  
-//   // mix the color
-//   red = Math.floor((red + mix.red) / 2);
-//   green = Math.floor((green + mix.green) / 2);
-//   blue = Math.floor((blue + mix.blue) / 2);
-  
-//   var colorString = "#" + red.toString(16) + green.toString(16) + blue.toString(16);
-  
-//   console.log("generateRandomColor", colorString);
-//   $("body").css("background-color", colorString); //set color
-  
-//   // Color color = new Color(red, green, blue);
-//   // return color;
-// }
-
-
-// function pastelColors(){
-//   var r = (Math.floor(Math.random()* 128) + 127).toString(16);
-//   var g = (Math.floor(Math.random()* 128) + 127).toString(16);
-//   var b = (Math.floor(Math.random()* 128) + 127).toString(16);
-//   var color = "#" + r + g + b;
-  
-//   var iLuma = 0.2126 * parseInt(r, 16) + 0.7152 * parseInt(g, 16) + 0.0722 * parseInt(b, 16); // per ITU-R BT.709
-  
-//   if(iLuma > 155 && iLuma < 250){
-//     console.log("pastelColors", color, parseInt(iLuma));
-//     $("body").css("background-color", color); //set color
-//   } else
-//     pastelColors();
-// }
-
-
-// function fnGetRandomColour(iDarkLuma, iLightLuma){
-//   var sColour, rgb, r, g, b, iLuma;
-  
-//   for (var i=0; i<20; i++){
-    
-//     sColour = ("ffffff" + Math.floor(Math.random() * 0xFFFFFF).toString(16)).substr(-6);
-    
-//     rgb = parseInt(sColour, 16);   // convert rrggbb to decimal
-//     r = (rgb >> 16) & 0xff;  // extract red
-//     g = (rgb >>  8) & 0xff;  // extract green
-//     b = (rgb >>  0) & 0xff;  // extract blue
-    
-//     iLuma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-    
-//     if(iLuma > iDarkLuma && iLuma < iLightLuma)
-//       break;
-//   }
-  
-//   console.log("fnGetRandomColour", "#"+sColour);
-//   $("body").css("background-color", "#"+sColour); //set color  
-// } 
+function removeTopSitesPermission(callback){
+  chrome.permissions.remove({
+    permissions: ["topSites"]
+  }, callback);
+}

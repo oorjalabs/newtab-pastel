@@ -1,5 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Inconsolata:400,700);
 
+:root{
+  --button-opacity-visible: .25;
+  --button-opacity-visible-hourtype: .35;
+  --button-opacity-non-settings-default: 0;
+  --button-opacity-focus: 0.8;
+  --button-opacity-pinned-default: 0.5;
+}
+
 * {
   margin:0;
   padding:0;
@@ -15,44 +23,67 @@ body {
   display:none;
 }
 
-a {
-  font-size: 14px;  
-  padding:10px 20px 10px 20px;
-  border-width:1px;
-  border-style: solid;
-  transition-duration: 0.5s;
-  text-decoration: none;
-  color:#333333;
-}
-
-  a:hover {
-    background-color:rgba(255, 255, 255, .3);
-    transition-duration: 0.5s;
-  }
-
-.material-icons {
-  font-size: 14px;
-  vertical-align: text-bottom; /* center icon. Don't ask my how this works because I don't know either */
-}
-
 #center {
   position:absolute;
-  /*width:300px;*/
   width:50%;
   left:50%;
   top:50%;
   text-align: center;
-  /*margin-left:-150px;*/
   margin-left:-25%;
   margin-top:-65px;
 }
+  
+  #clock {
+    font-size:7.5em;
+    margin-bottom:15px;
+  }
 
-#clock {
-  /*font-size:20px;*/
-  font-size:7.5em;
-  margin-bottom:15px;
+
+#topSites {
+  position: fixed;
+  bottom: calc(42px + 1rem);
+  width: 100%;
+  padding: 1rem 8rem;
+  box-sizing: border-box;
+  
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1.5rem 3rem;
+  
+  z-index: 3;
+  cursor: pointer;
 }
-
+  
+  .top_site_item {
+    list-style: none;
+    
+    display: block;
+    padding: 0.25rem 1rem;
+    height: 2rem;
+    line-height: 2rem;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    
+    border: 1px solid lightgrey;
+    border-radius: 0.2rem;
+    
+    /* background: lightgrey; */
+  }
+    
+    .top_site_link {
+      transition-duration: 0.5s;
+      text-decoration: none;
+      color:#333333;
+      font-size: 1.25em;
+    }
+      
+      .top_site_item:hover .top_site_link{
+        transition-duration: 0.5s;
+        text-decoration: underline;
+      }
+    
 
 #bottomHalf{
   position:fixed;
@@ -60,13 +91,21 @@ a {
   width: 100%;
   bottom:0;
   left:0;
+  
+  display: flex;
+  align-items: flex-end;
 }
-
-  .bottom_left_links{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    opacity: 0.15;
+  
+  #bottomHalf>*:not(#space_filler) {
+    flex: 0 0;
+  }
+  
+  #space_filler {
+    flex: 1 1 auto;
+  }
+  
+  .bottom_btn_links{
+    opacity: var(--button-opacity-visible);
     font-size: 14px;
     padding: 0.5em;
     border: 0;
@@ -74,73 +113,69 @@ a {
     cursor: pointer;
   }
     
-    .bottom_left_links:hover{
-      opacity:0.8 !important;
+    .bottom_btn_links:hover{
+      opacity: var(--button-opacity-focus) !important;
     }
     
-    #settings_link{
-      left: 0.5em;
-    }
-    
-    #clock_link{
-      left: calc(1.5em + 24px);
-    }
-    
-    #hr_link{
-      left: calc(2.5em + 48px);
+    .btn_icon {
+      display: inline-block;
+      height: 21px;
+      width: 21px;
+      margin: 2px;
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
       
+      #ic_top_sites {
+        background-image: url(../img/ic_web_up_black_24px.svg);
+      }
+        
+        #top_sites_link.showing #ic_top_sites {
+          background-image: url(../img/ic_web_down_black_24px.svg);
+        }
+        
+        .grab_attention {
+          animation: blinker 2s cubic-bezier(0.55, 0.06, 0.68, 0.19) infinite;
+        }
+        
+        @keyframes blinker {  
+          20% { opacity: var(--button-opacity-focus); }
+        }
+      
       #ic_clock_type{
-        display: inline-block;
-        height: 21px;
-        width: 21px;
-        margin: 2px;
         background-image: url(../img/24hr.png);
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
       }
         
         #ic_clock_type.twelve{
           background-image: url(../img/12hr.png);
         }
+    
+    #pin_colour_link{
+      margin: 0;
+    }
+      
+      #pin_colour_link.pinned{
+        border-radius: 0.5em;
+        border: 1px solid #888;
+        margin: 1px;
+        padding: calc(0.5em - 2px);
+        opacity: var(--button-opacity-pinned-default);
+      }
+      
+      .bottom_btn_links:hover #pin_colour_link.pinned{
+        opacity: var(--button-opacity-focus)
+      }
   
-  
-  .bottom_right_links{
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    opacity: 0.15;
-    font-size: 14px;
-    padding: 0.5em;
-    margin: 0;
-    border: 0;
-    text-decoration: none;
-    cursor: pointer;
+  .non_settings_link:not(.pinned){
+    opacity: var(--button-opacity-non-settings-default);
   }
     
-    .bottom_right_links:hover{
-      opacity:0.8 !important;
+    #bottomHalf:hover .non_settings_link:not(.pinned){
+      opacity: var(--button-opacity-visible);
     }
-    
-    #pin_colour_link.pinned{
-      border-radius: 0.5em;
-      border: 1px solid #888;
-      margin: 1px;
-      padding: calc(0.5em - 2px);
-      opacity: 0.5;
-    }
-    
-
-  .non_settings_link{
-    opacity: 0;
-  }
-
-  #bottomHalf:hover .non_settings_link{
-    opacity: 0.15;
-  }
-    
-    #bottomHalf:hover #hr_link{
-      opacity: 0.25;
-    }
+      
+      #bottomHalf:hover #hr_link{
+        opacity: var(--button-opacity-visible-hourtype);
+      }
     

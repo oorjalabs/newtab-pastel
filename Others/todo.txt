@@ -3,11 +3,23 @@ Original: https://github.com/williamyeny/pastel-tab
 ------------------------
   
 
-ver 2017.1026.0.6
+ver 2017.1102.1.1
+  
+  -- NEXT VERSION -- UPDATE: Keep fetched topSite list in storage, update only on fetch
   
   -- NEXT VERSION -- NEW FEATURE: Show controls on first use
   
   -- NEXT VERSION -- FEATURE: User defined colour
+  
+  
+------------------------
+  
+
+ver 2017.1101.1.0
+  
+  [DONE] NEW FEATURE: Show top websites
+  
+  [DONE] UPDATE: Control top websites from button
   
   
 ------------------------

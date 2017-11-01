@@ -13,15 +13,37 @@
     <script src='js/script.js'></script>
   </head>
   <body>
+    
     <div id='center'>
       <p id='clock'></p>
     </div>
+    
+    
     <div id="bottomHalf">
-      <a class="bottom_left_links" id="settings_link" title="Options"><img src="img/ic_settings_black_24px.svg"></a>
-      <a class="bottom_left_links non_settings_link" id="clock_link" title="Show/hide Clock"><img src="img/ic_access_time_black_24px.svg"></a>
-      <a class="bottom_left_links non_settings_link" id="hr_link" title="12/24 Hour Clock"><span id="ic_clock_type"></span></a>
-      <a class="bottom_right_links non_settings_link" id="pin_colour_link" title="If you like a colour, pin it"><img src="img/pin.svg"></a>
-      <!-- <a class="bottom_left_links" id="hr_link" title="24 Hour Clock"><img src="img/ic_access_time_black_24px.svg"></a> -->
+    <ul id="topSites"></ul>
+      
+      <a class="bottom_btn_links" id="settings_link" title="Options">
+        <img src="img/ic_settings_black_24px.svg">
+      </a>
+      
+      <a class="bottom_btn_links non_settings_link" id="top_sites_link" title="Show/hide top websites">
+        <span class="btn_icon" id="ic_top_sites"></span>
+      </a>
+      
+      <a class="bottom_btn_links non_settings_link" id="clock_link" title="Show/hide Clock">
+        <img src="img/ic_access_time_black_24px.svg">
+      </a>
+      
+      <a class="bottom_btn_links non_settings_link" id="hr_link" title="12/24 Hour Clock">
+        <span class="btn_icon" id="ic_clock_type"></span>
+      </a>
+      
+      <span id="space_filler"></span>
+      
+      <a class="bottom_btn_links non_settings_link" id="pin_colour_link" title="If you like a colour, pin it">
+        <img src="img/pin.svg">
+      </a>
     </div>
+    
   </body>
 </html>
