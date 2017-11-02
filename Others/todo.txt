@@ -3,13 +3,27 @@ Original: https://github.com/williamyeny/pastel-tab
 ------------------------
   
 
-ver 2017.1102.1.1
+ver 2017.1102.1.2
   
-  -- NEXT VERSION -- UPDATE: Keep fetched topSite list in storage, update only on fetch
+  -- NEXT VERSION -- UPDATE: Show in tab popup if extension updated
+    [ ] Link to update notes ("See changes")
+    [ ] Close button ("Close")
   
   -- NEXT VERSION -- NEW FEATURE: Show controls on first use
   
   -- NEXT VERSION -- FEATURE: User defined colour
+  
+  
+------------------------
+  
+
+ver 2017.1102.1.1
+  
+  [DONE] UPDATE: Keep fetched topSite list in storage, update only on fetch
+  
+  [DONE] UPDATE: Design the links to look acceptable
+  
+  [DONE] UPDATE: Add update notes link to options
   
   
 ------------------------

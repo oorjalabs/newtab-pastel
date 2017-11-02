@@ -4,7 +4,7 @@ const UPDATE_NOTES_URL = "https://c306.net/apps/updates/app/pastel-new-tab/?utm_
 const CHANGES_ICON = chrome.extension.getURL("img/ic_history_black_24px.svg");
 const NOTIFICATION_ICON = chrome.extension.getURL("img/icon128.png");
 
-const UPDATE_NOTIFICATION = false;
+const UPDATE_NOTIFICATION = true;
 const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
 
 chrome.browserAction.onClicked.addListener(tab => chrome.tabs.create({}));
@@ -17,25 +17,14 @@ chrome.runtime.onInstalled.addListener(details => {
     let version = chrome.app.getDetails().version;
     
     // Set uninstall url, if not local/dev install
-    chrome.management.getSelf(function(e){
-      if(e.installType !== "development")
-        chrome.runtime.setUninstallURL(UNINSTALL_URL);
-    });
+    chrome.management.getSelf(e => 
+      e.installType !== "development" && chrome.runtime.setUninstallURL(UNINSTALL_URL)
+    );
     
     // Show install/update notification
-    if(details.reason === "install" || UPDATE_NOTIFICATION){
-      // showNotification({
-      //   title: chrome.i18n.getMessage("shortName") + " " + (details.reason == 'install' ? "Installed" : "Updated"),
-      //   message: (details.reason === "install" ? "Installed version " + version : "Upgraded to ver " + version) + ".",
-      //   id: EXTENSION_UPDATED_NOTIFICATION_ID,
-      //   buttons: [{
-      //     title: details.reason === "install" ? "See recent update notes" : "See what's new in this update",
-      //     iconUrl: CHANGES_ICON
-      //   }],
-      // });
-    }
+    if(details.reason === "install" || UPDATE_NOTIFICATION)
+      ls.set({"extensionUpdated": true});
+    
     
   }  
 });
-
-

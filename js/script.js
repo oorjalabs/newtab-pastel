@@ -174,26 +174,44 @@ function showTopSites(show){
   
   if(show) {
     
-    // Fetch top sites from API, and show
-    chrome.topSites.get(topSites => {
-      let err = chrome.runtime.lastError;
-      if(err){
-        console.warn("Error: ", err);
-        return;
-      }
+    ls.get({"topSites": DEFAULT_TOP_SITES}, st => {
       
-      topSites = topSites
-        .filter(site => !/^chrome(\-extension)?\:\/\//.test(site.url));
+      $("#topSites").text("");
       
-      topSites
-        .slice(0, Math.min(topSites.length, 8))
-        .forEach(site => {
-          $("#topSites").append(`<li class="top_site_item"><a href="${site.url}" class="top_site_link">${site.title}</a></li>`);
-          console.log(site);
-        });
+      st.topSites
+        .forEach(site =>
+          $("#topSites").append(`<a href="${site.url}" class="top_site_link">${site.title}</a>`)
+        );
       
       $("#topSites").fadeIn("fast");
       $("#top_sites_link").addClass("showing");
+      
+      // Fetch top sites from API, and update in storage
+      chrome.topSites.get(topSites => {
+        
+        let err = chrome.runtime.lastError;
+        if(err){
+          console.warn("Error: ", err);
+          return;
+        }
+        
+        topSites = topSites
+          .filter(site => !/^chrome(\-extension)?\:\/\//.test(site.url))
+          .slice(0, Math.min(topSites.length, TOP_SITE_COUNT));
+        
+        ls.set({"topSites": topSites});
+        
+        // Update sites on screen
+        if(!arraysEqual(st.topSites, topSites)){
+          $("#topSites").text("");
+          
+          topSites
+            .forEach(site =>
+              $("#topSites").append(`<a href="${site.url}" class="top_site_link">${site.title}</a>`)
+            );          
+        }
+        
+      });
       
     });
     
@@ -241,4 +259,9 @@ function removeTopSitesPermission(callback){
   chrome.permissions.remove({
     permissions: ["topSites"]
   }, callback);
+}
+
+
+function arraysEqual(arr1, arr2) {
+  return JSON.stringify(arr1) === JSON.stringify(arr2);
 }

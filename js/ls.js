@@ -1,8 +1,8 @@
 var ls = chrome.storage.local;
 
-ls.fetch = function(a){
+ls.fetch = a => {
   if(a)
-    ls.get(a, function(s){console.log(s[a])});
+    ls.get(a, s => console.log(s[a]));
   else
-    ls.get(function(s){console.log(s)});
+    ls.get(s => console.log(s));
 }
