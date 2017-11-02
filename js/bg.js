@@ -22,9 +22,10 @@ chrome.runtime.onInstalled.addListener(details => {
     );
     
     // Show install/update notification
-    if(details.reason === "install" || UPDATE_NOTIFICATION)
-      ls.set({"extensionUpdated": true});
-    
+    if(details.reason === "install" || UPDATE_NOTIFICATION){
+      details.version = version;
+      ls.set({"extensionUpdated": details});
+    }
     
   }  
 });

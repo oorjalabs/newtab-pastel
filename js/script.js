@@ -12,7 +12,8 @@ $(document).ready(() => {
     "twentyfourhourclock": DEFAULT_TWENTY_FOUR_HOUR_CLOCK,
     "showClock": DEFAULT_SHOW_CLOCK,
     "showTopSites": DEFAULT_SHOW_TOP_SITES,
-    "topSitesPermission_firstAsk": false
+    "topSitesPermission_firstAsk": false,
+    "extensionUpdated": DEFAULT_EXTENSION_UPDATED
   }, st => {
     
     // Set clock format
@@ -26,6 +27,8 @@ $(document).ready(() => {
       $("#top_sites_link").addClass("grab_attention");
     else
       showTopSites(st.showTopSites);
+    
+    showUpdatedModal(st.extensionUpdated);
   });
   
   
@@ -121,6 +124,15 @@ $(document).ready(() => {
   );
   
   
+  $("#seeChangesButton").on("click", () => ls.set({extensionUpdated: false}));
+  
+  
+  $("#closeButton").on("click", () => {
+    ls.set({extensionUpdated: false})
+    return false;
+  });
+  
+  
   chrome.storage.onChanged.addListener((changes, area) => {
     
     if(changes.twentyfourhourclock)
@@ -134,6 +146,9 @@ $(document).ready(() => {
     
     if(changes.pinnedColour)
       setPinnedColour(localStorage.pinnedColour);
+    
+    if(changes.extensionUpdated)
+      showUpdatedModal(changes.extensionUpdated.newValue);
   });
 });
 
@@ -233,6 +248,31 @@ function setPinnedColour(colour){
   } else {
     changeColor();
     $("#pin_colour_link").removeClass("pinned");
+  }
+}
+
+
+function showUpdatedModal(details){
+  
+  if(details) {
+    
+    if(details.reason && details.reason === "update"){
+      $("#installed").text("Extension updated");
+      $("#seeChangesButton").text("See what's new");
+    }
+    
+    else {
+      $("#installed").text("Welcome to pastel new tab");
+      $("#seeChangesButton").text("Recent update notes");
+    }
+    
+    $("#version").text(`v. ${details.version}`);
+    $("#closeButton").text(`Dismiss`);
+    $("#updatedModal").show();
+  }
+  
+  else {
+    $("#updatedModal").hide();
   }
 }
 

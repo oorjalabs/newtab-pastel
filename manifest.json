@@ -1,6 +1,6 @@
 {
-  "version": "2017.1102.1.1",
-  "version_name": "2017.1102.1.1 release",
+  "version": "2017.1102.1.2",
+  "version_name": "2017.1102.1.2 release",
   "name": "__MSG_appName__",
   "short_name": "__MSG_shortName__",
   "description": "__MSG_appDescription__",
@@ -15,7 +15,10 @@
     "128": "img/icon128.png" 
   },
   "background": {
-    "scripts": ["js/bg.js"],
+    "scripts": [
+      "js/ls.js",
+      "js/bg.js"
+    ],
     "persistent": false
   },
   "browser_action": {
