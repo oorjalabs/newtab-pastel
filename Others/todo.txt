@@ -13,6 +13,14 @@ ver 2017.X.X.X
 ------------------------
   
 
+ver 2018.0213.1.3
+  
+  [DONE] UPDATE: Set title for new tab page - "New Tab, Pastel"
+  
+  
+------------------------
+  
+
 ver 2017.1102.1.2
   
   [DONE] UPDATE: Show in tab popup if extension updated

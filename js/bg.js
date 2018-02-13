@@ -4,7 +4,7 @@ const UPDATE_NOTES_URL = "https://c306.net/apps/updates/app/pastel-new-tab/?utm_
 const CHANGES_ICON = chrome.extension.getURL("img/ic_history_black_24px.svg");
 const NOTIFICATION_ICON = chrome.extension.getURL("img/icon128.png");
 
-const UPDATE_NOTIFICATION = true;
+const UPDATE_NOTIFICATION = false;
 const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
 
 chrome.browserAction.onClicked.addListener(tab => chrome.tabs.create({}));
