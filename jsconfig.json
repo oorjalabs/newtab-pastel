@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "es6"
+    },
+    "exclude": [
+        "Others"
+    ],
+    "include": [
+        "src/js/*"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "chrome",
+            "jquery",
+            "lodash"
+        ]
+    }
+}

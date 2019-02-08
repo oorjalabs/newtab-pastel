@@ -13,10 +13,10 @@ var trimLeft = /^\s+/,
     mathRandom = Math.random;
 
 function tinycolor (color, opts) {
-
+    
     color = (color) ? color : '';
     opts = opts || { };
-
+    
     // If input is already a tinycolor, return itself
     if (color instanceof tinycolor) {
        return color;
@@ -25,7 +25,7 @@ function tinycolor (color, opts) {
     if (!(this instanceof tinycolor)) {
         return new tinycolor(color, opts);
     }
-
+    
     var rgb = inputToRGB(color);
     this._originalInput = color,
     this._r = rgb.r,
@@ -35,7 +35,7 @@ function tinycolor (color, opts) {
     this._roundA = mathRound(100*this._a) / 100,
     this._format = opts.format || rgb.format;
     this._gradientType = opts.gradientType;
-
+    
     // Don't let the range of [0,255] come back in [0,1].
     // Potentially lose a little bit of precision here, but will fix issues where
     // .5 gets interpreted as half of the total, instead of half of 1
@@ -43,7 +43,7 @@ function tinycolor (color, opts) {
     if (this._r < 1) { this._r = mathRound(this._r); }
     if (this._g < 1) { this._g = mathRound(this._g); }
     if (this._b < 1) { this._b = mathRound(this._b); }
-
+    
     this._ok = rgb.ok;
     this._tc_id = tinyCounter++;
 }
@@ -79,7 +79,7 @@ tinycolor.prototype = {
         RsRGB = rgb.r/255;
         GsRGB = rgb.g/255;
         BsRGB = rgb.b/255;
-
+        
         if (RsRGB <= 0.03928) {R = RsRGB / 12.92;} else {R = Math.pow(((RsRGB + 0.055) / 1.055), 2.4);}
         if (GsRGB <= 0.03928) {G = GsRGB / 12.92;} else {G = Math.pow(((GsRGB + 0.055) / 1.055), 2.4);}
         if (BsRGB <= 0.03928) {B = BsRGB / 12.92;} else {B = Math.pow(((BsRGB + 0.055) / 1.055), 2.4);}
@@ -144,33 +144,33 @@ tinycolor.prototype = {
         if (this._a === 0) {
             return "transparent";
         }
-
+        
         if (this._a < 1) {
             return false;
         }
-
+        
         return hexNames[rgbToHex(this._r, this._g, this._b, true)] || false;
     },
     toFilter: function(secondColor) {
         var hex8String = '#' + rgbaToHex(this._r, this._g, this._b, this._a);
         var secondHex8String = hex8String;
         var gradientType = this._gradientType ? "GradientType = 1, " : "";
-
+        
         if (secondColor) {
             var s = tinycolor(secondColor);
             secondHex8String = s.toHex8String();
         }
-
+        
         return "progid:DXImageTransform.Microsoft.gradient("+gradientType+"startColorstr="+hex8String+",endColorstr="+secondHex8String+")";
     },
     toString: function(format) {
         var formatSet = !!format;
         format = format || this._format;
-
+        
         var formattedString = false;
         var hasAlpha = this._a < 1 && this._a >= 0;
         var needsAlphaFormat = !formatSet && hasAlpha && (format === "hex" || format === "hex6" || format === "hex3" || format === "name");
-
+        
         if (needsAlphaFormat) {
             // Special case for "transparent", all other non-alpha formats
             // will return rgba when there is transparency.
@@ -203,13 +203,13 @@ tinycolor.prototype = {
         if (format === "hsv") {
             formattedString = this.toHsvString();
         }
-
+        
         return formattedString || this.toHexString();
     },
     clone: function() {
         return tinycolor(this.toString());
     },
-
+    
     _applyModification: function(fn, args) {
         var color = fn.apply(null, [this].concat([].slice.call(args)));
         this._r = color._r;
@@ -239,7 +239,7 @@ tinycolor.prototype = {
     spin: function() {
         return this._applyModification(spin, arguments);
     },
-
+    
     _applyCombination: function(fn, args) {
         return fn.apply(null, [this].concat([].slice.call(args)));
     },
@@ -280,7 +280,7 @@ tinycolor.fromRatio = function(color, opts) {
         }
         color = newColor;
     }
-
+    
     return tinycolor(color, opts);
 };
 
@@ -300,16 +300,16 @@ tinycolor.fromRatio = function(color, opts) {
 //     "hsv(0, 100%, 100%)" or "hsv 0 100% 100%"
 //
 function inputToRGB(color) {
-
+    
     var rgb = { r: 0, g: 0, b: 0 };
     var a = 1;
     var ok = false;
     var format = false;
-
+    
     if (typeof color == "string") {
         color = stringInputToObject(color);
     }
-
+    
     if (typeof color == "object") {
         if (isValidCSSUnit(color.r) && isValidCSSUnit(color.g) && isValidCSSUnit(color.b)) {
             rgb = rgbToRgb(color.r, color.g, color.b);
@@ -330,14 +330,14 @@ function inputToRGB(color) {
             ok = true;
             format = "hsl";
         }
-
+        
         if (color.hasOwnProperty("a")) {
             a = color.a;
         }
     }
-
+    
     a = boundAlpha(a);
-
+    
     return {
         ok: ok,
         format: color.format || format,
@@ -373,14 +373,14 @@ function rgbToRgb(r, g, b){
 // *Assumes:* r, g, and b are contained in [0, 255] or [0, 1]
 // *Returns:* { h, s, l } in [0,1]
 function rgbToHsl(r, g, b) {
-
+    
     r = bound01(r, 255);
     g = bound01(g, 255);
     b = bound01(b, 255);
-
+    
     var max = mathMax(r, g, b), min = mathMin(r, g, b);
     var h, s, l = (max + min) / 2;
-
+    
     if(max == min) {
         h = s = 0; // achromatic
     }
@@ -392,10 +392,10 @@ function rgbToHsl(r, g, b) {
             case g: h = (b - r) / d + 2; break;
             case b: h = (r - g) / d + 4; break;
         }
-
+        
         h /= 6;
     }
-
+    
     return { h: h, s: s, l: l };
 }
 
@@ -405,11 +405,11 @@ function rgbToHsl(r, g, b) {
 // *Returns:* { r, g, b } in the set [0, 255]
 function hslToRgb(h, s, l) {
     var r, g, b;
-
+    
     h = bound01(h, 360);
     s = bound01(s, 100);
     l = bound01(l, 100);
-
+    
     function hue2rgb(p, q, t) {
         if(t < 0) t += 1;
         if(t > 1) t -= 1;
@@ -418,7 +418,7 @@ function hslToRgb(h, s, l) {
         if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
         return p;
     }
-
+    
     if(s === 0) {
         r = g = b = l; // achromatic
     }
@@ -429,7 +429,7 @@ function hslToRgb(h, s, l) {
         g = hue2rgb(p, q, h);
         b = hue2rgb(p, q, h - 1/3);
     }
-
+    
     return { r: r * 255, g: g * 255, b: b * 255 };
 }
 
@@ -438,17 +438,17 @@ function hslToRgb(h, s, l) {
 // *Assumes:* r, g, and b are contained in the set [0, 255] or [0, 1]
 // *Returns:* { h, s, v } in [0,1]
 function rgbToHsv(r, g, b) {
-
+    
     r = bound01(r, 255);
     g = bound01(g, 255);
     b = bound01(b, 255);
-
+    
     var max = mathMax(r, g, b), min = mathMin(r, g, b);
     var h, s, v = max;
-
+    
     var d = max - min;
     s = max === 0 ? 0 : d / max;
-
+    
     if(max == min) {
         h = 0; // achromatic
     }
@@ -468,11 +468,11 @@ function rgbToHsv(r, g, b) {
 // *Assumes:* h is contained in [0, 1] or [0, 360] and s and v are contained in [0, 1] or [0, 100]
 // *Returns:* { r, g, b } in the set [0, 255]
  function hsvToRgb(h, s, v) {
-
+    
     h = bound01(h, 360) * 6;
     s = bound01(s, 100);
     v = bound01(v, 100);
-
+    
     var i = Math.floor(h),
         f = h - i,
         p = v * (1 - s),
@@ -482,7 +482,7 @@ function rgbToHsv(r, g, b) {
         r = [v, q, p, p, t, v][mod],
         g = [t, v, v, q, p, p][mod],
         b = [p, p, t, v, v, q][mod];
-
+    
     return { r: r * 255, g: g * 255, b: b * 255 };
 }
 
@@ -491,18 +491,18 @@ function rgbToHsv(r, g, b) {
 // Assumes r, g, and b are contained in the set [0, 255]
 // Returns a 3 or 6 character hex
 function rgbToHex(r, g, b, allow3Char) {
-
+    
     var hex = [
         pad2(mathRound(r).toString(16)),
         pad2(mathRound(g).toString(16)),
         pad2(mathRound(b).toString(16))
     ];
-
+    
     // Return a 3 character hex if possible
     if (allow3Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1)) {
         return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0);
     }
-
+    
     return hex.join("");
 }
 
@@ -511,14 +511,14 @@ function rgbToHex(r, g, b, allow3Char) {
 // Assumes r, g, b and a are contained in the set [0, 255]
 // Returns an 8 character hex
 function rgbaToHex(r, g, b, a) {
-
+    
     var hex = [
         pad2(convertDecimalToHex(a)),
         pad2(mathRound(r).toString(16)),
         pad2(mathRound(g).toString(16)),
         pad2(mathRound(b).toString(16))
     ];
-
+    
     return hex.join("");
 }
 
@@ -642,11 +642,11 @@ function splitcomplement(color) {
 function analogous(color, results, slices) {
     results = results || 6;
     slices = slices || 30;
-
+    
     var hsl = tinycolor(color).toHsl();
     var part = 360 / slices;
     var ret = [tinycolor(color)];
-
+    
     for (hsl.h = ((hsl.h - (part * results >> 1)) + 720) % 360; --results; ) {
         hsl.h = (hsl.h + part) % 360;
         ret.push(tinycolor(hsl));
@@ -660,12 +660,12 @@ function monochromatic(color, results) {
     var h = hsv.h, s = hsv.s, v = hsv.v;
     var ret = [];
     var modification = 1 / results;
-
+    
     while (results--) {
         ret.push(tinycolor({ h: h, s: s, v: v}));
         v = (v + modification) % 1;
     }
-
+    
     return ret;
 }
 
@@ -674,33 +674,33 @@ function monochromatic(color, results) {
 
 tinycolor.mix = function(color1, color2, amount) {
     amount = (amount === 0) ? 0 : (amount || 50);
-
+    
     var rgb1 = tinycolor(color1).toRgb();
     var rgb2 = tinycolor(color2).toRgb();
-
+    
     var p = amount / 100;
     var w = p * 2 - 1;
     var a = rgb2.a - rgb1.a;
-
+    
     var w1;
-
+    
     if (w * a == -1) {
         w1 = w;
     } else {
         w1 = (w + a) / (1 + w * a);
     }
-
+    
     w1 = (w1 + 1) / 2;
-
+    
     var w2 = 1 - w1;
-
+    
     var rgba = {
         r: rgb2.r * w1 + rgb1.r * w2,
         g: rgb2.g * w1 + rgb1.g * w2,
         b: rgb2.b * w1 + rgb1.b * w2,
         a: rgb2.a * p  + rgb1.a * (1 - p)
     };
-
+    
     return tinycolor(rgba);
 };
 
@@ -730,9 +730,9 @@ tinycolor.readability = function(color1, color2) {
 tinycolor.isReadable = function(color1, color2, wcag2) {
     var readability = tinycolor.readability(color1, color2);
     var wcag2Parms, out;
-
+    
     out = false;
-
+    
     wcag2Parms = validateWCAG2Parms(wcag2);
     switch (wcag2Parms.level + wcag2Parms.size) {
         case "AAsmall":
@@ -768,7 +768,7 @@ tinycolor.mostReadable = function(baseColor, colorList, args) {
     includeFallbackColors = args.includeFallbackColors ;
     level = args.level;
     size = args.size;
-
+    
     for (var i= 0; i < colorList.length ; i++) {
         readability = tinycolor.readability(baseColor, colorList[i]);
         if (readability > bestScore) {
@@ -776,7 +776,7 @@ tinycolor.mostReadable = function(baseColor, colorList, args) {
             bestColor = tinycolor(colorList[i]);
         }
     }
-
+    
     if (tinycolor.isReadable(baseColor, bestColor, {"level":level,"size":size}) || !includeFallbackColors) {
         return bestColor;
     }
@@ -963,31 +963,31 @@ function flip(o) {
 // Return a valid alpha value [0,1] with all invalid values being set to 1
 function boundAlpha(a) {
     a = parseFloat(a);
-
+    
     if (isNaN(a) || a < 0 || a > 1) {
         a = 1;
     }
-
+    
     return a;
 }
 
 // Take input from [0, n] and return it as [0, 1]
 function bound01(n, max) {
     if (isOnePointZero(n)) { n = "100%"; }
-
+    
     var processPercent = isPercentage(n);
     n = mathMin(max, mathMax(0, parseFloat(n)));
-
+    
     // Automatically convert percentage into number
     if (processPercent) {
         n = parseInt(n * max, 10) / 100;
     }
-
+    
     // Handle floating point rounding errors
     if ((Math.abs(n - max) < 0.000001)) {
         return 1;
     }
-
+    
     // Convert into [0, 1] range if it isn't already
     return (n % max) / parseFloat(max);
 }
@@ -1023,7 +1023,7 @@ function convertToPercentage(n) {
     if (n <= 1) {
         n = (n * 100) + "%";
     }
-
+    
     return n;
 }
 
@@ -1037,22 +1037,22 @@ function convertHexToDecimal(h) {
 }
 
 var matchers = (function() {
-
+    
     // <http://www.w3.org/TR/css3-values/#integers>
     var CSS_INTEGER = "[-\\+]?\\d+%?";
-
+    
     // <http://www.w3.org/TR/css3-values/#number-value>
     var CSS_NUMBER = "[-\\+]?\\d*\\.\\d+%?";
-
+    
     // Allow positive/negative integer/number.  Don't capture the either/or, just the entire outcome.
     var CSS_UNIT = "(?:" + CSS_NUMBER + ")|(?:" + CSS_INTEGER + ")";
-
+    
     // Actual matching.
     // Parentheses and commas are optional, but not required.
     // Whitespace can take the place of commas or opening paren
     var PERMISSIVE_MATCH3 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
     var PERMISSIVE_MATCH4 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
-
+    
     return {
         CSS_UNIT: new RegExp(CSS_UNIT),
         rgb: new RegExp("rgb" + PERMISSIVE_MATCH3),
@@ -1078,7 +1078,7 @@ function isValidCSSUnit(color) {
 // Permissive string parsing.  Take in a number of formats, and output an object
 // based on detected format.  Returns `{ r, g, b }` or `{ h, s, l }` or `{ h, s, v}`
 function stringInputToObject(color) {
-
+    
     color = color.replace(trimLeft,'').replace(trimRight, '').toLowerCase();
     var named = false;
     if (names[color]) {
@@ -1088,7 +1088,7 @@ function stringInputToObject(color) {
     else if (color == 'transparent') {
         return { r: 0, g: 0, b: 0, a: 0, format: "name" };
     }
-
+    
     // Try to match string input using regular expressions.
     // Keep most of the number bounding out of this function - don't worry about [0,1] or [0,100] or [0,360]
     // Just return an object and let the conversion functions handle that.
@@ -1137,7 +1137,7 @@ function stringInputToObject(color) {
             format: named ? "name" : "hex"
         };
     }
-
+    
     return false;
 }
 

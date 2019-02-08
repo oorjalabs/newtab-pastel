@@ -1,137 +1,161 @@
 Original: https://github.com/williamyeny/pastel-tab
-
+    
 ------------------------
-  
-
-ver 2017.X.X.X
-  
-  -- NEXT VERSION -- NEW FEATURE: Show controls on first use
-  
-  -- NEXT VERSION -- FEATURE: User defined colour
-  
-  
+    
+    
+ver 2019.X.X.X
+    
+    -- NEXT VERSION -- NEW FEATURE: Show controls on first use
+    
+    -- NEXT VERSION -- FEATURE: User defined colour
+    
+    
 ------------------------
-  
-
+    
+    
+ver 2019.208.1.4.2
+    
+    -- NEXT VERSION -- UPDATE: AutoConvert notification
+    
+    -- NEXT VERSION -- NEW FEATURE: Serif font (Google calendar)
+    
+    -- NEXT VERSION -- UPDATE: Add version number to feedback link
+    
+    -- NEXT VERSION -- UPDATE: Add version number to uninstall link
+    
+    
+------------------------
+    
+    
+ver 2019.208.1.4.1
+    
+    [DONE] UPDATE: Add gulp file
+    
+    [DONE] UPDATE: Add jsconfig file
+    
+    
+------------------------
+    
+    
 ver 2018.0213.1.3
-  
-  [DONE] UPDATE: Set title for new tab page - "New Tab, Pastel"
-  
-  
+    
+    [DONE] UPDATE: Set title for new tab page - "New Tab, Pastel"
+    
+    
 ------------------------
-  
-
+    
+    
 ver 2017.1102.1.2
-  
-  [DONE] UPDATE: Show in tab popup if extension updated
-    [X] Link to update notes ("See changes")
-    [X] Close button ("Close")
-  
-  
+    
+    [DONE] UPDATE: Show in tab popup if extension updated
+        [X] Link to update notes ("See changes")
+        [X] Close button ("Close")
+    
+    
 ------------------------
-  
-
+    
+    
 ver 2017.1102.1.1
-  
-  [DONE] UPDATE: Keep fetched topSite list in storage, update only on fetch
-  
-  [DONE] UPDATE: Design the links to look acceptable
-  
-  [DONE] UPDATE: Add update notes link to options
-  
-  
+    
+    [DONE] UPDATE: Keep fetched topSite list in storage, update only on fetch
+    
+    [DONE] UPDATE: Design the links to look acceptable
+    
+    [DONE] UPDATE: Add update notes link to options
+    
+    
 ------------------------
-  
-
+    
+    
 ver 2017.1101.1.0
-  
-  [DONE] NEW FEATURE: Show top websites
-  
-  [DONE] UPDATE: Control top websites from button
-  
-  
+    
+    [DONE] NEW FEATURE: Show top websites
+    
+    [DONE] UPDATE: Control top websites from button
+    
+    
 ------------------------
-  
-
+    
+    
 ver 2017.1026.0.5
-  
-  [DONE] UPDATE: 12 hour clock as default
-  
-  [DONE] UPDATE: Toggle 12/24 hour icon based on selected clock format
-  
-  
+    
+    [DONE] UPDATE: 12 hour clock as default
+    
+    [DONE] UPDATE: Toggle 12/24 hour icon based on selected clock format
+    
+    
 ------------------------
-  
-
+    
+    
 ver 2016.1215.0.4
-  
-  [DONE] UPDATE: Switch back to old colour function
-  
-  [DONE] UPDATE: Remove notifications, and permission
-  
-  
+    
+    [DONE] UPDATE: Switch back to old colour function
+    
+    [DONE] UPDATE: Remove notifications, and permission
+    
+    
 ------------------------
-  
-
+    
+    
 ver 2016.1214.0.3
-  
-  [DONE] OPTIONS: Show / hide clock
-  
-  [DONE] OPTIONS: 12/24 hour clock
-  
-  [DONE] OPTIONS: Pin colour
-  
-  [DONE] UPDATE: New colour generating method
-  
-  [DONE] OPTIONS: Pin, clock and 12/24 buttons show only when hovering on bottom 3rd of page
-  
-  [DONE] UPDATE: Install & update notifications with changelog button
-  
-  
+    
+    [DONE] OPTIONS: Show / hide clock
+    
+    [DONE] OPTIONS: 12/24 hour clock
+    
+    [DONE] OPTIONS: Pin colour
+    
+    [DONE] UPDATE: New colour generating method
+    
+    [DONE] OPTIONS: Pin, clock and 12/24 buttons show only when hovering on bottom 3rd of page
+    
+    [DONE] UPDATE: Install & update notifications with changelog button
+    
+    
 ------------------------
-  
-
+    
+    
 ver 2016.1124.0.2
-  
-  [DONE] OPTIONS: Remove link
-  
-  [DONE] OPTIONS: Feedback link 
-  
-  [DONE] OPTIONS: Source code link
-  
-  [DONE] OPTIONS: Donation link
-  
-  [DONE] Add settings link to NTP
-  
+    
+    [DONE] OPTIONS: Remove link
+    
+    [DONE] OPTIONS: Feedback link 
+    
+    [DONE] OPTIONS: Source code link
+    
+    [DONE] OPTIONS: Donation link
+    
+    [DONE] Add settings link to NTP
+    
 ------------------------
-  
-
+    
+    
 ver 0.1.1
-  
-  [DONE] Update: Write CWS description
-  
-  [DONE] Update: Create new icon (specially for browser button)
-  
-  [DONE] Update: Add screen shots
-  
-  [DONE] Update: Small promo shot
-  
-  [DONE] Update: Make public
-  
-  [DONE] Update: Set uninstall URL
-  
-  [DONE] Update: Change clock to 24 hr format
-  
-  [DONE] Update: Added extension description string to manifest
-  
-  
+    
+    [DONE] Update: Write CWS description
+    
+    [DONE] Update: Create new icon (specially for browser button)
+    
+    [DONE] Update: Add screen shots
+    
+    [DONE] Update: Small promo shot
+    
+    [DONE] Update: Make public
+    
+    [DONE] Update: Set uninstall URL
+    
+    [DONE] Update: Change clock to 24 hr format
+    
+    [DONE] Update: Added extension description string to manifest
+    
+    
 ------------------------
-  
-
+    
+    
 ver 0.1
-  
-  [DONE] UPDATE: Remove buttons with options on new tab page
-  
-  [DONE] NEW FEATURE: Add browser action to open new tab
-  
-  
+    
+    [DONE] UPDATE: Remove buttons with options on new tab page
+    
+    [DONE] NEW FEATURE: Add browser action to open new tab
+    
+    

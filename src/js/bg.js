@@ -11,21 +11,23 @@ chrome.browserAction.onClicked.addListener(tab => chrome.tabs.create({}));
 
 // On install/update handler
 chrome.runtime.onInstalled.addListener(details => {
-  if(details.reason !== "chrome_update"){
-    
-    //Log versions to Google Analytics
-    let version = chrome.app.getDetails().version;
-    
-    // Set uninstall url, if not local/dev install
-    chrome.management.getSelf(e => 
-      e.installType !== "development" && chrome.runtime.setUninstallURL(UNINSTALL_URL)
-    );
-    
-    // Show install/update notification
-    if(details.reason === "install" || UPDATE_NOTIFICATION){
-      details.version = version;
-      ls.set({"extensionUpdated": details});
+    if (details.reason !== "chrome_update") {
+        
+        //Log versions to Google Analytics
+        let version = chrome.app.getDetails().version;
+        
+        // Set uninstall url, if not local/dev install
+        chrome.management.getSelf(e =>
+            e.installType !== "development" && chrome.runtime.setUninstallURL(UNINSTALL_URL)
+        );
+            
+        // Show install/update notification
+        if (details.reason === "install" || UPDATE_NOTIFICATION) {
+            details.version = version;
+            ls.set({
+                "extensionUpdated": details
+            });
+        }
+        
     }
-    
-  }  
 });
