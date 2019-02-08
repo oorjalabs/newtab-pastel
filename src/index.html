@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>New Tab, Pastel</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel='stylesheet' href='css/style.css'>
+        <script src='js/ext/jquery-3.3.1.min.js'></script>
+        <script src='js/ext/tinycolor.js'></script>
+        <script src='js/ext/clipboard.min.js'></script>
+        <script src='js/ext/moment.min.js'></script>
+        <script src='js/ls.js'></script>
+        <script src='js/constants.js'></script>
+        <script src='js/script.js'></script>
+    </head>
+    
+    <body>
+        
+        <div id='center'>
+            <p id='clock'></p>
+        </div>
+        
+        <div id="bottomHalf">
+            
+            <div id="topSites">
+            </div>
+                
+            <div id="action_links">
+                <a class="bottom_btn_links" id="settings_link" title="Options">
+                    <img src="img/ic_settings_black_24px.svg">
+                </a>
+                
+                <a class="bottom_btn_links non_settings_link" id="top_sites_link" title="Show/hide top websites">
+                    <span class="btn_icon" id="ic_top_sites"></span>
+                </a>
+                
+                <a class="bottom_btn_links non_settings_link" id="clock_link" title="Show/hide Clock">
+                    <img src="img/ic_access_time_black_24px.svg">
+                </a>
+                
+                <a class="bottom_btn_links non_settings_link" id="hr_link" title="12/24 Hour Clock">
+                    <span class="btn_icon" id="ic_clock_type"></span>
+                </a>
+                
+                <a class="bottom_btn_links non_settings_link" id="font_link" title="Serif/sans-serif font">
+                    <span class="btn_icon" id="ic_font"></span>
+                </a>
+                
+                <span id="space_filler"></span>
+                
+                <a class="bottom_btn_links non_settings_link" id="pin_colour_link" title="If you like a colour, pin it">
+                    <img src="img/pin.svg">
+                </a>
+                
+            </div>
+            
+        </div>
+        
+        <div id="notificationModal" class="hide">
+            <span class="notificationTitle" id="notificationTitle"></span>
+            <span id="context_message"></span>
+            <a href="https://updatenotes.wordpress.com/category/pastel-new-tab/?utm_source=pastelnewtab&utm_medium=chrome_projects&utm_content=ntp_updated_notification_links&utm_campaign=chrome_projects" title="See changes" class="notification_button_links" id="notification_action"></a>
+            <a href="#" title="Remove this update note" id="notification_close">Dismiss</a>
+        </div>
+    </body>
+    
+</html>
