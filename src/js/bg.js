@@ -1,33 +1,46 @@
-const UNINSTALL_URL = "http://c306.net/whygo.html?src=nTP&utm_source=nTP%20for%20chrome&utm_medium=chrome_projects&utm_content=uninstall&utm_campaign=chrome_projects";
-const UPDATE_NOTES_URL = "https://c306.net/apps/updates/app/pastel-new-tab/?utm_source=nTP%20for%20chrome&utm_medium=chrome_projects&utm_content=upgradeNotification_changelog&utm_campaign=chrome_projects";
-
-const CHANGES_ICON = chrome.extension.getURL("img/ic_history_black_24px.svg");
-const NOTIFICATION_ICON = chrome.extension.getURL("img/icon128.png");
-
 const UPDATE_NOTIFICATION = false;
 const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
 
-chrome.browserAction.onClicked.addListener(tab => chrome.tabs.create({}));
+chrome.browserAction.onClicked.addListener(_ => chrome.tabs.create({}));
 
 // On install/update handler
 chrome.runtime.onInstalled.addListener(details => {
-    if (details.reason !== "chrome_update") {
+    if (details.reason === "chrome_update")
+        return;
         
-        //Log versions to Google Analytics
-        let version = chrome.app.getDetails().version;
+    const version = chrome.app.getDetails().version;
+    
+    // Set uninstall url, if not local/dev install
+    chrome.management.getSelf(e =>
+        e.installType !== "development" && chrome.runtime.setUninstallURL(URLS.UNINSTALL)
+    );
         
-        // Set uninstall url, if not local/dev install
-        chrome.management.getSelf(e =>
-            e.installType !== "development" && chrome.runtime.setUninstallURL(UNINSTALL_URL)
-        );
-            
-        // Show install/update notification
-        if (details.reason === "install" || UPDATE_NOTIFICATION) {
-            details.version = version;
-            ls.set({
-                "extensionUpdated": details
-            });
-        }
-        
+    // Show install/update notification
+    if (details.reason === "install" || UPDATE_NOTIFICATION) {
+        details.version = version;
+        ls.set({
+            "extensionUpdated": details
+        });
     }
 });
+
+/**
+ * Parses version number, after removing date, from version string
+ * @param {string} versionString Version string as returned by manifest
+ * @param {boolean} [asString=false] If true, return `7` as `7.0`
+ * @return {number} Version number
+ */
+function getVersionNumberFromString(versionString, asString = false) {
+    const vArr = versionString.split(".")
+    
+    if (vArr.length < 4)
+        return versionString;
+    
+    const version = parseFloat(`${vArr[2]}.${vArr[3] < 10 ? `0${parseInt(vArr[3])}` : vArr[3]}`);
+    
+    if (asString) {
+        return Number.isInteger(version) ? `${version}.0` : Number.isInteger(version * 10) ? `${version}0` : `${version}`;
+    }
+    
+    return version;
+}

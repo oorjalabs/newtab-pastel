@@ -13,15 +13,23 @@ ver 2019.X.X.X
 ------------------------
     
     
-ver 2019.208.1.4.2
+ver 2019.208.1.4.3
     
     -- NEXT VERSION -- UPDATE: AutoConvert notification
     
     -- NEXT VERSION -- NEW FEATURE: Serif font (Google calendar)
     
-    -- NEXT VERSION -- UPDATE: Add version number to feedback link
     
-    -- NEXT VERSION -- UPDATE: Add version number to uninstall link
+------------------------
+    
+    
+ver 2019.208.1.4.2
+    
+    [DONE] UPDATE: Add version number to feedback link
+    
+    [DONE] UPDATE: Add version number to uninstall link
+    
+    [DONE] UPDATE: Upgrade jquery, moment
     
     
 ------------------------

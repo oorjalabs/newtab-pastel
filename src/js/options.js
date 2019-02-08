@@ -1,16 +1,19 @@
 var detailsTimer;
 
-$(document).ready(function () {
+$(document).ready(() => {
     
-    $(".action_links").on("click", function () {
+    // Add feedback link with version number
+    $("#feedback").attr("href", URLS.FEEDBACK);
+    
+    $(".action_links").on("click", e => {
         
-        switch (this.id) {
+        switch (e.currentTarget.id) {
             
             case "delete":
                 chrome.management.uninstallSelf({
                     showConfirmDialog: true
-                }, function () {
-                    var err = chrome.runtime.lastError;
+                }, _ => {
+                    const err = chrome.runtime.lastError;
                     if (err) console.warn("Couldn't uninstall", err);
                 });
                 break;
@@ -18,19 +21,8 @@ $(document).ready(function () {
             case "donate":
                 $("#charity_picker").show();
                 break;
-                
-            case "feedback":
-                console.log("Opening feedback");
-                break;
-                
-            case "source":
-                console.log("Opening source code");
-                break;
+            
         }
-    });
-    
-    $(".donate_link").on("click", function () {
-        console.log("clicked", this.id);
     });
     
 });
