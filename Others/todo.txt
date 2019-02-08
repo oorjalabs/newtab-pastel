@@ -15,7 +15,9 @@ ver 2019.X.X.X
     
 ver 2019.208.1.4.4
     
-    -- NEXT VERSION -- UPDATE: AutoConvert notification
+    [DONE] UPDATE: AutoConvert notification
+    
+    [DONE] UPDATE: Top sites slide in and out
     
     
 ------------------------

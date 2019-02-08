@@ -8,8 +8,6 @@ chrome.runtime.onInstalled.addListener(details => {
     if (details.reason === "chrome_update")
         return;
         
-    const version = chrome.app.getDetails().version;
-    
     // Set uninstall url, if not local/dev install
     chrome.management.getSelf(e =>
         e.installType !== "development" && chrome.runtime.setUninstallURL(URLS.UNINSTALL)
@@ -17,12 +15,61 @@ chrome.runtime.onInstalled.addListener(details => {
         
     // Show install/update notification
     if (details.reason === "install" || UPDATE_NOTIFICATION) {
-        details.version = version;
-        ls.set({
-            "extensionUpdated": details
-        });
+        ls.set({ "extensionUpdated": details.reason });
     }
+    
+    // Set up ACS notification alarm if not installed, and notification not shown before
+    ls.get({
+        "acsNotificationShown": false
+    }, st => !st.acsNotificationShown && 
+        // Check if ACS is installed
+        chrome.runtime.sendMessage("einokpbfcmmopbfbpiofaeohhkmcbbcg", "checkAlive", isInstalled => {
+            if (isInstalled) {
+                return ls.set({
+                    "acsNotificationShown": true
+                });
+            }
+            
+            const ONE_DAY_IN_MS = 24 * 3600 * 1000;
+            const startDay = Date.now() + (details.reason === "install" ? 5 : 5 / 24) * ONE_DAY_IN_MS;
+            
+            chrome.alarms.create("alarm_acs_cws_notif", {
+                "when": randomDate(startDay, startDay + 1 * ONE_DAY_IN_MS, 8, 19).getTime(), // 5-24 hours (+5 days if onInstall)
+            });
+        })
+    );
+
 });
+
+
+chrome.alarms.onAlarm.addListener(alarm => {
+    
+    if (alarm.name === "alarm_acs_cws_notif") {
+        // Show ACS notification if not shown before && acs is not installed
+        ls.get({
+            "acsNotificationShown": false
+        }, st => !st.acsNotificationShown &&
+            // Check if ACS is installed
+            chrome.runtime.sendMessage("einokpbfcmmopbfbpiofaeohhkmcbbcg", "checkAlive", isInstalled => {
+                
+                if (isInstalled) {
+                    return ls.set({
+                        "acsNotificationShown": true
+                    });
+                }
+                
+                // Show notification, and mark as shown
+                ls.set({
+                    "extensionUpdated": NOTIFICATIONS.ACS_CWS.ID,
+                    "acsNotificationShown": true
+                });
+                
+            })
+        );
+    } else 
+        console.warn("Unidentified alarm: " + alarm.name);
+});
+
 
 /**
  * Parses version number, after removing date, from version string
@@ -43,4 +90,21 @@ function getVersionNumberFromString(versionString, asString = false) {
     }
     
     return version;
+}
+
+
+/**
+ * @param {number} start 
+ * @param {number} end 
+ * @param {number} startHour 
+ * @param {number} endHour 
+ * @return {Date}
+ */
+function randomDate(start, end, startHour, endHour) {
+    let date = new Date(+start + Math.random() * (end - start));
+    const hour = startHour + Math.random() * (endHour - startHour) | 0;
+    date.setHours(hour);
+    if (date <= Date.now())
+        date.setDate(date.getDate() + 1);
+    return date;
 }

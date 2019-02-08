@@ -1,0 +1,53 @@
+It's just a simple new tab page. Shows a random pastel colour background with a clock in the middle of screen.
+
+The browser button just opens a new tab, so would ideally be hidden away.
+
+-------------------
+
+
+OTHER FEATURES:
+
+1. Quick action buttons at bottom of new tab:
+    - Hide/show clock,
+    - Hide/show frequently visited websites
+    - Select 12 hour or 24 hour clock
+    - Select serif or sans-serif font
+    - Pin the current colour
+
+2. Settings page provides options to:
+    - Remove new tab page, 
+    - Send feedback, and
+    - Donate to one of the charities I like
+
+
+-------------------
+
+OPTIONAL PERMISSIONS
+
+>> "Read a list of your most frequently visited websites"
+
+This permission allows the new tab page to show your most frequently visited websites.
+
+The permission is only requested when 'Show top websites' button is used.
+
+Read more here: https://updatenotes.blog/2017/11/02/pastel-new-tab-now-with-your-top-websites/
+
+
+You may read more about 'tabs' permissions here: https://developer.chrome.com/extensions/tabs
+
+
+-------------------
+
+UPDATE:
+
+(Full update notes: https://updatenotes.blog/category/pastel-new-tab/ ) 
+
+UPDATE 08 Feb 2019: 
+    1. Select from serif or sans-serif fonts
+    2. Frequently visited websites slide in/out
+    3. Bug fixes and updates
+    
+
+UPDATE 02 Nov 2017: 
+    1. Show frequently visited websites for easy access
+

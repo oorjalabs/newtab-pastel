@@ -31,7 +31,7 @@ $(document).ready(() => {
         else
             showTopSites(st.showTopSites);
         
-        showUpdatedModal(st.extensionUpdated);
+        st.extensionUpdated && showUpdatedModal(st.extensionUpdated);
     });
     
     
@@ -143,10 +143,10 @@ $(document).ready(() => {
     );
         
         
-    $("#seeChangesButton").on("click", () => ls.set({ extensionUpdated: false }));
+    $("#notification_action").on("click", () => ls.set({ extensionUpdated: false }));
     
     
-    $("#closeButton").on("click", () => {
+    $("#notification_close").on("click", () => {
         ls.set({ extensionUpdated: false })
         return false;
     });
@@ -163,7 +163,7 @@ $(document).ready(() => {
             showClock(changes.showClock.newValue);
         
         if (changes.showTopSites)
-            showTopSites(changes.showTopSites.newValue);
+            showTopSites(changes.showTopSites.newValue, toggle = true);
         
         if (changes.pinnedColour)
             setPinnedColour(localStorage.pinnedColour);
@@ -227,11 +227,18 @@ function setClockFormat(isTwentyFourHour) {
 
 /**
  * @param {boolean} show 
+ * @param {boolean} [toggle=false] 
  */
-function showTopSites(show) {
+function showTopSites(show, toggle = false) {
+    
+    const topSitesDiv = $("#topSites");
     
     if (!show) {
-        $("#topSites").text("").fadeOut("fast");
+        if (!toggle) {
+            topSitesDiv.hide().text("");
+        } else {
+            topSitesDiv.slideToggle(_ => topSitesDiv.text(""))
+        }
         $("#top_sites_link").removeClass("showing");
         return;
     }
@@ -240,10 +247,10 @@ function showTopSites(show) {
         "topSites": DEFAULTS.TOP_SITES
     }, st => {
         
-        $("#topSites").text("");
-        
         const topSitesString = st.topSites.reduce((acc, site) => `${acc}<a href="${site.url}" class="top_site_link">${site.title}</a>`, "");
-        $("#topSites").append(topSitesString).fadeIn("fast");
+        
+        topSitesDiv.text("").append(topSitesString);//[toggle ? "slideToggle" : "hide"]();
+        toggle ? topSitesDiv.slideToggle() : topSitesDiv.show();
         
         $("#top_sites_link").addClass("showing");
         
@@ -268,7 +275,7 @@ function showTopSites(show) {
             ls.set({ "topSites": topSites });
             
             const topSitesString = st.topSites.reduce((acc, site) => `${acc}<a href="${site.url}" class="top_site_link">${site.title}</a>`, "");
-            $("#topSites").text("").append(topSitesString);
+            topSitesDiv.text("").append(topSitesString);
             
         });
         
@@ -291,26 +298,41 @@ function setPinnedColour(colour) {
 
 
 /**
- * 
- * @param {{reason?: string, version?: string}} [details]
+ * @param {string|boolean} [reason]
  */
-function showUpdatedModal(details) {
+function showUpdatedModal(reason) {
     
-    if (!details) {
-        return $("#updatedModal").hide();
+    if (!reason) {
+        return $("#notificationModal").hide().addClass("hide");
+    }
+    
+    switch (reason) {
+        
+        // Updated
+        case NOTIFICATIONS.UPDATED.ID: {
+            $("#notificationTitle").text(NOTIFICATIONS.UPDATED.TITLE);
+            $("#notification_action").text(NOTIFICATIONS.UPDATED.ACTION_TITLE).attr("href", NOTIFICATIONS.UPDATED.ACTION_URL);
+            $("#context_message").text(NOTIFICATIONS.UPDATED.CONTEXT_MESSAGE);
+            break;
+        }
+        
+        // Promote ACS
+        case NOTIFICATIONS.ACS_CWS.ID: {
+            $("#notificationTitle").text(NOTIFICATIONS.ACS_CWS.TITLE);
+            $("#notification_action").text(NOTIFICATIONS.ACS_CWS.ACTION_TITLE).attr("href", NOTIFICATIONS.ACS_CWS.ACTION_URL);
+            $("#context_message").text(NOTIFICATIONS.ACS_CWS.CONTEXT_MESSAGE);
+            break;
+        }
+        
+        // Install
+        default: {
+            $("#notificationTitle").text(NOTIFICATIONS.INSTALLED.TITLE);
+            $("#notification_action").text(NOTIFICATIONS.INSTALLED.ACTION_TITLE).attr("href", NOTIFICATIONS.INSTALLED.ACTION_URL);
+            $("#context_message").text(NOTIFICATIONS.INSTALLED.CONTEXT_MESSAGE);
+        }
     }
         
-    if (details.reason && details.reason === "update") {
-        $("#installed").text("Extension updated");
-        $("#seeChangesButton").text("See what's new");
-    } else {
-        $("#installed").text("Welcome to pastel new tab");
-        $("#seeChangesButton").text("Recent update notes");
-    }
-    
-    $("#version").text(`v. ${details.version}`);
-    $("#closeButton").text(`Dismiss`);
-    $("#updatedModal").show();
+    $("#notificationModal").show().removeClass("hide");
 }
 
 
