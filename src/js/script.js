@@ -12,9 +12,12 @@ $(document).ready(() => {
         "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK,
         "showClock": DEFAULTS.SHOW_CLOCK,
         "showTopSites": DEFAULTS.SHOW_TOP_SITES,
+        "fontStyle": DEFAULTS.FONT_STYLE,
         "topSitesPermission_firstAsk": false,
         "extensionUpdated": DEFAULTS.EXTENSION_UPDATED
     }, st => {
+        
+        setFont(st.fontStyle);
         
         // Set clock format
         setClockFormat(st.twentyfourhourclock);
@@ -46,7 +49,7 @@ $(document).ready(() => {
         $("#top_sites_link").removeClass("grab_attention");
         
         ls.get({
-            showTopSites: DEFAULTS.SHOW_TOP_SITES
+            "showTopSites": DEFAULTS.SHOW_TOP_SITES
         }, st => {
             
             const newShowTopSites = !st.showTopSites;
@@ -58,7 +61,7 @@ $(document).ready(() => {
             
             // Changing from false to true, check if we have permission
             chrome.permissions.contains({
-                permissions: ["topSites"]
+                "permissions": ["topSites"]
             }, result => {
                 
                 // The extension has the permissions.
@@ -69,7 +72,7 @@ $(document).ready(() => {
                 // The extension doesn't have the permissions.
                 // Request permission. 
                 chrome.permissions.request({
-                    permissions: ["topSites"]
+                    "permissions": ["topSites"]
                 }, granted => {
                     
                     // If granted, set setting as true, 
@@ -89,27 +92,37 @@ $(document).ready(() => {
     // Toggle clock visibility in storage
     $("#clock_link").on("click", () =>
         ls.get({
-            showClock: DEFAULTS.SHOW_CLOCK
+            "showClock": DEFAULTS.SHOW_CLOCK
         }, st =>
-            ls.set({ showClock: !st.showClock })
+            ls.set({ "showClock": !st.showClock })
         )
     );
-            
-            
+    
+    
     // Toggle clock type in storage
     $("#hr_link").on("click", () =>
         ls.get({
-                twentyfourhourclock: DEFAULTS.TWENTY_FOUR_HOUR_CLOCK
+            "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK
         }, st =>
-            ls.set({ twentyfourhourclock: !st.twentyfourhourclock })
+            ls.set({ "twentyfourhourclock": !st.twentyfourhourclock })
         )
     );
-            
-            
+    
+    
+    // Toggle clock type in storage
+    $("#font_link").on("click", () =>
+        ls.get({
+            "fontStyle": DEFAULTS.FONT_STYLE
+        }, st =>
+            ls.set({ "fontStyle": st.fontStyle === FONT_STYLES.SANS ? FONT_STYLES.SERIF : FONT_STYLES.SANS})
+        )
+    );
+    
+    
     // Save pinned colour to storage.
     // Actual pinning happens in storage.onchanged handler
     $("#pin_colour_link").on("click", () =>
-            
+        
         ls.get({
             pinnedColour: DEFAULTS.PINNED_COLOUR
         }, st => {
@@ -139,6 +152,8 @@ $(document).ready(() => {
     });
     
     
+    
+    
     chrome.storage.onChanged.addListener(changes => {
         
         if (changes.twentyfourhourclock)
@@ -153,12 +168,28 @@ $(document).ready(() => {
         if (changes.pinnedColour)
             setPinnedColour(localStorage.pinnedColour);
         
+        if (changes.fontStyle)
+            setFont(changes.fontStyle.newValue);
+        
         if (changes.extensionUpdated)
             showUpdatedModal(changes.extensionUpdated.newValue);
     });
 });
 
 
+/**
+ * @param {string} fontStyle Of type `FONT_STYLES`
+ */
+function setFont(fontStyle) {
+    const body = document.getElementsByTagName("body")[0];
+    body.classList.remove(FONT_STYLES.SANS, FONT_STYLES.SERIF);
+    body.classList.add(fontStyle);
+}
+
+
+/**
+ * @param {boolean} show 
+ */
 function showClock(show) {
     
     if (clockTimeout)
@@ -174,6 +205,9 @@ function showClock(show) {
 }
 
 
+/**
+ * @param {boolean} isTwentyFourHour 
+ */
 function setClockFormat(isTwentyFourHour) {
     
     if (isTwentyFourHour) {
@@ -191,6 +225,9 @@ function setClockFormat(isTwentyFourHour) {
 }
 
 
+/**
+ * @param {boolean} show 
+ */
 function showTopSites(show) {
     
     if (!show) {
@@ -239,6 +276,9 @@ function showTopSites(show) {
 }
 
 
+/**
+ * @param {string} colour 
+ */
 function setPinnedColour(colour) {
     if (!!colour) {
         $("body").css("background-color", colour); //set color
@@ -250,6 +290,10 @@ function setPinnedColour(colour) {
 }
 
 
+/**
+ * 
+ * @param {{reason?: string, version?: string}} [details]
+ */
 function showUpdatedModal(details) {
     
     if (!details) {
@@ -288,6 +332,9 @@ function changeColor() {
 }
 
 
+/**
+ * @param {function} callback 
+ */
 function removeTopSitesPermission(callback) {
     chrome.permissions.remove({
         permissions: ["topSites"]
@@ -295,6 +342,10 @@ function removeTopSitesPermission(callback) {
 }
 
 
+/**
+ * @param {[*]} arr1 
+ * @param {[*]} arr2 
+ */
 function arraysEqual(arr1, arr2) {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
 }

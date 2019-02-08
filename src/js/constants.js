@@ -1,8 +1,13 @@
+const FONT_STYLES = {
+    SANS: "sans",
+    SERIF: "serif",
+}
 const DEFAULTS = {
     "SHOW_CLOCK": true,
     "TWENTY_FOUR_HOUR_CLOCK": false,
     "PINNED_COLOUR": "",
     "SHOW_TOP_SITES": false,
+    "FONT_STYLE": FONT_STYLES.SANS,
     "EXTENSION_UPDATED": false,
     "TOP_SITES": [{
             title: "Google",

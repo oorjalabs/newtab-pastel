@@ -1,5 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Inconsolata:400,700);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+@import url(https://fonts.googleapis.com/css?family=Noto+Serif+SC:400);
 
 :root {
     --button-opacity-visible: .25;
@@ -16,8 +16,16 @@
 
 body {
     transition-duration: 1s;
-    font-family: 'Inconsolata';
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
     color: #333333;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    height: 100vh;
+}
+
+body.serif {
+    font-family: 'Noto Serif SC', serif;
 }
 
 .hide {
@@ -25,56 +33,42 @@ body {
 }
 
 #center {
-    position: absolute;
-    width: 50%;
-    left: 50%;
-    top: 50%;
-    text-align: center;
-    margin-left: -25%;
-    margin-top: -65px;
+    margin: auto;
 }
 
 #clock {
     font-size: 7.5em;
-    margin-bottom: 15px;
 }
 
 
 #topSites {
-    position: fixed;
-    bottom: calc(42px + 1rem);
-    width: 100%;
-    padding: 1rem 8rem;
-    box-sizing: border-box;
-
     display: grid;
     grid-template-columns: repeat(4, minmax(12rem, 18rem));
     grid-gap: 1.5rem 3rem;
     justify-content: center;
-
+    padding: 1rem 8rem;
     z-index: 3;
     cursor: pointer;
 }
 
 .top_site_link {
-    font-family: Roboto, Ubuntu, 'Noto Sans UI', 'Lucida Grande', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, Verdana, Geneva, 'Open Sans', sans-serif;
     transition-duration: 0.5s;
     text-decoration: none;
     color: #333333;
     font-size: 1.25em;
-
+    
     display: block;
     padding: 0.25rem 1rem;
     height: 2rem;
     line-height: 2rem;
-
+    
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
+    
     border: 1px solid rgba(211, 211, 211, .5);
     border-radius: 0.2rem;
-
+    
     background: rgba(250, 250, 250, .5);
 }
 
@@ -86,14 +80,9 @@ body {
 
 
 #bottomHalf {
-    position: fixed;
-    height: 35%;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-
-    display: flex;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
 }
 
 #bottomHalf>*:not(#space_filler) {
@@ -102,6 +91,11 @@ body {
 
 #space_filler {
     flex: 1 1 auto;
+}
+
+#action_links {
+    display: flex;
+    align-items: flex-end;
 }
 
 .bottom_btn_links {
@@ -157,11 +151,16 @@ body {
     margin: 0;
 }
 
+#ic_font {
+    background-image: url(../img/format-font.svg);
+}
+
 #pin_colour_link.pinned {
     border-radius: 0.5em;
     border: 1px solid #888;
     margin: 1px;
     padding: calc(0.5em - 2px);
+    margin-left: auto;
     opacity: var(--button-opacity-pinned-default);
 }
 
@@ -188,12 +187,12 @@ body {
     top: 1.5rem;
     padding: 0.5rem 1rem;
     /* border: 1px dotted rgba(210, 210, 210, 0.3); */
-
+    
     font-size: medium;
     font-family: Roboto, Ubuntu, 'Noto Sans UI', 'Lucida Grande', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, Verdana, Geneva, 'Open Sans', sans-serif;
     color: #333;
     text-align: center;
-
+    
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 0.5rem;

@@ -13,11 +13,19 @@ ver 2019.X.X.X
 ------------------------
     
     
-ver 2019.208.1.4.3
+ver 2019.208.1.4.4
     
     -- NEXT VERSION -- UPDATE: AutoConvert notification
     
-    -- NEXT VERSION -- NEW FEATURE: Serif font (Google calendar)
+    
+------------------------
+    
+    
+ver 2019.208.1.4.3
+    
+    [DONE] NEW FEATURE: Serif font (Google calendar)
+    
+    [DONE] UPDATE: Convert fixed to grid layout
     
     
 ------------------------
