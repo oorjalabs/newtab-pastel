@@ -13,6 +13,22 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2019.211.1.5.2
+    
+    -- NEXT VERSION -- UPDATE: Grid to select colours from whole list (pin the selected colour)
+    
+    
+------------------------
+    
+    
+ver 2019.211.1.5.1
+    
+    [DONE] UPDATE: Test alternative pastel list
+    
+    
+------------------------
+    
+    
 ver 2019.208.1.4.4
     
     [DONE] UPDATE: AutoConvert notification

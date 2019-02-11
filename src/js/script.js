@@ -122,7 +122,6 @@ $(document).ready(() => {
     // Save pinned colour to storage.
     // Actual pinning happens in storage.onchanged handler
     $("#pin_colour_link").on("click", () =>
-        
         ls.get({
             pinnedColour: DEFAULTS.PINNED_COLOUR
         }, st => {
@@ -150,8 +149,6 @@ $(document).ready(() => {
         ls.set({ extensionUpdated: false })
         return false;
     });
-    
-    
     
     
     chrome.storage.onChanged.addListener(changes => {
@@ -288,11 +285,12 @@ function showTopSites(show, toggle = false) {
  */
 function setPinnedColour(colour) {
     if (!!colour) {
-        $("body").css("background-color", colour); //set color
+        setColour(colour); //set color
         $("#pin_colour_link").addClass("pinned");
         return;
     }
-    changeColor();
+    
+    changeColour();
     $("#pin_colour_link").removeClass("pinned");
 }
 
@@ -342,15 +340,14 @@ function clock() {
 }
 
 
-function changeColor() {
-    const col = parseInt((Date.now() % 1000) * 360 / 1000)
-    // let col = parseInt(Math.random() * 360); //randomize color
-    
-    const colorString = `hsl(${col}, ${saturation}, ${lightness})`;
-    $("body").css("background-color", colorString); //set color
-    
-    const hex = "#" + tinycolor(colorString).toHex(); //translate to hex
-    console.log("changeColor", hex, colorString);
+function changeColour() {
+    const colourIndex = Math.round(Math.random() * pastels.length);
+    const colourString = pastels[colourIndex];
+    setColour(colourString); //set color
+}
+
+function setColour(colour) {
+    $("body").css("background-color", colour); //set color
 }
 
 

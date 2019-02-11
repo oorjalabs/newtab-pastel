@@ -15,7 +15,7 @@
 }
 
 body {
-    transition-duration: 1s;
+    /* transition-duration: 1s; */
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
     color: #333333;
     display: grid;
@@ -44,7 +44,7 @@ body.serif {
 
 #topSites {
     display: grid;
-    grid-template-columns: repeat(4, minmax(12rem, 18rem));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 18rem));
     grid-gap: 1.5rem 3rem;
     justify-content: center;
     padding: 1rem 8rem;
