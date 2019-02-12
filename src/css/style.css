@@ -79,11 +79,21 @@ body.serif {
     text-decoration: underline;
 }
 
+#hoverHalf {
+    z-index: 1;
+    position: fixed;
+    bottom: 0;
+    left:0;
+    height: 50%;
+    width: 100%;
+}
 
 #bottomHalf {
     display: grid;
+    z-index: 2;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
+    transition-duration: 1s;
 }
 
 #bottomHalf>*:not(#space_filler) {
@@ -173,10 +183,12 @@ body.serif {
     opacity: var(--button-opacity-non-settings-default);
 }
 
+#bottomHalf.entered .non_settings_link:not(.pinned),
 #bottomHalf:hover .non_settings_link:not(.pinned) {
     opacity: var(--button-opacity-visible);
 }
 
+#bottomHalf.entered #hr_link,
 #bottomHalf:hover #hr_link {
     opacity: var(--button-opacity-visible-hourtype);
 }

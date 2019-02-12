@@ -8,6 +8,8 @@ chrome.runtime.onInstalled.addListener(details => {
     if (details.reason === "chrome_update")
         return;
         
+    const previousVersion = details.previousVersion ? getVersionNumberFromString(details.previousVersion) : 0;
+    
     // Set uninstall url, if not local/dev install
     chrome.management.getSelf(e =>
         e.installType !== "development" && chrome.runtime.setUninstallURL(URLS.UNINSTALL)
@@ -16,6 +18,12 @@ chrome.runtime.onInstalled.addListener(details => {
     // Show install/update notification
     if (details.reason === "install" || UPDATE_NOTIFICATION) {
         ls.set({ "extensionUpdated": details.reason });
+    }
+    
+    // Load colours into storage if installing or updating to first v2 colours version
+    const COLOURS_V2 = 1.05;
+    if (previousVersion < COLOURS_V2) {
+        localStorage.allPastels = pastels.join(",");
     }
     
     // Set up ACS notification alarm if not installed, and notification not shown before

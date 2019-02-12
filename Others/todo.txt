@@ -13,9 +13,19 @@ ver 2019.X.X.X
 ------------------------
     
     
-ver 2019.211.1.5.2
+ver 2019.212.1.5.3
     
-    -- NEXT VERSION -- UPDATE: Grid to select colours from whole list (pin the selected colour)
+    -- NEXT VERSION -- UPDATE: Grid opener link on new tab page
+    
+    
+------------------------
+    
+    
+ver 2019.212.1.5.2
+    
+    [DONE] UPDATE: Load pastels from storage so list can be edited
+    
+    [DONE] UPDATE: Grid to select colours from whole list (pin the selected colour)
     
     
 ------------------------
