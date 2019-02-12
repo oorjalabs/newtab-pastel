@@ -1,7 +1,9 @@
-var lightness = "95%";
-var saturation = "100%";
 var clockTimeout;
 var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
+
+const pastels = (localStorage.allPastels || "").split(",");
+const lightness = "95%";
+const saturation = "100%";
 
 $(document).ready(() => {
     
@@ -33,6 +35,12 @@ $(document).ready(() => {
         
         st.extensionUpdated && showUpdatedModal(st.extensionUpdated);
     });
+    
+    
+    $("#hoverHalf").hover(
+        _ => $("#bottomHalf").addClass("entered"), 
+        _ => $("#bottomHalf").removeClass("entered")
+    );
     
     
     // Open options page
@@ -122,21 +130,19 @@ $(document).ready(() => {
     // Save pinned colour to storage.
     // Actual pinning happens in storage.onchanged handler
     $("#pin_colour_link").on("click", () =>
-        
         ls.get({
             pinnedColour: DEFAULTS.PINNED_COLOUR
         }, st => {
             
+            // Remove pinned colour
             if (!!st.pinnedColour) {
                 ls.remove("pinnedColour");
                 localStorage.removeItem("pinnedColour");
                 return;
             }
             
-            const bgcolor = $("body").css("background-color");
-            ls.set({
-                pinnedColour: bgcolor
-            });
+            const bgcolor = $("body").data("colour");
+            ls.set({"pinnedColour": bgcolor});
             localStorage.pinnedColour = bgcolor;
             
         })
@@ -150,8 +156,6 @@ $(document).ready(() => {
         ls.set({ extensionUpdated: false })
         return false;
     });
-    
-    
     
     
     chrome.storage.onChanged.addListener(changes => {
@@ -288,11 +292,12 @@ function showTopSites(show, toggle = false) {
  */
 function setPinnedColour(colour) {
     if (!!colour) {
-        $("body").css("background-color", colour); //set color
+        setColour(colour); //set color
         $("#pin_colour_link").addClass("pinned");
         return;
     }
-    changeColor();
+    
+    changeColour();
     $("#pin_colour_link").removeClass("pinned");
 }
 
@@ -342,15 +347,21 @@ function clock() {
 }
 
 
-function changeColor() {
-    const col = parseInt((Date.now() % 1000) * 360 / 1000)
-    // let col = parseInt(Math.random() * 360); //randomize color
+function changeColour() {
+    const pastelCount = pastels.length;
+    const colourIndex = Math.round(Math.random() * pastelCount);
+    const col = parseInt((Date.now() % 1000) * 360 / 1000);
+    const colourString = pastelCount > 0 ? pastels[colourIndex] : `hsl(${col}, ${saturation}, ${lightness})`;
     
-    const colorString = `hsl(${col}, ${saturation}, ${lightness})`;
-    $("body").css("background-color", colorString); //set color
-    
-    const hex = "#" + tinycolor(colorString).toHex(); //translate to hex
-    console.log("changeColor", hex, colorString);
+    setColour(colourString); //set color
+}
+
+
+/**
+ * @param {string} colour Of type `'#ffffff'`
+ */
+function setColour(colour) {
+    $("body").css("background-color", colour).attr("data-colour", colour); //set color
 }
 
 

@@ -42,6 +42,12 @@ UPDATE:
 
 (Full update notes: https://updatenotes.blog/category/pastel-new-tab/ ) 
 
+UPDATE 12 Feb 2019: 
+    1. See full page grid of available pastel colours
+    2. Pin or remove pastel colours from grid page
+    3. Bug fixes and updates
+    
+
 UPDATE 08 Feb 2019: 
     1. Select from serif or sans-serif fonts
     2. Frequently visited websites slide in/out

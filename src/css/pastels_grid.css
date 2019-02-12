@@ -1,0 +1,102 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700);
+
+:root {
+    --button-opacity-visible: .1;
+    --button-opacity-visible-hourtype: .35;
+    --button-opacity-non-settings-default: 0;
+    --button-opacity-focus: 0.8;
+    --button-opacity-pinned-default: 0.5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* transition-duration: 1s; */
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+    color: #333333;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    height: 100vh;
+}
+
+.hide, .hide * {
+    display: none;
+}
+
+div#grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-gap: 1rem 0.5rem;
+    grid-auto-rows: 15rem;
+    padding: 1rem;
+    justify-items: center;
+    align-items: center;
+    /* margin: auto; */
+    transition-duration: 1s;
+}
+
+span.pastel_colour {
+    text-align: center;
+    height: 15rem;
+    border-radius: 0.2rem;
+    width: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+}
+
+div.colour_contents {
+    /* padding-bottom: 1rem; */
+    display: flex;
+}
+
+span.colour_name {
+    flex-grow: 1;
+    margin: auto;
+    text-align: left;
+    padding: 0 1rem;
+}
+
+.delete_colour {
+    padding: calc(0.5rem - 2px);
+    opacity: var(--button-opacity-visible);
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.delete_colour:focus,
+.delete_colour:hover {
+    opacity: var(--button-opacity-pinned-default);    
+}
+
+.pin_colour {
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 0.5em;
+    margin: 1px;
+    padding: calc(0.5em - 2px);
+    opacity: var(--button-opacity-visible);
+    cursor: pointer;
+}
+
+.pin_colour:hover,
+.pin_colour:focus {
+    opacity: var(--button-opacity-pinned-default);
+}
+
+
+.pin_colour.pinned {
+    border-color: #888;
+    opacity: var(--button-opacity-focus);
+}
+
+#credit {
+    padding: 1rem;
+}

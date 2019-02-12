@@ -6,8 +6,6 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel='stylesheet' href='css/style.css'>
         <script src='js/ext/jquery-3.3.1.min.js'></script>
-        <script src='js/ext/tinycolor.js'></script>
-        <script src='js/ext/clipboard.min.js'></script>
         <script src='js/ext/moment.min.js'></script>
         <script src='js/ls.js'></script>
         <script src='js/constants.js'></script>
@@ -48,6 +46,10 @@
                 
                 <span id="space_filler"></span>
                 
+                <a class="bottom_btn_links non_settings_link" id="colours_grid_link" title="All pastel colours" href="pastels.html">
+                    <img src="img/baseline-grid_on-24px.svg">
+                </a>
+                
                 <a class="bottom_btn_links non_settings_link" id="pin_colour_link" title="If you like a colour, pin it">
                     <img src="img/pin.svg">
                 </a>
@@ -55,6 +57,8 @@
             </div>
             
         </div>
+        
+        <div id="hoverHalf"></div>
         
         <div id="notificationModal" class="hide">
             <span class="notificationTitle" id="notificationTitle"></span>
