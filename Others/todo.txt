@@ -15,7 +15,11 @@ ver 2019.X.X.X
     
 ver 2019.212.1.5.3
     
-    -- NEXT VERSION -- UPDATE: Grid opener link on new tab page
+    [DONE] UPDATE: Grid opener link on new tab page
+    
+    [DONE] UPDATE: Show pinned colour first in grid when first opened
+    
+    [DONE] UPDATE: Credit automatic pastels
     
     
 ------------------------

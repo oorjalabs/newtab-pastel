@@ -6,10 +6,21 @@ const lightness = "95%";
 const saturation = "100%";
 
 $(document).ready(() => {
-    const pastelGridString = shuffle(pastels).map(toHtml).join("\n");
-    $("#grid").append(pastelGridString);
     
-    setPinned(localStorage.pinnedColour);
+    let pastelGridArray = shuffle(pastels);
+    
+    const pinnedColour = localStorage.pinnedColour;
+    if(pinnedColour) {
+        const colourIndex = pastelGridArray.indexOf(pinnedColour);
+        if (colourIndex > -1) {
+            pastelGridArray.splice(colourIndex, 1);
+            pastelGridArray.splice(0, 0, pinnedColour);
+        }
+    }
+    
+    $("#grid").append(pastelGridArray.map(toHtml).join("\n"));
+    
+    setPinned(pinnedColour);
     
     $("body").on("click", ".delete_colour", e => {
         // Get colour string
