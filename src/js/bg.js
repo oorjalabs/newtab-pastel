@@ -53,30 +53,27 @@ chrome.runtime.onInstalled.addListener(details => {
 
 chrome.alarms.onAlarm.addListener(alarm => {
     
-    if (alarm.name === "alarm_acs_cws_notif") {
-        // Show ACS notification if not shown before && acs is not installed
-        ls.get({
-            "acsNotificationShown": false
-        }, st => !st.acsNotificationShown &&
-            // Check if ACS is installed
-            chrome.runtime.sendMessage("einokpbfcmmopbfbpiofaeohhkmcbbcg", "checkAlive", isInstalled => {
-                
-                if (isInstalled) {
-                    return ls.set({
-                        "acsNotificationShown": true
-                    });
-                }
-                
-                // Show notification, and mark as shown
-                ls.set({
-                    "extensionUpdated": NOTIFICATIONS.ACS_CWS.ID,
-                    "acsNotificationShown": true
-                });
-                
-            })
-        );
-    } else 
-        console.warn("Unidentified alarm: " + alarm.name);
+    if (alarm.name !== "alarm_acs_cws_notif") {
+        return console.log("Unidentified alarm: " + alarm.name);
+    }
+    
+    // Show ACS notification acs is not installed
+    return chrome.runtime.sendMessage("einokpbfcmmopbfbpiofaeohhkmcbbcg", "checkAlive", isInstalled => {
+        
+        if (!chrome.runtime.lastError && isInstalled) {
+            return ls.set({
+                "acsNotificationShown": true
+            });
+        }
+        
+        // Show notification, and mark as shown
+        ls.set({
+            "extensionUpdated": NOTIFICATIONS.ACS_CWS.ID,
+            "acsNotificationShown": true
+        });
+        
+    });
+    
 });
 
 

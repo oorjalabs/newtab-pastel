@@ -13,6 +13,16 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2019.223.1.7
+    
+    [DONE] UPDATE: ACS notification without chrome.runtime.lastError in alarm
+    
+    [DONE] UPDATE: Froze objects in constants.js
+    
+    
+------------------------
+    
+    
 ver 2019.223.1.6
     
     [DONE] BUG FIX: Delete more than one colour at once
