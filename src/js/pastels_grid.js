@@ -1,7 +1,7 @@
 var clockTimeout;
 var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
 
-const pastels = (localStorage.allPastels || "").split(",");
+let pastels = (localStorage.allPastels || "").split(",");
 const lightness = "95%";
 const saturation = "100%";
 
@@ -31,8 +31,8 @@ $(document).ready(() => {
         card.hide(_ => card.remove());
         
         // Remove the card from pastels set
-        const updatedPastels = pastels.filter(p => p != colour);
-        localStorage.allPastels = updatedPastels.join(",");
+        pastels = pastels.filter(p => p != colour);
+        localStorage.allPastels = pastels.join(",");
     });
     
     

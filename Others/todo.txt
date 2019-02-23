@@ -13,6 +13,18 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2019.223.1.6
+    
+    [DONE] BUG FIX: Delete more than one colour at once
+    
+    [DONE] UPDATE: ACS notification without chrome.runtime.lastError
+    
+    [DONE] UPDATE: Removed boring pastels from grid - low saturation, or very high lightness
+    
+    
+------------------------
+    
+    
 ver 2019.212.1.5.3
     
     [DONE] UPDATE: Grid opener link on new tab page

@@ -22,9 +22,10 @@ chrome.runtime.onInstalled.addListener(details => {
     
     // Load colours into storage if installing or updating to first v2 colours version
     const COLOURS_V2 = 1.05;
-    if (previousVersion < COLOURS_V2) {
-        localStorage.allPastels = pastels.join(",");
+    if (previousVersion <= COLOURS_V2) {
+        setPastels(pastels);
     }
+    
     
     // Set up ACS notification alarm if not installed, and notification not shown before
     ls.get({
@@ -32,7 +33,7 @@ chrome.runtime.onInstalled.addListener(details => {
     }, st => !st.acsNotificationShown && 
         // Check if ACS is installed
         chrome.runtime.sendMessage("einokpbfcmmopbfbpiofaeohhkmcbbcg", "checkAlive", isInstalled => {
-            if (isInstalled) {
+            if (!chrome.runtime.lastError && isInstalled) {
                 return ls.set({
                     "acsNotificationShown": true
                 });
@@ -115,4 +116,35 @@ function randomDate(start, end, startHour, endHour) {
     if (date <= Date.now())
         date.setDate(date.getDate() + 1);
     return date;
+}
+
+
+/**
+ * @param {[string]} pastelsArray 
+ */
+function setPastels(pastelsArray) {
+    localStorage.allPastels = pastelsArray.join(",");
+}
+
+
+function getSaturation (hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    
+    let r = parseInt(result[1], 16);
+    let g = parseInt(result[2], 16);
+    let b = parseInt(result[3], 16);
+    
+    r /= 255, g /= 255, b /= 255;
+    const max = Math.max(r, g, b),
+        min = Math.min(r, g, b);
+    let s, l = (max + min) / 2;
+    
+    if (max == min) {
+        s = 0; // achromatic
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    }
+    
+    return Math.round(s * 100);
 }
