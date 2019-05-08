@@ -245,3 +245,7 @@ body.serif {
 #notification_close:hover {
     text-decoration: underline;
 }
+
+#icon_dark_mode {
+    height: 24px;
+}

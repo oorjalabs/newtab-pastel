@@ -5,33 +5,51 @@ const pastels = (localStorage.allPastels || "").split(",");
 const lightness = "95%";
 const saturation = "100%";
 
+const settings = {
+    "darkColour": false,
+    "fontStyle": DEFAULTS.FONT_STYLE,
+    "pinnedColour": DEFAULTS.PINNED_COLOUR,
+    "showClock": DEFAULTS.SHOW_CLOCK,
+    "showTopSites": DEFAULTS.SHOW_TOP_SITES,
+    "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK,
+}
+
 $(document).ready(() => {
     
     // If pinned colour, set that as background color
-    setPinnedColour(localStorage.pinnedColour);
+    setPinnedColour(localStorage.darkColour == "true" ? DARK_COLOUR : localStorage.pinnedColour);
     
     ls.get({
-        "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK,
+        "darkColour": false,
+        "extensionUpdated": DEFAULTS.EXTENSION_UPDATED,
+        "fontStyle": DEFAULTS.FONT_STYLE,
+        "pinnedColour": DEFAULTS.PINNED_COLOUR,
         "showClock": DEFAULTS.SHOW_CLOCK,
         "showTopSites": DEFAULTS.SHOW_TOP_SITES,
-        "fontStyle": DEFAULTS.FONT_STYLE,
         "topSitesPermission_firstAsk": false,
-        "extensionUpdated": DEFAULTS.EXTENSION_UPDATED
+        "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK,
     }, st => {
         
-        setFont(st.fontStyle);
+        settings.darkColour = st.darkColour;
+        settings.fontStyle = st.fontStyle;
+        settings.pinnedColour = st.pinnedColour;
+        settings.showClock = st.showClock;
+        settings.showTopSites = st.showTopSites;
+        settings.twentyfourhourclock = st.twentyfourhourclock;
+        
+        setFont(settings.fontStyle);
         
         // Set clock format
-        setClockFormat(st.twentyfourhourclock);
+        setClockFormat(settings.twentyfourhourclock);
         
         // Show/hide clock
-        showClock(st.showClock);
+        showClock(settings.showClock);
         
         // Show top sites
         if (!st.topSitesPermission_firstAsk)
             $("#top_sites_link").addClass("grab_attention");
         else
-            showTopSites(st.showTopSites);
+            showTopSites(settings.showTopSites);
         
         st.extensionUpdated && showUpdatedModal(st.extensionUpdated);
     });
@@ -50,103 +68,84 @@ $(document).ready(() => {
     // Toggle site visibility in storage
     $("#top_sites_link").on("click", () => {
         
-        ls.set({
-            "topSitesPermission_firstAsk": true
-        });
+        ls.set({ "topSitesPermission_firstAsk": true });
         
         $("#top_sites_link").removeClass("grab_attention");
         
-        ls.get({
-            "showTopSites": DEFAULTS.SHOW_TOP_SITES
-        }, st => {
+        // Setting it off, so just save the new setting
+        if (settings.showTopSites) {
+            return ls.set({ showTopSites: !settings.showTopSites });
+        }
+        
+        // Changing from false to true, check if we have permission
+        chrome.permissions.contains({
+            "permissions": ["topSites"]
+        }, result => {
             
-            const newShowTopSites = !st.showTopSites;
-            
-            // Setting it off, so just save the new setting
-            if (st.showTopSites) {
-                return ls.set({ showTopSites: newShowTopSites });
-            }
-            
-            // Changing from false to true, check if we have permission
-            chrome.permissions.contains({
-                "permissions": ["topSites"]
-            }, result => {
+            // The extension has the permissions.
+            // Save setting as true, action will happen in storage change handler
+            if (result)
+                return ls.set({"showTopSites": !settings.showTopSites});
                 
-                // The extension has the permissions.
-                // Save setting as true, action will happen in storage change handler
-                if (result)
-                    return ls.set({"showTopSites": newShowTopSites});
+            // The extension doesn't have the permissions.
+            // Request permission. 
+            chrome.permissions.request({
+                "permissions": ["topSites"]
+            }, granted => {
+                
+                // If granted, set setting as true, 
+                if (granted)
+                    return ls.set({"showTopSites": !settings.showTopSites});
                     
-                // The extension doesn't have the permissions.
-                // Request permission. 
-                chrome.permissions.request({
-                    "permissions": ["topSites"]
-                }, granted => {
-                    
-                    // If granted, set setting as true, 
-                    if (granted)
-                        return ls.set({"showTopSites": newShowTopSites});
-                        
-                    // If not granted, do nothing (or show modal)
-                    console.warn("Permission not granted");
-                    
-                });
+                // If not granted, do nothing (or show modal)
+                console.warn("Permission not granted");
+                
             });
-            
         });
+        
     });
     
     
     // Toggle clock visibility in storage
-    $("#clock_link").on("click", () =>
-        ls.get({
-            "showClock": DEFAULTS.SHOW_CLOCK
-        }, st =>
-            ls.set({ "showClock": !st.showClock })
-        )
-    );
+    $("#clock_link").on("click", () => {
+        ls.set({ "showClock": !settings.showClock })
+    });
     
     
     // Toggle clock type in storage
-    $("#hr_link").on("click", () =>
-        ls.get({
-            "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK
-        }, st =>
-            ls.set({ "twentyfourhourclock": !st.twentyfourhourclock })
-        )
-    );
+    $("#hr_link").on("click", () => {
+        ls.set({ "twentyfourhourclock": !settings.twentyfourhourclock })
+    });
     
     
     // Toggle clock type in storage
-    $("#font_link").on("click", () =>
-        ls.get({
-            "fontStyle": DEFAULTS.FONT_STYLE
-        }, st =>
-            ls.set({ "fontStyle": st.fontStyle === FONT_STYLES.SANS ? FONT_STYLES.SERIF : FONT_STYLES.SANS})
-        )
-    );
+    $("#font_link").on("click", () => {
+        ls.set({ "fontStyle": settings.fontStyle === FONT_STYLES.SANS ? FONT_STYLES.SERIF : FONT_STYLES.SANS})
+    });
+    
+    
+    // Toggle dark colour in storage
+    $("#go_dark").on("click", () => {
+        localStorage.darkColour = !settings.darkColour;
+        ls.set({ "darkColour": !settings.darkColour });
+    });
     
     
     // Save pinned colour to storage.
     // Actual pinning happens in storage.onchanged handler
-    $("#pin_colour_link").on("click", () =>
-        ls.get({
-            pinnedColour: DEFAULTS.PINNED_COLOUR
-        }, st => {
-            
-            // Remove pinned colour
-            if (!!st.pinnedColour) {
-                ls.remove("pinnedColour");
-                localStorage.removeItem("pinnedColour");
-                return;
-            }
-            
-            const bgcolor = $("body").data("colour");
-            ls.set({"pinnedColour": bgcolor});
-            localStorage.pinnedColour = bgcolor;
-            
-        })
-    );
+    $("#pin_colour_link").on("click", () => {
+        
+        // Remove pinned colour
+        if (!!settings.pinnedColour) {
+            localStorage.removeItem("pinnedColour");
+            ls.remove("pinnedColour");
+            return;
+        }
+        
+        const bgcolor = $("body").data("colour");
+        localStorage.pinnedColour = bgcolor;
+        ls.set({"pinnedColour": bgcolor});
+    });
         
         
     $("#notification_action").on("click", () => ls.set({ extensionUpdated: false }));
@@ -160,23 +159,40 @@ $(document).ready(() => {
     
     chrome.storage.onChanged.addListener(changes => {
         
-        if (changes.twentyfourhourclock)
+        if (changes.twentyfourhourclock) {
+            settings.twentyfourhourclock = changes.twentyfourhourclock.newValue;
             setClockFormat(changes.twentyfourhourclock.newValue);
+        }
         
-        if (changes.showClock)
+        if (changes.showClock){
+            settings.showClock = changes.showClock.newValue;
             showClock(changes.showClock.newValue);
+        }
         
-        if (changes.showTopSites)
+        if (changes.showTopSites){
+            settings.showTopSites = changes.showTopSites.newValue;
             showTopSites(changes.showTopSites.newValue, toggle = true);
+        }
         
-        if (changes.pinnedColour)
-            setPinnedColour(localStorage.pinnedColour);
+        if (changes.pinnedColour){
+            settings.pinnedColour = changes.pinnedColour.newValue;
+            setPinnedColour(settings.darkColour ? DARK_COLOUR : settings.pinnedColour);
+        }
         
-        if (changes.fontStyle)
+        if (changes.fontStyle){
+            settings.fontStyle = changes.fontStyle.newValue;
             setFont(changes.fontStyle.newValue);
+        }
         
-        if (changes.extensionUpdated)
+        if (changes.extensionUpdated){
+            settings.extensionUpdated = changes.extensionUpdated.newValue;
             showUpdatedModal(changes.extensionUpdated.newValue);
+        }
+        
+        if (changes.darkColour) {
+            settings.darkColour = changes.darkColour.newValue;
+            setPinnedColour(settings.darkColour ? DARK_COLOUR : settings.pinnedColour)
+        }
     });
 });
 
