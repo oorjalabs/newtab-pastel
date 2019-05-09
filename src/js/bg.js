@@ -10,11 +10,9 @@ chrome.runtime.onInstalled.addListener(details => {
         
     const previousVersion = details.previousVersion ? getVersionNumberFromString(details.previousVersion) : 0;
     
-    // Set uninstall url, if not local/dev install
-    chrome.management.getSelf(e =>
-        e.installType !== "development" && chrome.runtime.setUninstallURL(URLS.UNINSTALL)
-    );
-        
+    // Remove uninstall url, if not local/dev install
+    chrome.runtime.setUninstallURL("")
+    
     // Show install/update notification
     if (details.reason === "install" || UPDATE_NOTIFICATION) {
         ls.set({ "extensionUpdated": details.reason });

@@ -188,6 +188,11 @@ body.serif {
     opacity: var(--button-opacity-visible);
 }
 
+body.dark_mode #bottomHalf.entered #go_dark,
+body.dark_mode #bottomHalf:hover #go_dark {
+    opacity: var(--button-opacity-pinned-default);
+}
+
 #bottomHalf.entered #hr_link,
 #bottomHalf:hover #hr_link {
     opacity: var(--button-opacity-visible-hourtype);
@@ -244,4 +249,51 @@ body.serif {
 #notification_close:focus,
 #notification_close:hover {
     text-decoration: underline;
+}
+
+#icon_dark_mode {
+    height: 24px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+body.dark_mode #go_dark {
+    opacity: var(--button-opacity-pinned-default);
+}
+
+
+#customColourModal {
+    font-size: medium;
+    /* font-family: Roboto, Ubuntu, 'Noto Sans UI', 'Lucida Grande', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, Verdana, Geneva, 'Open Sans', sans-serif; */
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    position: relative;
+    display: inherit;
+}
+
+#customColourModalInner{
+    z-index: 400;
+    position: absolute;
+    visibility: hidden;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(210, 210, 210, 0.3);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 1rem;
+    align-items: center;
+    top: -3em;
+    right: -2em;
+    width: max-content;
+    background-color: #757575;
+    border-radius: 0.25rem;
+    color: #FAFAFA;
+}
+
+
+#save_custom_colour {
+    opacity: 0.84;
+}
+
+#save_custom_colour:hover {
+    opacity: 1;
 }

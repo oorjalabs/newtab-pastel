@@ -72,3 +72,5 @@ const NOTIFICATIONS = Object.freeze({
         CONTEXT_MESSAGE: "Automatically convert values from other units, currencies and time zones when selected on a page",
     }
 });
+
+const DARK_COLOUR = "#666666";

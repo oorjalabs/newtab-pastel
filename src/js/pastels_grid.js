@@ -10,6 +10,7 @@ $(document).ready(() => {
     let pastelGridArray = shuffle(pastels);
     
     const pinnedColour = localStorage.pinnedColour;
+    
     if(pinnedColour) {
         const colourIndex = pastelGridArray.indexOf(pinnedColour);
         if (colourIndex > -1) {

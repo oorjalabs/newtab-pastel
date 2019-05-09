@@ -1,42 +1,78 @@
 var clockTimeout;
 var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
 
+const DARK_MODE_CLASS_NAME = "dark_mode";
+
 const pastels = (localStorage.allPastels || "").split(",");
 const lightness = "95%";
 const saturation = "100%";
+let currentColour;
+
+const customColourSet = {
+    current: undefined,
+    new: undefined
+}
+
+const settings = {
+    "darkColour": false,
+    "fontStyle": DEFAULTS.FONT_STYLE,
+    "pinnedColour": DEFAULTS.PINNED_COLOUR,
+    "showClock": DEFAULTS.SHOW_CLOCK,
+    "showTopSites": DEFAULTS.SHOW_TOP_SITES,
+    "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK,
+}
 
 $(document).ready(() => {
     
     // If pinned colour, set that as background color
-    setPinnedColour(localStorage.pinnedColour);
+    setPinnedColour(localStorage.darkColour == "true" ? DARK_COLOUR : localStorage.pinnedColour);
+    
+    if (localStorage.darkColour == "true") {
+        $("body").addClass(DARK_MODE_CLASS_NAME);
+    }
+    
+    // After initial colour has been displayed, do further colour changes with transition
+    setTimeout(() => $("body").css({ "transition-duration": "1s" }), 2000);
+    
+    $("#customColourModalInner").hide();
     
     ls.get({
-        "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK,
+        "darkColour": false,
+        "extensionUpdated": DEFAULTS.EXTENSION_UPDATED,
+        "fontStyle": DEFAULTS.FONT_STYLE,
+        "pinnedColour": DEFAULTS.PINNED_COLOUR,
         "showClock": DEFAULTS.SHOW_CLOCK,
         "showTopSites": DEFAULTS.SHOW_TOP_SITES,
-        "fontStyle": DEFAULTS.FONT_STYLE,
         "topSitesPermission_firstAsk": false,
-        "extensionUpdated": DEFAULTS.EXTENSION_UPDATED
+        "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK,
     }, st => {
         
-        setFont(st.fontStyle);
+        settings.darkColour = st.darkColour;
+        settings.fontStyle = st.fontStyle;
+        settings.pinnedColour = st.pinnedColour;
+        settings.showClock = st.showClock;
+        settings.showTopSites = st.showTopSites;
+        settings.twentyfourhourclock = st.twentyfourhourclock;
+        
+        setFont(settings.fontStyle);
         
         // Set clock format
-        setClockFormat(st.twentyfourhourclock);
+        setClockFormat(settings.twentyfourhourclock);
         
         // Show/hide clock
-        showClock(st.showClock);
+        showClock(settings.showClock);
         
         // Show top sites
         if (!st.topSitesPermission_firstAsk)
             $("#top_sites_link").addClass("grab_attention");
         else
-            showTopSites(st.showTopSites);
+            showTopSites(settings.showTopSites);
         
         st.extensionUpdated && showUpdatedModal(st.extensionUpdated);
     });
     
     
+    // Show tab options on hovering over bottom half of the screen
     $("#hoverHalf").hover(
         _ => $("#bottomHalf").addClass("entered"), 
         _ => $("#bottomHalf").removeClass("entered")
@@ -50,105 +86,145 @@ $(document).ready(() => {
     // Toggle site visibility in storage
     $("#top_sites_link").on("click", () => {
         
-        ls.set({
-            "topSitesPermission_firstAsk": true
-        });
+        ls.set({ "topSitesPermission_firstAsk": true });
         
         $("#top_sites_link").removeClass("grab_attention");
         
-        ls.get({
-            "showTopSites": DEFAULTS.SHOW_TOP_SITES
-        }, st => {
+        // Setting it off, so just save the new setting
+        if (settings.showTopSites) {
+            return ls.set({ showTopSites: !settings.showTopSites });
+        }
+        
+        // Changing from false to true, check if we have permission
+        chrome.permissions.contains({
+            "permissions": ["topSites"]
+        }, result => {
             
-            const newShowTopSites = !st.showTopSites;
-            
-            // Setting it off, so just save the new setting
-            if (st.showTopSites) {
-                return ls.set({ showTopSites: newShowTopSites });
-            }
-            
-            // Changing from false to true, check if we have permission
-            chrome.permissions.contains({
-                "permissions": ["topSites"]
-            }, result => {
+            // The extension has the permissions.
+            // Save setting as true, action will happen in storage change handler
+            if (result)
+                return ls.set({"showTopSites": !settings.showTopSites});
                 
-                // The extension has the permissions.
-                // Save setting as true, action will happen in storage change handler
-                if (result)
-                    return ls.set({"showTopSites": newShowTopSites});
+            // The extension doesn't have the permissions.
+            // Request permission. 
+            chrome.permissions.request({
+                "permissions": ["topSites"]
+            }, granted => {
+                
+                // If granted, set setting as true, 
+                if (granted)
+                    return ls.set({"showTopSites": !settings.showTopSites});
                     
-                // The extension doesn't have the permissions.
-                // Request permission. 
-                chrome.permissions.request({
-                    "permissions": ["topSites"]
-                }, granted => {
-                    
-                    // If granted, set setting as true, 
-                    if (granted)
-                        return ls.set({"showTopSites": newShowTopSites});
-                        
-                    // If not granted, do nothing (or show modal)
-                    console.warn("Permission not granted");
-                    
-                });
+                // If not granted, do nothing (or show modal)
+                console.warn("Permission not granted");
+                
             });
-            
         });
+        
     });
     
     
     // Toggle clock visibility in storage
-    $("#clock_link").on("click", () =>
-        ls.get({
-            "showClock": DEFAULTS.SHOW_CLOCK
-        }, st =>
-            ls.set({ "showClock": !st.showClock })
-        )
-    );
+    $("#clock_link").on("click", () => {
+        ls.set({ "showClock": !settings.showClock })
+    });
     
     
     // Toggle clock type in storage
-    $("#hr_link").on("click", () =>
-        ls.get({
-            "twentyfourhourclock": DEFAULTS.TWENTY_FOUR_HOUR_CLOCK
-        }, st =>
-            ls.set({ "twentyfourhourclock": !st.twentyfourhourclock })
-        )
-    );
+    $("#hr_link").on("click", () => {
+        ls.set({ "twentyfourhourclock": !settings.twentyfourhourclock })
+    });
     
     
     // Toggle clock type in storage
-    $("#font_link").on("click", () =>
-        ls.get({
-            "fontStyle": DEFAULTS.FONT_STYLE
-        }, st =>
-            ls.set({ "fontStyle": st.fontStyle === FONT_STYLES.SANS ? FONT_STYLES.SERIF : FONT_STYLES.SANS})
-        )
-    );
+    $("#font_link").on("click", () => {
+        ls.set({ "fontStyle": settings.fontStyle === FONT_STYLES.SANS ? FONT_STYLES.SERIF : FONT_STYLES.SANS})
+    });
     
     
-    // Save pinned colour to storage.
-    // Actual pinning happens in storage.onchanged handler
-    $("#pin_colour_link").on("click", () =>
-        ls.get({
-            pinnedColour: DEFAULTS.PINNED_COLOUR
-        }, st => {
-            
-            // Remove pinned colour
-            if (!!st.pinnedColour) {
-                ls.remove("pinnedColour");
-                localStorage.removeItem("pinnedColour");
+    // Toggle dark colour in storage
+    $("#go_dark").on("click", () => {
+        localStorage.darkColour = !settings.darkColour;
+        ls.set({ "darkColour": !settings.darkColour });
+    });
+    
+    
+    /**
+     * Toggle pinned colour.
+     * If there's a pinned colour, un-pin it.
+     * If there's no pinned colour, save the current colour as pinned. Actual pinning happens in storage.onchanged handler
+     */
+    $("#pin_colour_link").on("click", () => {
+        
+        // Remove pinned colour
+        if (!!settings.pinnedColour) {
+            localStorage.removeItem("pinnedColour");
+            ls.remove("pinnedColour");
+            return;
+        }
+        
+        // Set pinned colour
+        savePinnedColour(currentColour);
+    });
+    
+    
+    // Show custom colour modal
+    $("#set_custom_colour").on("click", e => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        showCustomColourModal();
+    });
+    
+    
+    // Show selected colour in background when selecting new colour
+    $("#custom_colour_input").on("change", e => {
+        customColourSet.new = e.currentTarget.value.toLowerCase();
+        setColour(customColourSet.new)
+    });
+    
+    
+    // Apply and save custom colour
+    $("#save_custom_colour").on("click", () => {
+        showCustomColourModal(false);
+        
+        /**
+         * 1. If colour is same as current colour, and is pinned, do nothing
+         * 2. If colour is same as current colour, but not pinned, pin it
+         * 3. If colour is not the current colour, 
+         * - but is already in pastel colours, pin it
+         * - is not in pastel colours, add it to pastels, and pin it
+         */
+        
+        // Chose dark colour, do nothing
+        if (customColourSet.new == DARK_COLOUR)
+            return;
+        
+        if (customColourSet.current == customColourSet.new) {
+            // Colour not changed, and already pinned - nothing to do
+            if (customColourSet.current == settings.pinnedColour) 
                 return;
-            }
             
-            const bgcolor = $("body").data("colour");
-            ls.set({"pinnedColour": bgcolor});
-            localStorage.pinnedColour = bgcolor;
-            
-        })
-    );
+            // Colour not changed, but not pinned - pin it
+            savePinnedColour(customColourSet.current);
+            return;
+        }
         
+        // Colour changed - add it to pastels, and pin it
+        customColourSet.current = customColourSet.new;
+        addToPastels(customColourSet.new);
+        savePinnedColour(customColourSet.new);
+    });
+    
+    
+    // Hide modal if outer modal is touched, reset colour to previous
+    $(":not(#customColourModalInner)").on("click", e => {
+        if ($(e.target).parents("#customColourModal").length > 0) return;
         
+        setColour(customColourSet.current)
+        return showCustomColourModal(false);
+    })
+    
+    
     $("#notification_action").on("click", () => ls.set({ extensionUpdated: false }));
     
     
@@ -160,25 +236,70 @@ $(document).ready(() => {
     
     chrome.storage.onChanged.addListener(changes => {
         
-        if (changes.twentyfourhourclock)
+        if (changes.twentyfourhourclock) {
+            settings.twentyfourhourclock = changes.twentyfourhourclock.newValue;
             setClockFormat(changes.twentyfourhourclock.newValue);
+        }
         
-        if (changes.showClock)
+        if (changes.showClock){
+            settings.showClock = changes.showClock.newValue;
             showClock(changes.showClock.newValue);
+        }
         
-        if (changes.showTopSites)
+        if (changes.showTopSites){
+            settings.showTopSites = changes.showTopSites.newValue;
             showTopSites(changes.showTopSites.newValue, toggle = true);
+        }
         
-        if (changes.pinnedColour)
-            setPinnedColour(localStorage.pinnedColour);
+        if (changes.pinnedColour){
+            settings.pinnedColour = changes.pinnedColour.newValue;
+            setPinnedColour(settings.darkColour ? DARK_COLOUR : settings.pinnedColour);
+        }
         
-        if (changes.fontStyle)
+        if (changes.fontStyle){
+            settings.fontStyle = changes.fontStyle.newValue;
             setFont(changes.fontStyle.newValue);
+        }
         
-        if (changes.extensionUpdated)
+        if (changes.extensionUpdated){
+            settings.extensionUpdated = changes.extensionUpdated.newValue;
             showUpdatedModal(changes.extensionUpdated.newValue);
+        }
+        
+        if (changes.darkColour) {
+            settings.darkColour = changes.darkColour.newValue;
+            setPinnedColour(settings.darkColour ? DARK_COLOUR : settings.pinnedColour);
+            $("body").toggleClass(DARK_MODE_CLASS_NAME);
+        }
     });
 });
+
+
+/**
+ * Show or hide custom colour modal
+ * @param {Boolean} [show] Optional parameter to hide modal
+ */
+function showCustomColourModal(show = true) {
+    
+    if (!show) {
+        $("#customColourModalInner").fadeOut("fast", () => $("#customColourModalInner").addClass("hide"));
+        return;
+    }
+    
+    const initialColour = !!settings.pinnedColour ? 
+        settings.pinnedColour : 
+        settings.darkColour ? 
+            getSomeColour() : 
+            currentColour;
+    
+    $("#customColourModalInner").css({"visibility": "visible"}).fadeIn("fast").removeClass("hide");
+    $("#custom_colour_input").val(initialColour);
+    $("#custom_colour_input").focus()
+    
+    // Reset custom set to current colour
+    customColourSet.current = currentColour;
+    customColourSet.new = currentColour;
+}
 
 
 /**
@@ -297,7 +418,7 @@ function setPinnedColour(colour) {
         return;
     }
     
-    changeColour();
+    setColour(getSomeColour());
     $("#pin_colour_link").removeClass("pinned");
 }
 
@@ -347,13 +468,13 @@ function clock() {
 }
 
 
-function changeColour() {
+function getSomeColour() {
     const pastelCount = pastels.length;
     const colourIndex = Math.round(Math.random() * pastelCount);
     const col = parseInt((Date.now() % 1000) * 360 / 1000);
     const colourString = pastelCount > 0 ? pastels[colourIndex] : `hsl(${col}, ${saturation}, ${lightness})`;
     
-    setColour(colourString); //set color
+    return colourString;
 }
 
 
@@ -361,6 +482,7 @@ function changeColour() {
  * @param {string} colour Of type `'#ffffff'`
  */
 function setColour(colour) {
+    currentColour = colour;
     $("body").css("background-color", colour).attr("data-colour", colour); //set color
 }
 
@@ -381,4 +503,32 @@ function removeTopSitesPermission(callback) {
  */
 function arraysEqual(arr1, arr2) {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
+}
+
+
+/**
+ * Adds a colour to saved list of pastel colours
+ * @param {string} colourString Colour string to add to pastels list
+ */
+function addToPastels(colourString = "") {
+    if (!colourString) return;
+    
+    const pastels = (localStorage.allPastels || "").split(",");
+    
+    if (pastels.includes(colourString)) return;
+    
+    pastels.push(colourString);
+    localStorage.allPastels = pastels.join(",");
+}
+
+
+/**
+ * Save a colour as pinned, or remove pinning
+ * @param {String?} colourString Colour to set as pinned colour. If empty, remove current pinned colour
+ */
+function savePinnedColour(colourString = "") {
+    if (!colourString) return;
+    
+    localStorage.pinnedColour = colourString;
+    ls.set({ "pinnedColour": colourString }); 
 }

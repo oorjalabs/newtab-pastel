@@ -13,7 +13,47 @@ ver 2019.X.X.X
 ------------------------
     
     
-ver 2019.223.1.7
+ver 2019.0509.1.8.5
+    
+    [DONE] UPDATE: Dark mode - pin icon to indicate dark mode
+    
+    
+------------------------
+    
+    
+ver 2019.0509.1.8.4
+    
+    [DONE] UPDATE: Allow custom colour div to be above the button
+    
+    
+------------------------
+    
+    
+ver 2019.0509.1.8.3
+    
+    [DONE] UPDATE: Allow users to specify hex color (or use colour picker)
+    
+    
+------------------------
+    
+    
+ver 2019.0508.1.8.2
+    
+    [DONE] UPDATE: Add a single dark colour (#666)
+    
+    
+------------------------
+    
+    
+ver 2019.0508.1.8.1
+    
+    [DONE] UPDATE: Remove uninstall url
+    
+    
+------------------------
+    
+    
+ver 2019.223.1.7 [FEBRUARY UPDATE]
     
     [DONE] UPDATE: ACS notification without chrome.runtime.lastError in alarm
     
