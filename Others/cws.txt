@@ -42,6 +42,12 @@ UPDATE:
 
 (Full update notes: https://updatenotes.blog/category/pastel-new-tab/ ) 
 
+UPDATE 09 May 2019: 
+    1. New: Switch to dark mode (non-pastel) with one click
+    2. New: Add custom colours
+    3. Bug fixes
+    
+
 UPDATE 23 Feb 2019: 
     1. Tuned the master list of pastel colours
     2. Bug fixes
