@@ -28,6 +28,8 @@ $(document).ready(() => {
     // After initial colour has been displayed, do further colour changes with transition
     setTimeout(() => $("body").css({ "transition-duration": "1s" }), 2000);
     
+    $("#customColourModalInner").hide();
+    
     ls.get({
         "darkColour": false,
         "extensionUpdated": DEFAULTS.EXTENSION_UPDATED,
@@ -161,7 +163,11 @@ $(document).ready(() => {
     
     
     // Show custom colour modal
-    $("#set_custom_colour").on("click", showCustomColourModal);
+    $("#set_custom_colour").on("click", e => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        showCustomColourModal();
+    });
     
     
     // Show selected colour in background when selecting new colour
@@ -183,6 +189,10 @@ $(document).ready(() => {
          * - is not in pastel colours, add it to pastels, and pin it
          */
         
+        // Chose dark colour, do nothing
+        if (customColourSet.new == DARK_COLOUR)
+            return;
+        
         if (customColourSet.current == customColourSet.new) {
             // Colour not changed, and already pinned - nothing to do
             if (customColourSet.current == settings.pinnedColour) 
@@ -201,10 +211,8 @@ $(document).ready(() => {
     
     
     // Hide modal if outer modal is touched, reset colour to previous
-    $(".modalOuter").on("click", e => {
-        if (e.target != e.currentTarget) {
-            return true;
-        }
+    $(":not(#customColourModalInner)").on("click", e => {
+        if ($(e.target).parents("#customColourModal").length > 0) return;
         
         setColour(customColourSet.current)
         return showCustomColourModal(false);
@@ -267,18 +275,23 @@ $(document).ready(() => {
 function showCustomColourModal(show = true) {
     
     if (!show) {
-        $("#customColourModal").fadeOut("fast", () => $("#customColourModal").addClass("hide"));
+        $("#customColourModalInner").fadeOut("fast", () => $("#customColourModalInner").addClass("hide"));
         return;
     }
     
-    $("#customColourModal").fadeIn("fast").removeClass("hide");
-    $("#custom_colour_input").val(currentColour);
+    const initialColour = !!settings.pinnedColour ? 
+        settings.pinnedColour : 
+        settings.darkColour ? 
+            getSomeColour() : 
+            currentColour;
+    
+    $("#customColourModalInner").css({"visibility": "visible"}).fadeIn("fast").removeClass("hide");
+    $("#custom_colour_input").val(initialColour);
     $("#custom_colour_input").focus()
     
     // Reset custom set to current colour
     customColourSet.current = currentColour;
     customColourSet.new = currentColour;
-    
 }
 
 
@@ -398,7 +411,7 @@ function setPinnedColour(colour) {
         return;
     }
     
-    changeColour();
+    setColour(getSomeColour());
     $("#pin_colour_link").removeClass("pinned");
 }
 
@@ -448,13 +461,13 @@ function clock() {
 }
 
 
-function changeColour() {
+function getSomeColour() {
     const pastelCount = pastels.length;
     const colourIndex = Math.round(Math.random() * pastelCount);
     const col = parseInt((Date.now() % 1000) * 360 / 1000);
     const colourString = pastelCount > 0 ? pastels[colourIndex] : `hsl(${col}, ${saturation}, ${lightness})`;
     
-    setColour(colourString); //set color
+    return colourString;
 }
 
 

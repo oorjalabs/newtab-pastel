@@ -46,9 +46,15 @@
                 
                 <span id="space_filler"></span>
                 
-                <a class="bottom_btn_links non_settings_link" id="set_custom_colour" title="Set custom colour">
-                    <img src="img/ic_add_24px.svg">
-                </a>
+                <div id="customColourModal">
+                    <a class="bottom_btn_links non_settings_link" id="set_custom_colour" title="Set custom colour">
+                        <img src="img/ic_add_24px.svg">
+                    </a>
+                    <div id="customColourModalInner" class="hide">
+                        <label for="custom_colour_input">Pick a colour&nbsp; <input type="color" id="custom_colour_input" /></label>
+                        <a href="#" id="save_custom_colour" title="Apply colour"><img src="img/ic_done_24px.svg"></a>
+                    </div>
+                </div>
                 
                 <a class="bottom_btn_links non_settings_link" id="go_dark" title="Go dark">
                     <img src="img/ic_dark_mode.svg" id="icon_dark_mode">
@@ -73,13 +79,6 @@
             <span id="context_message"></span>
             <a href="https://updatenotes.wordpress.com/category/pastel-new-tab/?utm_source=pastelnewtab&utm_medium=chrome_projects&utm_content=ntp_updated_notification_links&utm_campaign=chrome_projects" title="See changes" class="notification_button_links" id="notification_action"></a>
             <a href="#" title="Remove this update note" id="notification_close">Dismiss</a>
-        </div>
-        
-        <div id="customColourModal" class="modalOuter hide">
-            <div class="modalInner" id="customColourModalInner">
-                <label for="custom_colour_input">Pick a colour&nbsp; <input type="color" id="custom_colour_input" /></label>
-                <a href="#" id="save_custom_colour" title="Apply colour"><img src="img/ic_done_24px.svg"></a>
-            </div>
         </div>
         
     </body>

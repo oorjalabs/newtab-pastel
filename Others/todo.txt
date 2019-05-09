@@ -13,11 +13,17 @@ ver 2019.X.X.X
 ------------------------
     
     
-ver 2019.0509.1.8.4
-    
-    -- NEXT VERSION -- UPDATE: Allow custom colour div to be above the button
+ver 2019.0509.1.8.5
     
     -- NEXT VERSION -- UPDATE: Dark mode - invert icon to indicate dark mode
+    
+    
+------------------------
+    
+    
+ver 2019.0509.1.8.4
+    
+    [DONE] UPDATE: Allow custom colour div to be above the button
     
     
 ------------------------
