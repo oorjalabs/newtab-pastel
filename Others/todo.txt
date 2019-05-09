@@ -7,7 +7,7 @@ ver 2019.X.X.X
     
     -- NEXT VERSION -- NEW FEATURE: Show controls on first use
     
-    -- NEXT VERSION -- FEATURE: User defined colour
+    -- NEXT VERSION -- UPDATE: Set dark colour to #323639 (Chrome NTP's dark mode colour)
     
     
 ------------------------

@@ -2,6 +2,8 @@ It's just a simple new tab page. Shows a random pastel colour background with a 
 
 The browser button just opens a new tab, so would ideally be hidden away.
 
+New: Dark mode button
+
 -------------------
 
 
