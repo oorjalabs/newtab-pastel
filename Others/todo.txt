@@ -15,7 +15,7 @@ ver 2019.X.X.X
     
 ver 2019.0509.1.8.5
     
-    -- NEXT VERSION -- UPDATE: Dark mode - invert icon to indicate dark mode
+    [DONE] UPDATE: Dark mode - pin icon to indicate dark mode
     
     
 ------------------------

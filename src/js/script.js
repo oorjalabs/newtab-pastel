@@ -1,6 +1,8 @@
 var clockTimeout;
 var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
 
+const DARK_MODE_CLASS_NAME = "dark_mode";
+
 const pastels = (localStorage.allPastels || "").split(",");
 const lightness = "95%";
 const saturation = "100%";
@@ -24,6 +26,10 @@ $(document).ready(() => {
     
     // If pinned colour, set that as background color
     setPinnedColour(localStorage.darkColour == "true" ? DARK_COLOUR : localStorage.pinnedColour);
+    
+    if (localStorage.darkColour == "true") {
+        $("body").addClass(DARK_MODE_CLASS_NAME);
+    }
     
     // After initial colour has been displayed, do further colour changes with transition
     setTimeout(() => $("body").css({ "transition-duration": "1s" }), 2000);
@@ -262,7 +268,8 @@ $(document).ready(() => {
         
         if (changes.darkColour) {
             settings.darkColour = changes.darkColour.newValue;
-            setPinnedColour(settings.darkColour ? DARK_COLOUR : settings.pinnedColour)
+            setPinnedColour(settings.darkColour ? DARK_COLOUR : settings.pinnedColour);
+            $("body").toggleClass(DARK_MODE_CLASS_NAME);
         }
     });
 });

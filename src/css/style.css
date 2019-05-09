@@ -188,6 +188,11 @@ body.serif {
     opacity: var(--button-opacity-visible);
 }
 
+body.dark_mode #bottomHalf.entered #go_dark,
+body.dark_mode #bottomHalf:hover #go_dark {
+    opacity: var(--button-opacity-pinned-default);
+}
+
 #bottomHalf.entered #hr_link,
 #bottomHalf:hover #hr_link {
     opacity: var(--button-opacity-visible-hourtype);
@@ -248,6 +253,12 @@ body.serif {
 
 #icon_dark_mode {
     height: 24px;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+body.dark_mode #go_dark {
+    opacity: var(--button-opacity-pinned-default);
 }
 
 
