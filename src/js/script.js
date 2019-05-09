@@ -4,6 +4,12 @@ var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
 const pastels = (localStorage.allPastels || "").split(",");
 const lightness = "95%";
 const saturation = "100%";
+let currentColour;
+
+const customColourSet = {
+    current: undefined,
+    new: undefined
+}
 
 const settings = {
     "darkColour": false,
@@ -18,6 +24,9 @@ $(document).ready(() => {
     
     // If pinned colour, set that as background color
     setPinnedColour(localStorage.darkColour == "true" ? DARK_COLOUR : localStorage.pinnedColour);
+    
+    // After initial colour has been displayed, do further colour changes with transition
+    setTimeout(() => $("body").css({ "transition-duration": "1s" }), 2000);
     
     ls.get({
         "darkColour": false,
@@ -55,6 +64,7 @@ $(document).ready(() => {
     });
     
     
+    // Show tab options on hovering over bottom half of the screen
     $("#hoverHalf").hover(
         _ => $("#bottomHalf").addClass("entered"), 
         _ => $("#bottomHalf").removeClass("entered")
@@ -131,8 +141,11 @@ $(document).ready(() => {
     });
     
     
-    // Save pinned colour to storage.
-    // Actual pinning happens in storage.onchanged handler
+    /**
+     * Toggle pinned colour.
+     * If there's a pinned colour, un-pin it.
+     * If there's no pinned colour, save the current colour as pinned. Actual pinning happens in storage.onchanged handler
+     */
     $("#pin_colour_link").on("click", () => {
         
         // Remove pinned colour
@@ -142,12 +155,62 @@ $(document).ready(() => {
             return;
         }
         
-        const bgcolor = $("body").data("colour");
-        localStorage.pinnedColour = bgcolor;
-        ls.set({"pinnedColour": bgcolor});
+        // Set pinned colour
+        savePinnedColour(currentColour);
     });
+    
+    
+    // Show custom colour modal
+    $("#set_custom_colour").on("click", showCustomColourModal);
+    
+    
+    // Show selected colour in background when selecting new colour
+    $("#custom_colour_input").on("change", e => {
+        customColourSet.new = e.currentTarget.value.toLowerCase();
+        setColour(customColourSet.new)
+    });
+    
+    
+    // Apply and save custom colour
+    $("#save_custom_colour").on("click", () => {
+        showCustomColourModal(false);
         
+        /**
+         * 1. If colour is same as current colour, and is pinned, do nothing
+         * 2. If colour is same as current colour, but not pinned, pin it
+         * 3. If colour is not the current colour, 
+         * - but is already in pastel colours, pin it
+         * - is not in pastel colours, add it to pastels, and pin it
+         */
         
+        if (customColourSet.current == customColourSet.new) {
+            // Colour not changed, and already pinned - nothing to do
+            if (customColourSet.current == settings.pinnedColour) 
+                return;
+            
+            // Colour not changed, but not pinned - pin it
+            savePinnedColour(customColourSet.current);
+            return;
+        }
+        
+        // Colour changed - add it to pastels, and pin it
+        customColourSet.current = customColourSet.new;
+        addToPastels(customColourSet.new);
+        savePinnedColour(customColourSet.new);
+    });
+    
+    
+    // Hide modal if outer modal is touched, reset colour to previous
+    $(".modalOuter").on("click", e => {
+        if (e.target != e.currentTarget) {
+            return true;
+        }
+        
+        setColour(customColourSet.current)
+        return showCustomColourModal(false);
+    })
+    
+    
     $("#notification_action").on("click", () => ls.set({ extensionUpdated: false }));
     
     
@@ -195,6 +258,28 @@ $(document).ready(() => {
         }
     });
 });
+
+
+/**
+ * Show or hide custom colour modal
+ * @param {Boolean} [show] Optional parameter to hide modal
+ */
+function showCustomColourModal(show = true) {
+    
+    if (!show) {
+        $("#customColourModal").fadeOut("fast", () => $("#customColourModal").addClass("hide"));
+        return;
+    }
+    
+    $("#customColourModal").fadeIn("fast").removeClass("hide");
+    $("#custom_colour_input").val(currentColour);
+    $("#custom_colour_input").focus()
+    
+    // Reset custom set to current colour
+    customColourSet.current = currentColour;
+    customColourSet.new = currentColour;
+    
+}
 
 
 /**
@@ -377,6 +462,7 @@ function changeColour() {
  * @param {string} colour Of type `'#ffffff'`
  */
 function setColour(colour) {
+    currentColour = colour;
     $("body").css("background-color", colour).attr("data-colour", colour); //set color
 }
 
@@ -397,4 +483,32 @@ function removeTopSitesPermission(callback) {
  */
 function arraysEqual(arr1, arr2) {
     return JSON.stringify(arr1) === JSON.stringify(arr2);
+}
+
+
+/**
+ * Adds a colour to saved list of pastel colours
+ * @param {string} colourString Colour string to add to pastels list
+ */
+function addToPastels(colourString = "") {
+    if (!colourString) return;
+    
+    const pastels = (localStorage.allPastels || "").split(",");
+    
+    if (pastels.includes(colourString)) return;
+    
+    pastels.push(colourString);
+    localStorage.allPastels = pastels.join(",");
+}
+
+
+/**
+ * Save a colour as pinned, or remove pinning
+ * @param {String?} colourString Colour to set as pinned colour. If empty, remove current pinned colour
+ */
+function savePinnedColour(colourString = "") {
+    if (!colourString) return;
+    
+    localStorage.pinnedColour = colourString;
+    ls.set({ "pinnedColour": colourString }); 
 }

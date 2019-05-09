@@ -249,3 +249,66 @@ body.serif {
 #icon_dark_mode {
     height: 24px;
 }
+
+
+/**************************/
+/**                      **/
+/**                      **/
+/**    Modal Common      **/
+/**                      **/
+/**                      **/
+/**************************/
+
+
+.modalOuter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 400;
+    width: 100%;
+    height: 100%;
+    background-color: var(--scrim-modals);
+}
+
+.modalInner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #666 none repeat scroll 0;
+    /* opacity: .95; */
+    z-index: 3;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #aaa;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+
+#customColourModal {
+    font-size: medium;
+    /* font-family: Roboto, Ubuntu, 'Noto Sans UI', 'Lucida Grande', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, Verdana, Geneva, 'Open Sans', sans-serif; */
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+    color: #333;
+    /* text-align: center; */
+}
+
+#customColourModalInner{
+    padding: 0.5rem 1rem;
+    border: 1px dotted rgba(210, 210, 210, 0.3);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 1rem;
+    /* max-width: 15em; */
+    align-items: center;
+}
+
+
+#save_custom_colour {
+    opacity: 0.84;
+}
+
+#save_custom_colour:hover {
+    opacity: 1;
+}
