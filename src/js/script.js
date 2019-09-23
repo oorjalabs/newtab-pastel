@@ -7,6 +7,7 @@ const pastels = (localStorage.allPastels || "").split(",");
 const lightness = "95%";
 const saturation = "100%";
 let currentColour;
+var customColourModalShowing = false;
 
 const customColourSet = {
     current: undefined,
@@ -218,6 +219,8 @@ $(document).ready(() => {
     
     // Hide modal if outer modal is touched, reset colour to previous
     $(":not(#customColourModalInner)").on("click", e => {
+        if (!customColourModalShowing) return;
+        
         if ($(e.target).parents("#customColourModal").length > 0) return;
         
         setColour(customColourSet.current)
@@ -283,6 +286,7 @@ function showCustomColourModal(show = true) {
     
     if (!show) {
         $("#customColourModalInner").fadeOut("fast", () => $("#customColourModalInner").addClass("hide"));
+        customColourModalShowing = false;
         return;
     }
     
@@ -299,6 +303,7 @@ function showCustomColourModal(show = true) {
     // Reset custom set to current colour
     customColourSet.current = currentColour;
     customColourSet.new = currentColour;
+    customColourModalShowing = true;
 }
 
 

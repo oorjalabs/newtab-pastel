@@ -13,6 +13,14 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2019.0923.1.8.6
+    
+    [DONE] BUG FIX: Pinning wasn't working
+    
+    
+------------------------
+    
+    
 ver 2019.0509.1.8.5
     
     [DONE] UPDATE: Dark mode - pin icon to indicate dark mode
