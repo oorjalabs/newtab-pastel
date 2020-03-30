@@ -55,7 +55,7 @@ body.serif {
 .top_site_link {
     transition-duration: 0.5s;
     text-decoration: none;
-    color: #333333;
+    color: #616161;
     font-size: 1.25em;
     
     display: block;
@@ -76,7 +76,20 @@ body.serif {
 .top_site_link:focus,
 .top_site_link:hover {
     transition-duration: 0.5s;
-    text-decoration: underline;
+    color: #212121;
+}
+
+.top_site_icon {
+    vertical-align: text-bottom;
+    padding-right: 0.75rem;
+    opacity: 0.75;
+    height: 1em;
+}
+
+.top_site_link:focus .top_site_icon,
+.top_site_link:hover .top_site_icon {
+    transition-duration: 0.5s;
+    opacity: 1;
 }
 
 #hoverHalf {

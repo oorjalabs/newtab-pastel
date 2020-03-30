@@ -13,6 +13,14 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2020.0330.1.9.1
+    
+    [DONE] NEW: Show top site icons
+    
+    
+------------------------
+    
+    
 ver 2019.0923.1.8.6
     
     [DONE] BUG FIX: Pinning wasn't working

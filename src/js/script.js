@@ -377,7 +377,7 @@ function showTopSites(show, toggle = false) {
         "topSites": DEFAULTS.TOP_SITES
     }, st => {
         
-        const topSitesString = st.topSites.reduce((acc, site) => `${acc}<a href="${site.url}" class="top_site_link">${site.title}</a>`, "");
+        const topSitesString = st.topSites.reduce((acc, site) => `${acc}<a href="${site.url}" class="top_site_link" title="${site.title}"><img class="top_site_icon" src="chrome://favicon/size/16@2x/${site.url}">${site.title}</a>`, "");
         
         topSitesDiv.text("").append(topSitesString);//[toggle ? "slideToggle" : "hide"]();
         toggle ? topSitesDiv.slideToggle() : topSitesDiv.show();
