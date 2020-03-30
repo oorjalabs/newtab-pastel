@@ -4,6 +4,8 @@ The browser button just opens a new tab, so would ideally be hidden away.
 
 New: Dark mode button
 
+Privacy statement: https://c306.net/apps/privacy/pastel-new-tab/
+
 -------------------
 
 
