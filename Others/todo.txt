@@ -13,15 +13,21 @@ ver 2019.X.X.X
 ------------------------
     
     
-ver 2020.0413.1.10.2
-    
-    --TBD-- NEW: System dark theme
-        [ ] Toggle theme with system theme change
-            [ ] System theme dark = show dark
-            [ ] System theme light = show pinned/random
-            [ ] Enable pinned/dark button based on system theme
+ver 2020.0414.1.10.3
     
     --TBD-- Move all strings to messages.json and load with locale
+    
+    
+------------------------
+    
+    
+ver 2020.0413.1.10.2
+    
+    [DONE] NEW: System dark theme
+        [X] Toggle theme with system theme change
+            [X] System theme dark = show dark
+            [X] System theme light = show pinned/random
+            [X] Show/hide pinned/dark button based on system theme
     
     
 ------------------------

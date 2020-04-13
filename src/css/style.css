@@ -6,7 +6,17 @@
     --button-opacity-visible-hourtype: .35;
     --button-opacity-non-settings-default: 0;
     --button-opacity-focus: 0.8;
-    --button-opacity-pinned-default: 0.5;
+    --button-opacity-pinned-default: 0.6;
+    
+    --display-gone: none;
+    --display-visible: initial;
+    
+    --default-background: #ffffff;
+}
+
+.system_init_dark {
+    /* Same as dark mode background colour **/
+    --default-background: #666666; 
 }
 
 * {
@@ -22,6 +32,7 @@ body {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
     height: 100vh;
+    background-color: var(--default-background);
 }
 
 body.serif {
@@ -123,6 +134,7 @@ body.serif {
 }
 
 .bottom_btn_links {
+    display: var(--display-visible);
     opacity: var(--button-opacity-visible);
     font-size: 14px;
     padding: 0.5em;
@@ -131,7 +143,7 @@ body.serif {
     cursor: pointer;
 }
 
-.bottom_btn_links:hover {
+.bottom_btn_links:not(.disabled):hover {
     opacity: var(--button-opacity-focus) !important;
 }
 
@@ -175,28 +187,30 @@ body.serif {
     background-image: url(../img/format-font.svg);
 }
 
-.bottom_btn_links.enabled {
-    border-radius: 0.5em;
-    border: 1px solid #888;
-    margin: 1px;
-    padding: calc(0.5em - 2px);
-    /* margin-left: auto; */
+.bottom_btn_links.disabled {
+    display: var(--display-gone);
+}
+
+.bottom_btn_links.switched_on {
     opacity: var(--button-opacity-pinned-default);
 }
 
-.bottom_btn_links.enabled:hover {
-    opacity: var(--button-opacity-focus)
+.bottom_btn_links.switched_on:hover {
+    opacity: var(--button-opacity-focus);
 }
 
-.non_settings_link:not(.enabled) {
+.non_settings_link:not(.switched_on) {
     opacity: var(--button-opacity-non-settings-default);
 }
 
-#bottomHalf.entered .non_settings_link:not(.enabled),
-#bottomHalf:hover .non_settings_link:not(.enabled) {
+#bottomHalf.entered .non_settings_link:not(.switched_on),
+#bottomHalf:hover .non_settings_link:not(.switched_on) {
     opacity: var(--button-opacity-visible);
 }
 
+
+body.auto_dark_mode #bottomHalf.entered #auto_dark,
+body.auto_dark_mode #bottomHalf:hover #auto_dark,
 body.dark_mode #bottomHalf.entered #go_dark,
 body.dark_mode #bottomHalf:hover #go_dark {
     opacity: var(--button-opacity-pinned-default);
@@ -266,13 +280,14 @@ body.dark_mode #bottomHalf:hover #go_dark {
     margin-right: 3px;
 }
 
+body.auto_dark_mode #auto_dark,
 body.dark_mode #go_dark {
     opacity: var(--button-opacity-pinned-default);
 }
 
+
 #icon_dark_auto {
     height: 24px;
-    margin: 1px;
 }
 
 #customColourModal {

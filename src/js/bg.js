@@ -1,7 +1,7 @@
 const UPDATE_NOTIFICATION = false;
 const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
 
-chrome.browserAction.onClicked.addListener(_ => chrome.tabs.create({}));
+chrome.browserAction.onClicked.addListener(() => chrome.tabs.create({}));
 
 // On install/update handler
 chrome.runtime.onInstalled.addListener(details => {
@@ -21,20 +21,21 @@ chrome.runtime.onInstalled.addListener(details => {
     // Load colours into storage if installing or updating to first v2 colours version
     const COLOURS_V2 = 1.05;
     if (previousVersion <= COLOURS_V2) {
-        setPastels(pastels);
+        ls.set({"allPastels": pastelsArray});
     }
     
     
     // Set up ACS notification alarm if not installed, and notification not shown before
     ls.get({
         "acsNotificationShown": false
-    }, st => !st.acsNotificationShown && 
+    }).then(st => !st.acsNotificationShown && 
         // Check if ACS is installed
         chrome.runtime.sendMessage("einokpbfcmmopbfbpiofaeohhkmcbbcg", "checkAlive", isInstalled => {
             if (!chrome.runtime.lastError && isInstalled) {
-                return ls.set({
+                ls.set({
                     "acsNotificationShown": true
                 });
+                return;
             }
             
             const ONE_DAY_IN_MS = 24 * 3600 * 1000;
@@ -59,9 +60,10 @@ chrome.alarms.onAlarm.addListener(alarm => {
     return chrome.runtime.sendMessage("einokpbfcmmopbfbpiofaeohhkmcbbcg", "checkAlive", isInstalled => {
         
         if (!chrome.runtime.lastError && isInstalled) {
-            return ls.set({
+            ls.set({
                 "acsNotificationShown": true
             });
+            return;
         }
         
         // Show notification, and mark as shown
@@ -111,14 +113,6 @@ function randomDate(start, end, startHour, endHour) {
     if (date <= Date.now())
         date.setDate(date.getDate() + 1);
     return date;
-}
-
-
-/**
- * @param {[string]} pastelsArray 
- */
-function setPastels(pastelsArray) {
-    localStorage.allPastels = pastelsArray.join(",");
 }
 
 

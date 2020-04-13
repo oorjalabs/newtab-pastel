@@ -1,102 +1,101 @@
-var clockTimeout;
-var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
-
-let pastels = (localStorage.allPastels || "").split(",");
-const lightness = "95%";
-const saturation = "100%";
-
-$(document).ready(() => {
+(function () {
     
-    let pastelGridArray = shuffle(pastels);
-    
-    const pinnedColour = localStorage.pinnedColour;
-    
-    if(pinnedColour) {
-        const colourIndex = pastelGridArray.indexOf(pinnedColour);
-        if (colourIndex > -1) {
-            pastelGridArray.splice(colourIndex, 1);
-            pastelGridArray.splice(0, 0, pinnedColour);
+    $(document).ready(async () => {
+        
+        const st = await ls.get({
+            "allPastels": defaultPastels,
+            "pinnedColour": DEFAULTS.PINNED_COLOUR
+        });
+        
+        let pastelGridArray = shuffle(st.allPastels);
+        
+        const pinnedColour = st.pinnedColour;
+        
+        if (pinnedColour) {
+            const colourIndex = pastelGridArray.indexOf(pinnedColour);
+            if (colourIndex > -1) {
+                pastelGridArray.splice(colourIndex, 1);
+                pastelGridArray.splice(0, 0, pinnedColour);
+            }
         }
-    }
-    
-    $("#grid").append(pastelGridArray.map(toHtml).join("\n"));
-    
-    setPinned(pinnedColour);
-    
-    $("body").on("click", ".delete_colour", e => {
-        // Get colour string
-        const colour = e.currentTarget.dataset.colour;
         
-        // Hide and remove the card
-        const card = $(`#colour_${colour.replace("#","")}`);
-        card.hide(_ => card.remove());
+        $("#grid").append(pastelGridArray.map(toHtml).join("\n"));
         
-        // Remove the card from pastels set
-        pastels = pastels.filter(p => p != colour);
-        localStorage.allPastels = pastels.join(",");
+        setPinned(pinnedColour);
+        
+        $("body").on("click", ".delete_colour", async e => {
+            // Get colour string
+            const colour = e.currentTarget.dataset.colour;
+            
+            // Hide and remove the card
+            const card = $(`#colour_${colour.replace("#","")}`);
+            card.hide(_ => card.remove());
+            
+            // Remove the card from pastels set
+            const st = await ls.get({ "allPastels": defaultPastels });
+            const storedPastels = st.allPastels.filter(p => p != colour);
+            ls.set({"allPastels": storedPastels});
+        });
+        
+        
+        $("body").on("click", ".pin_colour", e => {
+            // Get colour string
+            const colour = e.currentTarget.dataset.colour;
+            
+            const pin = $(`#colour_${colour.replace("#","")} .pin_colour`);
+            const wasPinned = pin.hasClass("pinned");
+            
+            // Remove previously pinned card
+            $(".pin_colour.pinned").removeClass("pinned");
+            
+            if (wasPinned) {
+                // Remove saved pinned colour
+                ls.remove("pinnedColour");
+                return;
+            }
+            
+            // Save newly pinned colour
+            pin.addClass("pinned");
+            
+            // Save pinned colour
+            ls.set({ "pinnedColour": colour });
+        });
+        
+        
+        chrome.storage.onChanged.addListener(changes => {
+            if (!changes || !changes.pinnedColour) {
+                return;
+            }
+            
+            setPinned(changes.pinnedColour.newValue);
+        });
     });
     
     
-    $("body").on("click", ".pin_colour", e => {
-        // Get colour string
-        const colour = e.currentTarget.dataset.colour;
-        
-        const pin = $(`#colour_${colour.replace("#","")} .pin_colour`);
-        const wasPinned = pin.hasClass("pinned");
-        
+    /**
+     * @param {string} [colour] 
+     */
+    function setPinned(colour) {
         // Remove previously pinned card
         $(".pin_colour.pinned").removeClass("pinned");
         
-        if (wasPinned) {
-            // Remove saved pinned colour
-            localStorage.removeItem("pinnedColour");
-            ls.remove("pinnedColour");
+        if (!colour)
             return;
+        
+        colour = colour.replace("#", "");
+        
+        if (colour) {
+            // Set new pinned colour
+            $(`#colour_${colour} .pin_colour`).addClass("pinned");
         }
-        
-        // Save newly pinned colour
-        pin.addClass("pinned");
-        
-        // Save pinned colour
-        localStorage.pinnedColour = colour;
-        ls.set({"pinnedColour": colour});
-    });
-    
-    
-    chrome.storage.onChanged.addListener(changes => {
-        if (!changes || !changes.pinnedColour) {
-            return;
-        }
-        
-        setPinned(changes.pinnedColour.newValue);
-    });
-});
-
-
-/**
- * @param {string} [colour] 
- */
-function setPinned(colour) {
-    // Remove previously pinned card
-    $(".pin_colour.pinned").removeClass("pinned");
-    
-    if (!colour)
-        return;
-    
-    colour = colour.replace("#", "");
-    
-    if (colour) {
-        // Set new pinned colour
-        $(`#colour_${colour} .pin_colour`).addClass("pinned");
     }
-}
-
-
-/**
- * @param {string} pastel 
- */
-function toHtml(pastel) {
-    return `
+    
+    
+    /**
+     * @param {string} pastel 
+     */
+    function toHtml(pastel) {
+        return `
     <span data-colour="${pastel}" style="background-color: ${pastel}" class="pastel_colour" id="colour_${pastel.replace("#", "")}">
         <div class="colour_contents">
             <span class="colour_name" title="Hex code for colour">${pastel}</span>
@@ -109,17 +108,20 @@ function toHtml(pastel) {
         </div>
     </span>
     `
-}
-
-
-/**
- * Shuffles array in place. ES6 version
- * @param {Array} a items An array containing the items.
- */
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
     }
-    return a;
-}
+    
+    
+    /**
+     * Shuffles array in place. ES6 version
+     * @param {[String]} a items An array containing the items.
+     * @return {[String]}
+     */
+    function shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+    
+})();
