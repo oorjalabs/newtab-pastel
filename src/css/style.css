@@ -171,33 +171,29 @@ body.serif {
     background-image: url(../img/12hr.png);
 }
 
-#pin_colour_link {
-    margin: 0;
-}
-
 #ic_font {
     background-image: url(../img/format-font.svg);
 }
 
-#pin_colour_link.pinned {
+.bottom_btn_links.enabled {
     border-radius: 0.5em;
     border: 1px solid #888;
     margin: 1px;
     padding: calc(0.5em - 2px);
-    margin-left: auto;
+    /* margin-left: auto; */
     opacity: var(--button-opacity-pinned-default);
 }
 
-.bottom_btn_links:hover #pin_colour_link.pinned {
+.bottom_btn_links.enabled:hover {
     opacity: var(--button-opacity-focus)
 }
 
-.non_settings_link:not(.pinned) {
+.non_settings_link:not(.enabled) {
     opacity: var(--button-opacity-non-settings-default);
 }
 
-#bottomHalf.entered .non_settings_link:not(.pinned),
-#bottomHalf:hover .non_settings_link:not(.pinned) {
+#bottomHalf.entered .non_settings_link:not(.enabled),
+#bottomHalf:hover .non_settings_link:not(.enabled) {
     opacity: var(--button-opacity-visible);
 }
 
@@ -274,6 +270,10 @@ body.dark_mode #go_dark {
     opacity: var(--button-opacity-pinned-default);
 }
 
+#icon_dark_auto {
+    height: 24px;
+    margin: 1px;
+}
 
 #customColourModal {
     font-size: medium;

@@ -419,12 +419,12 @@ function showTopSites(show, toggle = false) {
 function setPinnedColour(colour) {
     if (!!colour) {
         setColour(colour); //set color
-        $("#pin_colour_link").addClass("pinned");
+        $("#pin_colour_link").addClass("enabled");
         return;
     }
     
     setColour(getSomeColour());
-    $("#pin_colour_link").removeClass("pinned");
+    $("#pin_colour_link").removeClass("enabled");
 }
 
 
