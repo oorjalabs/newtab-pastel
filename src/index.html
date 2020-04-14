@@ -4,18 +4,19 @@
     <head>
         <title>New Tab, Pastel</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel='stylesheet' href='css/style.css'>
-        <script src='js/ext/jquery-3.3.1.min.js'></script>
-        <script src='js/ext/moment.min.js'></script>
-        <script src='js/ls.js'></script>
-        <script src='js/constants.js'></script>
-        <script src='js/script.js'></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/ext/jquery-3.3.1.min.js"></script>
+        <script src="js/ext/moment.min.js"></script>
+        <script src="js/ls.js"></script>
+        <script src="js/constants.js"></script>
+        <script src="js/script.js"></script>
     </head>
     
     <body>
+        <script src="js/onloadTheme.js"></script>
         
-        <div id='center'>
-            <p id='clock'></p>
+        <div id="center">
+            <p id="clock"></p>
         </div>
         
         <div id="bottomHalf">
@@ -24,47 +25,51 @@
             </div>
                 
             <div id="action_links">
-                <a class="bottom_btn_links" id="settings_link" title="Options">
+                <a class="bottom_btn_links" id="settings_link" data-title-i18n="button_title_open_options">
                     <img src="img/ic_settings_black_24px.svg">
                 </a>
                 
-                <a class="bottom_btn_links non_settings_link" id="top_sites_link" title="Show/hide top websites">
+                <a class="bottom_btn_links non_settings_link" id="top_sites_link" data-title-i18n="button_title_toggle_top_sites">
                     <span class="btn_icon" id="ic_top_sites"></span>
                 </a>
                 
-                <a class="bottom_btn_links non_settings_link" id="clock_link" title="Show/hide Clock">
+                <a class="bottom_btn_links non_settings_link" id="clock_link" data-title-i18n="button_title_toggle_clock">
                     <img src="img/ic_access_time_black_24px.svg">
                 </a>
                 
-                <a class="bottom_btn_links non_settings_link" id="hr_link" title="12/24 Hour Clock">
+                <a class="bottom_btn_links non_settings_link" id="hr_link" data-title-i18n="button_title_toggle_24_hr_clock">
                     <span class="btn_icon" id="ic_clock_type"></span>
                 </a>
                 
-                <a class="bottom_btn_links non_settings_link" id="font_link" title="Serif/sans-serif font">
+                <a class="bottom_btn_links non_settings_link" id="font_link" data-title-i18n="button_title_toggle_font">
                     <span class="btn_icon" id="ic_font"></span>
                 </a>
                 
                 <span id="space_filler"></span>
                 
                 <div id="customColourModal">
-                    <a class="bottom_btn_links non_settings_link" id="set_custom_colour" title="Set custom colour">
+                    <a class="bottom_btn_links non_settings_link" id="set_custom_colour" data-title-i18n="button_title_set_custom_colour">
                         <img src="img/ic_add_24px.svg">
                     </a>
                     <div id="customColourModalInner" class="hide">
-                        <label for="custom_colour_input">Pick a colour&nbsp; <input type="color" id="custom_colour_input" /></label>
-                        <a href="#" id="save_custom_colour" title="Apply colour"><img src="img/ic_done_24px.svg"></a>
+                        <label for="custom_colour_input" data-i18n-leading="text_pick_a_colour"><input type="color" id="custom_colour_input" /></label>
+                        <a href="#" id="save_custom_colour" data-title-i18n="button_title_apply_custom_colour"><img src="img/ic_done_24px.svg"></a>
                     </div>
                 </div>
                 
-                <a class="bottom_btn_links non_settings_link" id="colours_grid_link" title="All pastel colours" href="pastels.html">
+                <a class="bottom_btn_links non_settings_link" id="colours_grid_link" data-title-i18n="button_title_all_pastel_grid" href="pastels.html">
                     <img src="img/baseline-grid_on-24px.svg">
                 </a>
                 
-                <a class="bottom_btn_links non_settings_link" id="go_dark" title="Go dark">
+                <a class="bottom_btn_links non_settings_link" id="auto_dark" data-title-i18n="button_title_toggle_system_dark_mode">
+                    <img src="img/ic_dark_auto.svg" id="icon_dark_auto">
+                </a>
+                
+                <a class="bottom_btn_links non_settings_link" id="go_dark" data-title-i18n="button_title_toggle_manual_dark">
                     <img src="img/ic_dark_mode.svg" id="icon_dark_mode">
                 </a>
                 
-                <a class="bottom_btn_links non_settings_link" id="pin_colour_link" title="If you like a colour, pin it">
+                <a class="bottom_btn_links non_settings_link" id="pin_colour_link" data-title-i18n="button_title_pin_colour">
                     <img src="img/pin.svg">
                 </a>
                 
@@ -77,10 +82,10 @@
         <div id="notificationModal" class="hide">
             <span class="notificationTitle" id="notificationTitle"></span>
             <span id="context_message"></span>
-            <a href="https://updatenotes.wordpress.com/category/pastel-new-tab/?utm_source=pastelnewtab&utm_medium=chrome_projects&utm_content=ntp_updated_notification_links&utm_campaign=chrome_projects" title="See changes" class="notification_button_links" id="notification_action"></a>
-            <a href="#" title="Remove this update note" id="notification_close">Dismiss</a>
+            <a href="https://updatenotes.wordpress.com/category/pastel-new-tab/?utm_source=pastelnewtab&utm_medium=chrome_projects&utm_content=ntp_updated_notification_links&utm_campaign=chrome_projects" data-title-i18n="button_title_see_changes" class="notification_button_links" id="notification_action"></a>
+            <a href="#" data-title-i18n="button_title_dismiss_update_note" data-i18n="button_text_dismiss_update_note" id="notification_close"></a>
         </div>
-        
+        <script src="js/localise.js"></script>
     </body>
     
 </html>

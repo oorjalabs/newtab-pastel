@@ -7,7 +7,50 @@ ver 2019.X.X.X
     
     -- NEXT VERSION -- NEW FEATURE: Show controls on first use
     
-    -- NEXT VERSION -- UPDATE: Set dark colour to #323639 (Chrome NTP's dark mode colour)
+    
+------------------------
+    
+    
+ver 2020.0414.1.10.4
+    
+    [DONE] Move all strings to messages.json and load with locale
+    
+    [DONE] Update feedback link to provide chrome version and os
+    
+    [DONE] Dark or light pastel grid background based on dark mode
+    
+    [DONE] Enabled updated notification
+    
+    [DONE] CWS text
+    
+    
+------------------------
+    
+    
+ver 2020.0414.1.10.3
+    
+    [DONE] UPDATE: Set dark colour to #323639 (Chrome NTP's dark mode colour)
+    
+    
+------------------------
+    
+    
+ver 2020.0413.1.10.2
+    
+    [DONE] NEW: System dark theme
+        [X] Toggle theme with system theme change
+            [X] System theme dark = show dark
+            [X] System theme light = show pinned/random
+            [X] Show/hide pinned/dark button based on system theme
+    
+    
+------------------------
+    
+    
+ver 2020.0413.1.10.1
+    
+    --TBD-- NEW: System dark theme
+        [X] Add auto theme button
     
     
 ------------------------

@@ -10,5 +10,125 @@
     "shortName": {
         "message": "Pastel New Tab",
         "description": "Short name of the application"
+    },
+    "button_title_open_options": {
+        "message": "Open options"
+    },
+    "button_title_toggle_top_sites": {
+        "message": "Show/hide top websites"
+    },
+    "button_title_toggle_clock": {
+        "message": "Show/hide Clock"
+    },
+    "button_title_toggle_24_hr_clock": {
+        "message": "12/24 Hour Clock"
+    },
+    "button_title_toggle_font": {
+        "message": "Serif/sans-serif font"
+    },
+    "button_title_set_custom_colour": {
+        "message": "Set custom colour"
+    },
+    "text_pick_a_colour": {
+        "message": "Pick a colour&nbsp; "
+    },
+    "button_title_apply_custom_colour": {
+        "message": "Apply colour"
+    },
+    "button_title_all_pastel_grid": {
+        "message": "All pastel colours"
+    },
+    "button_title_toggle_system_dark_mode": {
+        "message": "System dark mode"
+    },
+    "button_title_toggle_manual_dark": {
+        "message": "Go dark"
+    },
+    "button_title_pin_colour": {
+        "message": "If you like a colour, pin it"
+    },
+    "button_title_see_changes": {
+        "message": "See changes"
+    },
+    "button_title_dismiss_update_note": {
+        "message": "Hide this update note"
+    },
+    "button_text_dismiss_update_note": {
+        "message": "Dismiss"
+    },
+    "text_pastel_credit": {
+        "message": "Pastel colours credit: "
+    },
+    "title_options_page": {
+        "message": "Options - Pastel New Tab"
+    },
+    "button_title_options_update_notes": {
+        "message": "Update notes (change log)"
+    },
+    "button_text_options_update_notes": {
+        "message": "See update notes"
+    },
+    "button_title_options_feedback": {
+        "message": "Share feedback, suggestions, or report bugs"
+    },
+    "button_text_options_feedback": {
+        "message": "Give feedback"
+    },
+    "button_title_options_remove": {
+        "message": "Uninstall extension"
+    },
+    "button_text_options_remove": {
+        "message": "Remove extension"
+    },
+    "button_title_options_donate": {
+        "message": "Donate to one of my favourite charities"
+    },
+    "button_text_options_donate": {
+        "message": "Donate"
+    },
+    "button_title_options_source_code": {
+        "message": "See source code"
+    },
+    "button_text_options_source_code": {
+        "message": "See source code"
+    },
+    "notif_title_updated": {
+        "message": "Extension updated"
+    },
+    "notif_action_title_updated": {
+        "message": "See what's new"
+    },
+    "notif_message_updated": {
+        "message": "ver. $version$",
+        "placeholders": {
+            "version": {
+                "content": "$1",
+                "example": "1.2.3.1"
+            }
+        }
+    },
+    "notif_title_installed": {
+        "message": "Welcome to pastel new tab"
+    },
+    "notif_action_title_installed": {
+        "message": "Recent update notes"
+    },
+    "notif_message_installed": {
+        "message": "ver. $version$",
+        "placeholders": {
+            "version": {
+                "content": "$1",
+                "example": "1.2.3.1"
+            }
+        }
+    },
+    "notif_title_acs": {
+        "message": "New: AutoConvert Select"
+    },
+    "notif_action_title_acs": {
+        "message": "See in Chrome Web Store"
+    },
+    "notif_message_acs": {
+        "message": "Automatically convert values from other units, currencies and time zones when selected on a page"
     }
 }

@@ -46,6 +46,12 @@ UPDATE:
 
 (Full update notes: https://updatenotes.blog/category/pastel-new-tab/ ) 
 
+UPDATE 14 Apr 2020: 
+    1. New: Follow system dark mode option - dark screen when dark, random pastel when light
+    2. New: Darker, integrated dark mode screen
+    3. Language and background code improvements
+    
+
 UPDATE 30 Mar 2020: 
     1. New: Show icons for frequently visited websites
     

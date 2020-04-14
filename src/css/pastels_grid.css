@@ -6,6 +6,13 @@
     --button-opacity-non-settings-default: 0;
     --button-opacity-focus: 0.8;
     --button-opacity-pinned-default: 0.5;
+    
+    --default-background: #00000000;
+}
+
+.dark_theme {
+    /* Same as chrome's dark mode background colour **/
+    --default-background: #323639;
 }
 
 * {
@@ -17,6 +24,7 @@ body {
     /* transition-duration: 1s; */
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
     color: #333333;
+    background-color: var(--default-background);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
