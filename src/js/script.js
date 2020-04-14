@@ -291,7 +291,7 @@
             setColourForTheme(
                 st.useSystemTheme,
                 st.pinnedColour,
-                st.darkColour,
+                st.darkColour
             );
         }
         
