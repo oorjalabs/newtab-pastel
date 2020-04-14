@@ -1,11 +1,26 @@
 (function () {
     
+    setColourForTheme(
+        localStorage.useSystemTheme == "true",
+        localStorage.pinnedColour,
+        localStorage.darkColour == "true"
+    );
+    
     $(document).ready(async () => {
         
         const st = await ls.get({
             "allPastels": defaultPastels,
-            "pinnedColour": DEFAULTS.PINNED_COLOUR
+            "pinnedColour": DEFAULTS.PINNED_COLOUR,
+            "useSystemTheme": DEFAULTS.USE_SYSTEM_THEME,
+            "darkColour": DEFAULTS.DARK_COLOUR,
         });
+        
+        setColourForTheme(
+            st.useSystemTheme,
+            st.pinnedColour,
+            st.darkColour,
+            false
+        );
         
         let pastelGridArray = shuffle(st.allPastels);
         
@@ -62,13 +77,35 @@
         });
         
         
-        chrome.storage.onChanged.addListener(changes => {
-            if (!changes || !changes.pinnedColour) {
-                return;
-            }
-            
+        // If system theme is enabled, set mode according to system preferences
+        if (window.matchMedia) {
+            window.matchMedia("(prefers-color-scheme: dark)").onchange = onSystemThemeChanged;
+        }
+
+    });
+    
+    
+    chrome.storage.onChanged.addListener(async changes => {
+        if (!changes) return;
+        
+        
+        if (changes.pinnedColour) {
             setPinned(changes.pinnedColour.newValue);
-        });
+        }
+        
+        if (changes.useSystemTheme || changes.darkColour) {
+            const st = await ls.get({
+                "pinnedColour": DEFAULTS.PINNED_COLOUR,
+                "darkColour": DEFAULTS.DARK_COLOUR,
+                "useSystemTheme": DEFAULTS.USE_SYSTEM_THEME
+            });
+            
+            setColourForTheme(
+                st.useSystemTheme,
+                st.pinnedColour,
+                st.darkColour,
+            );
+        }
     });
     
     
@@ -122,6 +159,42 @@
             [a[i], a[j]] = [a[j], a[i]];
         }
         return a;
+    }
+    
+    
+    async function onSystemThemeChanged(e) {
+        const st = await ls.get({
+            "darkColour": DEFAULTS.DARK_COLOUR,
+            "useSystemTheme": DEFAULTS.USE_SYSTEM_THEME,
+            "pinnedColour": DEFAULTS.PINNED_COLOUR
+        });
+        
+        setColourForTheme(
+            st.useSystemTheme,
+            st.pinnedColour,
+            st.darkColour
+        );
+    }
+    
+    
+    /**
+     * 
+     * @param {boolean} useSystemTheme 
+     * @param {string} pinnedColour 
+     * @param {boolean} darkPinned 
+     */
+    function setColourForTheme(useSystemTheme, pinnedColour, darkPinned, forceChange = true) {
+        
+        const isSystemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        
+        if (
+            (useSystemTheme && isSystemDark) ||
+            (!useSystemTheme && darkPinned)
+        ) {
+            document.body && document.body.classList.add(DARK_THEME);
+        } else {
+            document.body && document.body.classList.remove(DARK_THEME);
+        }
     }
     
 })();

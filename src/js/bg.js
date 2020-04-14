@@ -1,4 +1,4 @@
-const UPDATE_NOTIFICATION = false;
+const UPDATE_NOTIFICATION = true;
 const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
 
 chrome.browserAction.onClicked.addListener(() => chrome.tabs.create({}));

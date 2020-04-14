@@ -62,12 +62,41 @@
     </head>
     
     <body>
-        <title>Options - Pastel New Tab</title>
-        <a class="action_links external_link" target="_blank" id="updateNotes" title="Update notes (change log)" href="https://updatenotes.wordpress.com/category/pastel-new-tab/?utm_source=pastelnewtab&utm_medium=chrome_projects&utm_content=ntp_optionspage_link&utm_campaign=chrome_projects">See update notes</a>
-        <a class="action_links" id="delete" href="#delete">Remove extension</a>
-        <a class="action_links external_link" target="_blank" id="feedback" title="Share feedback, suggestions, or report bugs" href="https://docs.google.com/forms/d/e/1FAIpQLSf9_ku3EUkAOpHjfXGTr4qcWYUmaQpxYEj-WfkDdiwjryrGGQ/viewform?entry.1545185881=Pastel+-+New+tab+for+Chrome&entry.1097111967&entry.1652780603&entry.984758361=Suggest+new+feature+or+improvement&entry.1210432706=Only+if+I+can+find+the+time&entry.1609176506">Give feedback</a>
-        <a class="action_links external_link" target="_blank" id="source" title="See source code" href="https://github.com/adityabhaskar/newtab-pastel">See source code</a>
-        <a class="action_links external_link" id="donate" title="Donate to one of my favourite charities" href="#donate">Donate</a>
+        <title data-i18n="title_options_page"></title>
+        
+        <a id="updateNotes" 
+            class="action_links external_link" 
+            target="_blank" 
+            data-i18n-title="button_title_options_update_notes" 
+            data-i18n="button_text_options_update_notes" 
+            href="https://updatenotes.wordpress.com/category/pastel-new-tab/?utm_source=pastelnewtab&utm_medium=chrome_projects&utm_content=ntp_optionspage_link&utm_campaign=chrome_projects"></a>
+        
+        <a id="delete"
+            class="action_links" 
+            href="#delete" 
+            data-i18n-title="button_title_options_remove"
+            data-i18n="button_text_options_remove"></a>
+        
+        <a id="feedback"
+            class="action_links external_link" 
+            target="_blank" 
+            data-i18n="button_text_options_feedback" 
+            data-i18n-title="button_title_options_feedback" 
+            href="https://docs.google.com/forms/d/e/1FAIpQLSf9_ku3EUkAOpHjfXGTr4qcWYUmaQpxYEj-WfkDdiwjryrGGQ/viewform?usp=pp_url&entry.1545185881=Pastel+new+tab+for+Chrome&entry.984758361=Suggest+new+feature+or+improvement&entry.1210432706=Only+if+I+can+find+the+time"></a>
+        
+        <a id="source"
+            class="action_links external_link" 
+            target="_blank" 
+            data-i18n-title="button_title_options_source_code"
+            data-i18n="button_text_options_source_code"
+            href="https://github.com/adityabhaskar/newtab-pastel"></a>
+        
+        <a id="donate" 
+            class="action_links external_link" 
+            data-i18n-title="button_title_options_donate"
+            data-i18n="button_text_options_donate"
+            href="#donate"></a>
+        
         <div id="charity_picker">
             <a class="donate_link" id="bdch" target="_blank" href="https://www.battersea.org.uk/support-us/donate" title="Aims to never turn away a dog or cat in need of help, caring for them no matter how long it takes.">Battersea Dogs &amp; Cats Home <span class='charity_details'> - Aims to never turn away a dog or cat in need of help, caring for them no matter how long it takes.</span></a>
             
@@ -80,6 +109,7 @@
         <script type="text/javascript" src="js/ext/jquery-3.3.1.min.js"></script>
         <script type="text/javascript" src="js/constants.js"></script>
         <script type="text/javascript" src="js/options.js"></script>
+        <script src="js/localise.js"></script>
     </body>
     
 </html>

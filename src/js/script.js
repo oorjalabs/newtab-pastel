@@ -1,20 +1,19 @@
 // f9fbe4
 (function () {
-    var clockTimeout;
-    var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
+    let clockTimeout;
+    let hourFormat = TWENTY_FOUR_HOUR_FORMAT;
     
-    const DARK_THEME = "dark_theme";
     const DARK_MODE_CLASS_NAME = "dark_mode";
     const AUTO_DARK_MODE_CLASS_NAME = "auto_dark_mode";
     
     const lightness = "95%";
     const saturation = "100%";
     let currentColour;
-    var customColourModalShowing = false;
+    let customColourModalShowing = false;
     
     const customColourSet = {
-        current: undefined,
-        new: undefined
+        "current": undefined,
+        "new": undefined
     }
     
     setColourForTheme(

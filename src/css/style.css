@@ -351,3 +351,7 @@ body.dark_mode #go_dark {
 #save_custom_colour:hover {
     opacity: 1;
 }
+
+#save_custom_colour img {
+  vertical-align: middle;
+}

@@ -13,7 +13,15 @@ ver 2019.X.X.X
     
 ver 2020.0414.1.10.4
     
-    --TBD-- Move all strings to messages.json and load with locale
+    [DONE] Move all strings to messages.json and load with locale
+    
+    [DONE] Update feedback link to provide chrome version and os
+    
+    [DONE] Dark or light pastel grid background based on dark mode
+    
+    [DONE] Enabled updated notification
+    
+    [DONE] CWS text
     
     
 ------------------------
