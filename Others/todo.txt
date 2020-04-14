@@ -7,7 +7,13 @@ ver 2019.X.X.X
     
     -- NEXT VERSION -- NEW FEATURE: Show controls on first use
     
-    -- NEXT VERSION -- UPDATE: Set dark colour to #323639 (Chrome NTP's dark mode colour)
+    
+------------------------
+    
+    
+ver 2020.0414.1.10.4
+    
+    --TBD-- Move all strings to messages.json and load with locale
     
     
 ------------------------
@@ -15,7 +21,7 @@ ver 2019.X.X.X
     
 ver 2020.0414.1.10.3
     
-    --TBD-- Move all strings to messages.json and load with locale
+    [DONE] UPDATE: Set dark colour to #323639 (Chrome NTP's dark mode colour)
     
     
 ------------------------

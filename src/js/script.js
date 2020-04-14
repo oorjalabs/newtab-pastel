@@ -3,6 +3,7 @@
     var clockTimeout;
     var hourFormat = TWENTY_FOUR_HOUR_FORMAT;
     
+    const DARK_THEME = "dark_theme";
     const DARK_MODE_CLASS_NAME = "dark_mode";
     const AUTO_DARK_MODE_CLASS_NAME = "auto_dark_mode";
     
@@ -351,10 +352,15 @@
             (useSystemTheme && isSystemDark) ||
             (!useSystemTheme && darkPinned)
         ) {
+            document.body && document.body.classList.add(DARK_THEME);
+            
             // If dark enabled, or auto enabled and system theme is dark
             $("#pin_colour_link").removeClass("switched_on").addClass("disabled");
             setPinnedColour(DARK_COLOUR);
         } else {
+            
+            document.body && document.body.classList.remove(DARK_THEME);
+            
             // If pinned colour, set that as background color
             $("#pin_colour_link")[!!pinnedColour ? "addClass" : "removeClass"]("switched_on").removeClass("disabled");
             

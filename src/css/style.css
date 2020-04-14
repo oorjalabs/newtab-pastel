@@ -11,13 +11,42 @@
     --display-gone: none;
     --display-visible: initial;
     
+    --default-colour: #333333;
     --default-background: #ffffff;
+    
+    --bg-top-site-link: #fafafa80;
+    --colour-top-site-link: #616161;
+    --border-top-site-link: #d3d3d380;
+    
+    --button-icon-filter: invert(0);
 }
 
 .system_init_dark {
-    /* Same as dark mode background colour **/
-    --default-background: #666666; 
+    /* Same as chrome's dark mode background colour **/
+    --default-background: #323639;
 }
+
+
+.dark_theme {
+    /* Same as dark mode background colour **/
+    /* --default-background: #666666;  */
+    --default-background: #323639;
+    --default-colour: #757575;
+    
+    --bg-top-site-link: #424242;
+    --colour-top-site-link: #bdbdbd;
+    --border-top-site-link: #75757580;
+    
+    --button-icon-filter: invert(1);
+    
+    --button-opacity-visible: .35;
+    --button-opacity-visible-hourtype: .45;
+    --button-opacity-non-settings-default: 0;
+    --button-opacity-focus: 0.9;
+    --button-opacity-pinned-default: 0.7;
+}
+
+
 
 * {
     margin: 0;
@@ -27,7 +56,7 @@
 body {
     /* transition-duration: 1s; */
     font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
-    color: #333333;
+    color: var(--default-colour);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
@@ -66,22 +95,18 @@ body.serif {
 .top_site_link {
     transition-duration: 0.5s;
     text-decoration: none;
-    color: #616161;
     font-size: 1.25em;
-    
     display: block;
     padding: 0.25rem 1rem;
     height: 2rem;
     line-height: 2rem;
-    
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    
-    border: 1px solid rgba(211, 211, 211, .5);
+    border: 1px solid var(--border-top-site-link);
     border-radius: 0.2rem;
-    
-    background: rgba(250, 250, 250, .5);
+    background-color: var(--bg-top-site-link);
+    color: var(--colour-top-site-link);
 }
 
 .top_site_link:focus,
@@ -108,7 +133,7 @@ body.serif {
     position: fixed;
     bottom: 0;
     left:0;
-    height: 40%;
+    height: 45%;
     width: 100%;
 }
 
@@ -141,6 +166,7 @@ body.serif {
     border: 0;
     text-decoration: none;
     cursor: pointer;
+    filter: var(--button-icon-filter);
 }
 
 .bottom_btn_links:not(.disabled):hover {
