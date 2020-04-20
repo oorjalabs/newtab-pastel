@@ -11,6 +11,14 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2020.0420.1.10.5
+    
+    [DONE] Enabled icons be faded more in default view
+    
+    
+------------------------
+    
+    
 ver 2020.0414.1.10.4
     
     [DONE] Move all strings to messages.json and load with locale

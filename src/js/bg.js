@@ -14,7 +14,7 @@ chrome.runtime.onInstalled.addListener(details => {
     chrome.runtime.setUninstallURL("")
     
     // Show install/update notification
-    if (details.reason === "install" || UPDATE_NOTIFICATION) {
+    if (details.reason === "install" || (UPDATE_NOTIFICATION && previousVersion < 1.1)) {
         ls.set({ "extensionUpdated": details.reason });
     }
     

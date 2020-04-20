@@ -217,8 +217,10 @@ body.serif {
     display: var(--display-gone);
 }
 
+body.auto_dark_mode #auto_dark,
+body.dark_mode #go_dark,
 .bottom_btn_links.switched_on {
-    opacity: var(--button-opacity-pinned-default);
+    opacity: var(--button-opacity-visible);
 }
 
 .bottom_btn_links.switched_on:hover {
@@ -229,18 +231,21 @@ body.serif {
     opacity: var(--button-opacity-non-settings-default);
 }
 
+body.auto_dark_mode #bottomHalf.entered #auto_dark,
+body.auto_dark_mode #bottomHalf:hover #auto_dark,
+body.dark_mode #bottomHalf.entered #go_dark,
+body.dark_mode #bottomHalf:hover #go_dark,
+#bottomHalf.entered .non_settings_link.switched_on,
+#bottomHalf:hover .non_settings_link.switched_on {
+    opacity: var(--button-opacity-pinned-default);
+}
+
+
 #bottomHalf.entered .non_settings_link:not(.switched_on),
 #bottomHalf:hover .non_settings_link:not(.switched_on) {
     opacity: var(--button-opacity-visible);
 }
 
-
-body.auto_dark_mode #bottomHalf.entered #auto_dark,
-body.auto_dark_mode #bottomHalf:hover #auto_dark,
-body.dark_mode #bottomHalf.entered #go_dark,
-body.dark_mode #bottomHalf:hover #go_dark {
-    opacity: var(--button-opacity-pinned-default);
-}
 
 #bottomHalf.entered #hr_link,
 #bottomHalf:hover #hr_link {
@@ -305,12 +310,6 @@ body.dark_mode #bottomHalf:hover #go_dark {
     margin-left: 3px;
     margin-right: 3px;
 }
-
-body.auto_dark_mode #auto_dark,
-body.dark_mode #go_dark {
-    opacity: var(--button-opacity-pinned-default);
-}
-
 
 #icon_dark_auto {
     height: 24px;
