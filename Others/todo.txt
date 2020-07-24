@@ -11,6 +11,14 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2020.0724.1.11.0
+    
+    [DONE] Button for default new tab page
+    
+    
+------------------------
+    
+    
 ver 2020.0420.1.10.5
     
     [DONE] Enabled icons be faded more in default view

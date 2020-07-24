@@ -26,6 +26,9 @@
     "button_title_toggle_font": {
         "message": "Serif/sans-serif font"
     },
+    "button_title_default_npt_link": {
+        "message": "Show default Chrome new tab page"
+    },
     "button_title_set_custom_colour": {
         "message": "Set custom colour"
     },

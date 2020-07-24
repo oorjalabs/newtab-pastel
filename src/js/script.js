@@ -165,6 +165,9 @@
             
         });
         
+        $("#default_ntp_link").on("click", () => {
+            chrome.tabs.update({ url: "chrome-search://local-ntp/local-ntp.html" })
+        })
         
         /**
          * Toggle pinned colour.
