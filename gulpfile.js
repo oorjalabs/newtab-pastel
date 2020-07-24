@@ -2,8 +2,7 @@
 // npm i -g gulp-cli # required for gulp 4
 const gulp = require('gulp'),
     del = require('del'),
-    zip = require('gulp-zip'),
-    sourcemaps = require('gulp-sourcemaps');
+    zip = require('gulp-zip');
 
 const uglifyes = require('uglify-es');
 const composer = require('gulp-uglify/composer');
@@ -50,12 +49,10 @@ gulp.task('extscripts', () => {
 gulp.task('scripts', gulp.series('extscripts', (cb) => {
     pump([
         gulp.src(['src/js/**/*.js', '!src/js/ext/**/*.js']),
-        sourcemaps.init(),
         uglify({
             mangle: false,
             ecma: 6
         }),
-        sourcemaps.write('.'),
         gulp.dest('build/js/')
     ], cb)
 }))
@@ -70,12 +67,8 @@ gulp.task('styles', () => {
 // Build ditributable ZIP, ready for upload to Developer Console
 gulp.task('zip', gulp.series(gulp.parallel('html', 'scripts', 'styles', 'img', 'locales', 'rootfiles'), () => {
     const manifest = require('./src/manifest'),
-        distFileName = `${__dirname.split("/").pop()}_${manifest.version}.zip`,
-        mapFileName = `${__dirname.split("/").pop()}_${manifest.version}-map.zip`;
-    //collect all source maps
-    gulp.src('build/js/**/*.map')
-        .pipe(zip(mapFileName))
-        .pipe(gulp.dest('dist'));
+        distFileName = `${__dirname.split("/").pop()}_${manifest.version}.zip`;
+        
     //build distributable extension
     return gulp.src(['build/**', '!build/js/**/*.map'])
         .pipe(zip(distFileName))
