@@ -46,6 +46,10 @@ UPDATE:
 
 (Full update notes: https://updatenotes.blog/category/pastel-new-tab/ ) 
 
+UPDATE 24 Jul 2020: 
+    1. Button to open default Chrome new tab page
+    
+
 UPDATE 14 Apr 2020: 
     1. New: Follow system dark mode option - dark screen when dark, random pastel when light
     2. New: Darker, integrated dark mode screen
