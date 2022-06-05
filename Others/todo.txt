@@ -23,7 +23,7 @@ ver 2022.0506.2.0.0
             [X] localise.js
             [X] bg.js
             [ ] pastels_grid.js
-            [ ] constants.js
+            [X] constants.js
             [ ] script.js
     
     -- TBD -- Convert to MV3
