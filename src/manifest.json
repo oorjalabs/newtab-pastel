@@ -19,6 +19,7 @@
         "scripts": [
             "js/constants.js",
             "js/ls.js",
+            "js/utils.js",
             "js/bg.js"
         ],
         "persistent": false
