@@ -32,7 +32,7 @@ const DEFAULTS = Object.freeze({
         title: "My other apps",
         url: "https://c306.net/apps",
     },
-    ],
+    ] as TopSite[],
 });
 
 

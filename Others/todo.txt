@@ -13,10 +13,10 @@ ver 2019.X.X.X
     
 ver 2022.0506.2.0.0
     
-    -- TBD -- Convert to TS
+    [DONE] Convert to TS
         [X] Added package.json, tsconfigs and updated eslintrc
         [X] Added TS and eslint dependencies and tasks to package.json
-        [ ] Convert to TS
+        [X] Convert to TS
             [X] onloadTheme.js
             [X] options.js
             [X] ls.js
@@ -24,7 +24,7 @@ ver 2022.0506.2.0.0
             [X] bg.js
             [X] pastels_grid.js
             [X] constants.js
-            [ ] script.js
+            [X] script.js
     
     -- TBD -- Convert to MV3
     
