@@ -11,6 +11,17 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2022.0506.2.0.0
+    
+    -- TBD -- Convert to TS
+        [X] Added package.json, tsconfigs and updated eslintrc
+    
+    -- TBD -- Convert to MV3
+    
+    
+------------------------
+    
+    
 ver 2020.0724.1.11.0
     
     [DONE] Button for default new tab page

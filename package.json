@@ -1,0 +1,39 @@
+{
+    "name": "pastel-new-tab",
+    "version": "1.0.0",
+    "description": "Pastel New Tab",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "gulp": "gulp"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/adityabhaskar/newtab-pastel.git"
+    },
+    "keywords": [
+        "Chrome",
+        "Extension",
+        "New",
+        "Tab",
+        "Pastel",
+        "Typescript",
+        "Javascript",
+        "CSS"
+    ],
+    "author": "Aditya Bhaskar // Oorja labs",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/adityabhaskar/newtab-pastel/issues"
+    },
+    "homepage": "https://github.com/adityabhaskar/newtab-pastel#readme",
+    "devDependencies": {
+        "del": "^3.0.0",
+        "gulp-uglify": "^3.0.1",
+        "gulp-zip": "^4.2.0",
+        "gulp-cli": "^2.0.1",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp": "^4.0.0",
+        "pump": "^3.0.0",
+        "uglify-es": "^3.3.9"
+    }
+}
