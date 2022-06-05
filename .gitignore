@@ -4,3 +4,5 @@ ntp.code-workspace
 dist
 build
 bookmarks.json
+src/js/*.js
+
