@@ -21,7 +21,7 @@ ver 2022.0506.2.0.0
             [X] options.js
             [X] ls.js
             [X] localise.js
-            [ ] bg.js
+            [X] bg.js
             [ ] pastels_grid.js
             [ ] constants.js
             [ ] script.js
