@@ -1,18 +1,14 @@
-// var ls = chrome.storage.local;
-
-// ls.fetch = a => a ? ls.get(a, s => console.log(s[a])) : ls.get(s => console.log(s));
-
-// State, tasks and user variables are stored in local -- used only in front end
-var ls = (function () {
-    
+/** State, tasks and user variables are stored in local -- used only in front
+ * end */
+const ls = (function() {
     const storage = chrome.storage.local;
 
     /**
      * Wrapper function to read chrome.storage as a promise
-     * @param {Object.<string, *>} getObject 
-     * @return {Promise<Object.<string, *>>}
+     * @param getObject
+     * @return;
      */
-    async function storageGet(getObject) {
+    async function storageGet<T>(getObject: StorageGetParam): Promise<Record<string, T>> {
         return new Promise(resolve => {
             storage.get(getObject, resolve);
         });
@@ -20,10 +16,10 @@ var ls = (function () {
 
     /**
      * Wrapper function to read chrome.storage as a promise
-     * @param {Object.<string, *>} setObject 
-     * @return {Promise<Object.<string, *>>}
+     * @param  setObject
+     * @return;
      */
-    async function storageSet(setObject) {
+    async function storageSet(setObject: Record<string, unknown>): Promise<void> {
         return new Promise(resolve => {
             storage.set(setObject, resolve);
         });
@@ -32,25 +28,27 @@ var ls = (function () {
 
     /**
      * Wrapper function to read chrome.storage as a promise
-     * @param {String | [String]} keys 
+     * @param {String | [String]} keys
      * @return {Promise<Object.<string, *>>}
      */
-    async function remove(keys) {
+    function remove(keys: string | string[]): Promise<void> {
         return new Promise(resolve => {
             storage.remove(keys, resolve);
         });
     }
 
-
-    async function storageFetch(item) {
+    /**
+     * @param item
+     */
+    async function storageFetch(item: StorageGetParam) {
         const st = await storageGet(item);
-        console.debug(item && st[item] ? st[item] : st);
+        console.debug(typeof item === "string" && st[item] ? st[item] : st);
     }
 
     return {
         "get": storageGet,
         "set": storageSet,
         "remove": remove,
-        "fetch": storageFetch
-    }
+        "fetch": storageFetch,
+    };
 })();

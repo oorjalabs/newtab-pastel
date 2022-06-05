@@ -1,6 +1,6 @@
 // Inner content
 document.querySelectorAll("[data-i18n]").forEach(elem => {
-    const text = chrome.i18n.getMessage(elem.dataset.i18n);
+    const text = chrome.i18n.getMessage((elem as HTMLElement).dataset.i18n);
     if (!!text && !chrome.runtime.lastError) {
         elem.innerHTML = text;
     }
@@ -8,7 +8,7 @@ document.querySelectorAll("[data-i18n]").forEach(elem => {
 
 // Inner content leading
 document.querySelectorAll("[data-i18n-leading]").forEach(elem => {
-    const text = chrome.i18n.getMessage(elem.dataset.i18nLeading);
+    const text = chrome.i18n.getMessage((elem as HTMLElement).dataset.i18nLeading);
     if (!!text && !chrome.runtime.lastError) {
         const prev = elem.innerHTML;
         elem.innerHTML = text + prev;
@@ -17,7 +17,7 @@ document.querySelectorAll("[data-i18n-leading]").forEach(elem => {
 
 // Inner content trailing
 document.querySelectorAll("[data-i18n-trailing]").forEach(elem => {
-    const text = chrome.i18n.getMessage(elem.dataset.i18nTrailing);
+    const text = chrome.i18n.getMessage((elem as HTMLElement).dataset.i18nTrailing);
     if (!!text && !chrome.runtime.lastError) {
         elem.innerHTML += text;
     }
@@ -25,7 +25,8 @@ document.querySelectorAll("[data-i18n-trailing]").forEach(elem => {
 
 // Title attribute
 document.querySelectorAll("[data-title-i18n]").forEach(elem => {
-    const title = chrome.i18n.getMessage(elem.dataset.titleI18n);
-    if (!!title && !chrome.runtime.lastError)
+    const title = chrome.i18n.getMessage((elem as HTMLElement).dataset.titleI18n);
+    if (!!title && !chrome.runtime.lastError) {
         elem.setAttribute("title", title);
+    }
 });
