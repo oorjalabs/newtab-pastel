@@ -1,7 +1,10 @@
-const UPDATE_NOTIFICATION = false;
-const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
+importScripts("constants.js");
+importScripts("ls.js");
+importScripts("utils.js");
 
-chrome.browserAction.onClicked.addListener(() => chrome.tabs.create({}));
+const UPDATE_NOTIFICATION = false;
+
+chrome.action.onClicked.addListener(() => chrome.tabs.create({}));
 
 // On install/update handler
 chrome.runtime.onInstalled.addListener(onInstall);

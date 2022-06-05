@@ -11,9 +11,11 @@ ver 2019.X.X.X
 ------------------------
     
     
-ver 2022.0506.2.0.1
+ver 2022.0606.2.0.1
     
     -- TBD -- Convert to MV3
+        [X] Converted manifest and bg to MV3
+        [ ] Favicons not available
     
     
 ------------------------
