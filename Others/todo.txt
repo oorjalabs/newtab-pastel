@@ -15,6 +15,7 @@ ver 2022.0506.2.0.0
     
     -- TBD -- Convert to TS
         [X] Added package.json, tsconfigs and updated eslintrc
+        [X] Added TS and eslint dependencies and tasks to package.json
     
     -- TBD -- Convert to MV3
     
