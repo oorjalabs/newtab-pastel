@@ -18,7 +18,7 @@ ver 2022.0506.2.0.0
         [X] Added TS and eslint dependencies and tasks to package.json
         [ ] Convert to TS
             [X] onloadTheme.js
-            [ ] options.js
+            [X] options.js
             [X] ls.js
             [X] localise.js
             [ ] bg.js

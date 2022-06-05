@@ -1,12 +1,11 @@
-/** State, tasks and user variables are stored in local -- used only in front 
+/** State, tasks and user variables are stored in local -- used only in front
  * end */
-const ls = (function () {
-    
+const ls = (function() {
     const storage = chrome.storage.local;
 
     /**
      * Wrapper function to read chrome.storage as a promise
-     * @param getObject 
+     * @param getObject
      * @return;
      */
     async function storageGet<T>(getObject: StorageGetParam): Promise<Record<string, T>> {
@@ -17,7 +16,7 @@ const ls = (function () {
 
     /**
      * Wrapper function to read chrome.storage as a promise
-     * @param  setObject 
+     * @param  setObject
      * @return;
      */
     async function storageSet(setObject: Record<string, unknown>): Promise<void> {
@@ -29,7 +28,7 @@ const ls = (function () {
 
     /**
      * Wrapper function to read chrome.storage as a promise
-     * @param {String | [String]} keys 
+     * @param {String | [String]} keys
      * @return {Promise<Object.<string, *>>}
      */
     function remove(keys: string | string[]): Promise<void> {
@@ -39,7 +38,7 @@ const ls = (function () {
     }
 
     /**
-     * @param item 
+     * @param item
      */
     async function storageFetch(item: StorageGetParam) {
         const st = await storageGet(item);
@@ -50,6 +49,6 @@ const ls = (function () {
         "get": storageGet,
         "set": storageSet,
         "remove": remove,
-        "fetch": storageFetch
-    }
+        "fetch": storageFetch,
+    };
 })();

@@ -26,6 +26,7 @@ document.querySelectorAll("[data-i18n-trailing]").forEach(elem => {
 // Title attribute
 document.querySelectorAll("[data-title-i18n]").forEach(elem => {
     const title = chrome.i18n.getMessage((elem as HTMLElement).dataset.titleI18n);
-    if (!!title && !chrome.runtime.lastError)
+    if (!!title && !chrome.runtime.lastError) {
         elem.setAttribute("title", title);
+    }
 });
