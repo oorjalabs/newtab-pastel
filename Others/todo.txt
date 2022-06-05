@@ -22,7 +22,7 @@ ver 2022.0506.2.0.0
             [X] ls.js
             [X] localise.js
             [X] bg.js
-            [ ] pastels_grid.js
+            [X] pastels_grid.js
             [X] constants.js
             [ ] script.js
     
