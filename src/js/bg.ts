@@ -1,4 +1,4 @@
-const UPDATE_NOTIFICATION = true;
+const UPDATE_NOTIFICATION = false;
 const EXTENSION_UPDATED_NOTIFICATION_ID = "extension_updated_notification_id";
 
 chrome.browserAction.onClicked.addListener(() => chrome.tabs.create({}));
@@ -26,8 +26,8 @@ async function onInstall(details: chrome.runtime.InstalledDetails) {
 
     // Load colours into storage if installing or updating to first v2 colours version
     const COLOURS_V2 = 1.05;
-    if (previousVersion <= COLOURS_V2 && pastelsArray) {
-        await ls.set({"allPastels": pastelsArray});
+    if (previousVersion <= COLOURS_V2 && defaultPastels) {
+        await ls.set({"allPastels": defaultPastels});
     }
 
 

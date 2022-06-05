@@ -92,15 +92,16 @@
 
             $("#top_sites_link").removeClass("grab_attention");
 
-            const st = await ls.get({"showTopSites": DEFAULTS.SHOW_TOP_SITES});
+            const st = await ls.get<boolean>({"showTopSites": DEFAULTS.SHOW_TOP_SITES});
 
             // Setting it off, so just save the new setting
             if (st.showTopSites) {
-                return ls.set({"showTopSites": !st.showTopSites});
+                await ls.set({"showTopSites": !st.showTopSites});
+                return;
             }
 
             // Changing from false to true, check if we have permission
-            const result = await new Promise(resolve => {
+            const result = await new Promise<boolean>(resolve => {
                 chrome.permissions.contains({
                     "permissions": ["topSites"],
                 }, resolve);
@@ -109,13 +110,13 @@
             // The extension has the permissions.
             // Save setting as true, action will happen in storage change handler
             if (result) {
-                ls.set({"showTopSites": true});
+                await ls.set({"showTopSites": true});
                 return;
             }
 
             // The extension doesn't have the permissions.
             // Request permission.
-            const granted = await new Promise(resolve => {
+            const granted = await new Promise<boolean>(resolve => {
                 chrome.permissions.request({
                     "permissions": ["topSites"],
                 }, resolve);
@@ -123,7 +124,7 @@
 
             // If granted, set setting as true,
             if (granted) {
-                ls.set({"showTopSites": true});
+                await ls.set({"showTopSites": true});
                 return;
             }
 
@@ -512,7 +513,7 @@
         }, "");
 
         topSitesDiv.text("").append(topSitesString);// [toggle ? "slideToggle" : "hide"]();
-        toggle ? topSitesDiv.slideToggle() : topSitesDiv.show();
+        toggle && !topSitesDiv.is(":visible") ? topSitesDiv.slideToggle() : topSitesDiv.show();
 
         $("#top_sites_link").addClass("showing");
 
