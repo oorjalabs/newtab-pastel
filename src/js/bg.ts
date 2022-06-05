@@ -26,7 +26,7 @@ async function onInstall(details: chrome.runtime.InstalledDetails) {
 
     // Load colours into storage if installing or updating to first v2 colours version
     const COLOURS_V2 = 1.05;
-    if (previousVersion <= COLOURS_V2) {
+    if (previousVersion <= COLOURS_V2 && pastelsArray) {
         await ls.set({"allPastels": pastelsArray});
     }
 

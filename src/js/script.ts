@@ -21,6 +21,7 @@
         localStorage.pinnedColour,
         localStorage.darkColour == "true"
     );
+
     // After initial colour has been displayed, do further colour changes with transition
     setTimeout(() => $("body").css({"transition-duration": "1s"}), 2000);
 
@@ -480,7 +481,7 @@
 
     /**
      * @param {boolean} show
-     * @param {boolean} [toggle=false]
+     * @param toggle default `false`
      */
     async function showTopSites(show: boolean, toggle = false) {
         const topSitesDiv = $("#topSites");
