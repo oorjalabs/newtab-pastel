@@ -25,9 +25,9 @@
     "author": "Aditya Bhaskar // Oorja labs",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/adityabhaskar/newtab-pastel/issues"
+        "url": "https://github.com/oorjalabs/newtab-pastel/issues"
     },
-    "homepage": "https://github.com/adityabhaskar/newtab-pastel#readme",
+    "homepage": "https://github.com/oorjalabs/newtab-pastel#readme",
     "devDependencies": {
         "@types/chrome": "^0.0.188",
         "@types/jquery": "^3.5.8",
