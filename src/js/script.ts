@@ -501,10 +501,9 @@
         const st = await ls.get<TopSite[]>({
             "topSites": DEFAULTS.TOP_SITES,
         });
-        
+
         let topSitesString = st.topSites.reduce((acc, site) => {
             const faviconUrl = createFaviconURL(site.url);
-            console.debug("favIcon:", faviconUrl);
             return `
                 ${acc}<a 
                     href="${site.url}" 

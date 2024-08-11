@@ -15,7 +15,7 @@ ver 2022.0606.2.0.1
     
     -- TBD -- Convert to MV3
         [X] Converted manifest and bg to MV3
-        [ ] Favicons not available
+        [X] Favicons not available
     
     
 ------------------------
