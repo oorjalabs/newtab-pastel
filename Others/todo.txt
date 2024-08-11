@@ -11,6 +11,33 @@ ver 2019.X.X.X
 ------------------------
     
     
+ver 2022.0506.2.0.1
+    
+    -- TBD -- Convert to MV3
+    
+    
+------------------------
+    
+    
+ver 2022.0506.2.0.0
+    
+    [DONE] Convert to TS
+        [X] Added package.json, tsconfigs and updated eslintrc
+        [X] Added TS and eslint dependencies and tasks to package.json
+        [X] Convert to TS
+            [X] onloadTheme.js
+            [X] options.js
+            [X] ls.js
+            [X] localise.js
+            [X] bg.js
+            [X] pastels_grid.js
+            [X] constants.js
+            [X] script.js
+    
+    
+------------------------
+    
+    
 ver 2020.0724.1.11.0
     
     [DONE] Button for default new tab page

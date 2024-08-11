@@ -1,0 +1,35 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es2017",
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "allowUmdGlobalAccess": true,
+        "inlineSourceMap": true,
+        "esModuleInterop": true,
+        "allowJs": false,
+        "lib": [
+            "DOM.Iterable",
+            "DOM",
+            "ES2017",
+            "ES2020",
+            "ES2021",
+            "WebWorker.ImportScripts"
+        ],
+        "rootDir": "src",
+        // "outDir": "dist",
+        // "sourceMap": true,
+        "suppressImplicitAnyIndexErrors": true,
+    },
+    "exclude": [
+        "Others",
+        "node_modules",
+        "build",
+        "dist",
+        "release",
+    ],
+    "include": [
+        "src/**/*",
+    ],
+}

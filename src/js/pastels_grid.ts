@@ -1,31 +1,34 @@
-(function () {
-    
+(function() {
     setColourForTheme(
         localStorage.useSystemTheme == "true",
         localStorage.pinnedColour,
         localStorage.darkColour == "true"
     );
-    
-    $(document).ready(async () => {
-        
+
+    $(async () => {
         const st = await ls.get({
             "allPastels": defaultPastels,
             "pinnedColour": DEFAULTS.PINNED_COLOUR,
             "useSystemTheme": DEFAULTS.USE_SYSTEM_THEME,
             "darkColour": DEFAULTS.DARK_COLOUR,
-        });
-        
+        }) as {
+            "allPastels": string[]
+            "pinnedColour": string
+            "useSystemTheme": boolean
+            "darkColour": boolean
+        };
+
         setColourForTheme(
             st.useSystemTheme,
             st.pinnedColour,
             st.darkColour,
             false
         );
-        
-        let pastelGridArray = shuffle(st.allPastels);
-        
+
+        const pastelGridArray = shuffle(st.allPastels);
+
         const pinnedColour = st.pinnedColour;
-        
+
         if (pinnedColour) {
             const colourIndex = pastelGridArray.indexOf(pinnedColour);
             if (colourIndex > -1) {
@@ -33,73 +36,76 @@
                 pastelGridArray.splice(0, 0, pinnedColour);
             }
         }
-        
+
         $("#grid").append(pastelGridArray.map(toHtml).join("\n"));
-        
+
         setPinned(pinnedColour);
-        
+
         $("body").on("click", ".delete_colour", async e => {
             // Get colour string
-            const colour = e.currentTarget.dataset.colour;
-            
+            const colour = e.currentTarget.dataset.colour as string;
+
             // Hide and remove the card
-            const card = $(`#colour_${colour.replace("#","")}`);
-            card.hide(_ => card.remove());
-            
+            const card = $(`#colour_${colour.replace("#", "")}`);
+            card.hide(() => card.remove());
+
             // Remove the card from pastels set
-            const st = await ls.get({ "allPastels": defaultPastels });
+            const st = await ls.get<string[]>({"allPastels": defaultPastels});
             const storedPastels = st.allPastels.filter(p => p != colour);
             ls.set({"allPastels": storedPastels});
         });
-        
-        
+
+
         $("body").on("click", ".pin_colour", e => {
             // Get colour string
             const colour = e.currentTarget.dataset.colour;
-            
-            const pin = $(`#colour_${colour.replace("#","")} .pin_colour`);
+
+            const pin = $(`#colour_${colour.replace("#", "")} .pin_colour`);
             const wasPinned = pin.hasClass("pinned");
-            
+
             // Remove previously pinned card
             $(".pin_colour.pinned").removeClass("pinned");
-            
+
             if (wasPinned) {
                 // Remove saved pinned colour
                 ls.remove("pinnedColour");
                 return;
             }
-            
+
             // Save newly pinned colour
             pin.addClass("pinned");
-            
+
             // Save pinned colour
-            ls.set({ "pinnedColour": colour });
+            ls.set({"pinnedColour": colour});
         });
-        
-        
+
+
         // If system theme is enabled, set mode according to system preferences
         if (window.matchMedia) {
             window.matchMedia("(prefers-color-scheme: dark)").onchange = onSystemThemeChanged;
         }
-
     });
-    
-    
+
+
     chrome.storage.onChanged.addListener(async changes => {
         if (!changes) return;
-        
-        
+
+
         if (changes.pinnedColour) {
             setPinned(changes.pinnedColour.newValue);
         }
-        
+
         if (changes.useSystemTheme || changes.darkColour) {
             const st = await ls.get({
                 "pinnedColour": DEFAULTS.PINNED_COLOUR,
                 "darkColour": DEFAULTS.DARK_COLOUR,
-                "useSystemTheme": DEFAULTS.USE_SYSTEM_THEME
-            });
-            
+                "useSystemTheme": DEFAULTS.USE_SYSTEM_THEME,
+            }) as {
+                "pinnedColour": string
+                "useSystemTheme": boolean
+                "darkColour": boolean
+            };
+
             setColourForTheme(
                 st.useSystemTheme,
                 st.pinnedColour,
@@ -107,33 +113,39 @@
             );
         }
     });
-    
-    
+
+
     /**
-     * @param {string} [colour] 
+     * @param {string} colour
      */
-    function setPinned(colour) {
+    function setPinned(colour?: string) {
         // Remove previously pinned card
         $(".pin_colour.pinned").removeClass("pinned");
-        
-        if (!colour)
+
+        if (!colour) {
             return;
-        
+        }
+
         colour = colour.replace("#", "");
-        
+
         if (colour) {
             // Set new pinned colour
             $(`#colour_${colour} .pin_colour`).addClass("pinned");
         }
     }
-    
-    
+
+
     /**
-     * @param {string} pastel 
+     * @param pastel
+     * @returns;
      */
-    function toHtml(pastel) {
+    function toHtml(pastel: string): string {
         return `
-    <span data-colour="${pastel}" style="background-color: ${pastel}" class="pastel_colour" id="colour_${pastel.replace("#", "")}">
+    <span 
+        data-colour="${pastel}" 
+        style="background-color: ${pastel}" 
+        class="pastel_colour" 
+        id="colour_${pastel.replace("#", "")}">
         <div class="colour_contents">
             <span class="colour_name" title="Hex code for colour">${pastel}</span>
             <a class="bottom_btn_links pin_colour" id="" title="Pin colour" data-colour="${pastel}">
@@ -144,49 +156,59 @@
             </a>
         </div>
     </span>
-    `
+    `;
     }
-    
-    
+
+
     /**
      * Shuffles array in place. ES6 version
-     * @param {[String]} a items An array containing the items.
-     * @return {[String]}
+     * @param items An array containing the items.
+     * @return;
      */
-    function shuffle(a) {
-        for (let i = a.length - 1; i > 0; i--) {
+    function shuffle(items: string[]): string[] {
+        for (let i = items.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
+            [items[i], items[j]] = [items[j], items[i]];
         }
-        return a;
+        return items;
     }
-    
-    
-    async function onSystemThemeChanged(e) {
+
+    /**
+     * @param e
+     */
+    async function onSystemThemeChanged(e: MediaQueryListEvent) {
         const st = await ls.get({
             "darkColour": DEFAULTS.DARK_COLOUR,
             "useSystemTheme": DEFAULTS.USE_SYSTEM_THEME,
-            "pinnedColour": DEFAULTS.PINNED_COLOUR
-        });
-        
+            "pinnedColour": DEFAULTS.PINNED_COLOUR,
+        }) as {
+            "pinnedColour": string
+            "useSystemTheme": boolean
+            "darkColour": boolean
+        };
+
         setColourForTheme(
             st.useSystemTheme,
             st.pinnedColour,
             st.darkColour
         );
     }
-    
-    
+
+
     /**
-     * 
-     * @param {boolean} useSystemTheme 
-     * @param {string} pinnedColour 
-     * @param {boolean} darkPinned 
+     * @param {boolean} useSystemTheme
+     * @param {string} pinnedColour
+     * @param {boolean} darkPinned
+     * @param forceChange default `true`
      */
-    function setColourForTheme(useSystemTheme, pinnedColour, darkPinned, forceChange = true) {
-        
+    function setColourForTheme(
+        useSystemTheme: boolean,
+        pinnedColour: string,
+        darkPinned: boolean,
+        forceChange = true
+    ) {
         const isSystemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        
+
         if (
             (useSystemTheme && isSystemDark) ||
             (!useSystemTheme && darkPinned)
@@ -196,5 +218,4 @@
             document.body && document.body.classList.remove(DARK_THEME);
         }
     }
-    
 })();

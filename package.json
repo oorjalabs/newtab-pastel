@@ -1,0 +1,51 @@
+{
+    "name": "pastel-new-tab",
+    "version": "1.0.0",
+    "description": "Pastel New Tab",
+    "scripts": {
+        "test": "jest",
+        "lint": "eslint src",
+        "build": "npm run lint && tsc --project tsconfig.prod.json",
+        "gulp": "gulp"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/adityabhaskar/newtab-pastel.git"
+    },
+    "keywords": [
+        "Chrome",
+        "Extension",
+        "New",
+        "Tab",
+        "Pastel",
+        "Typescript",
+        "Javascript",
+        "CSS"
+    ],
+    "author": "Aditya Bhaskar // Oorja labs",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/oorjalabs/newtab-pastel/issues"
+    },
+    "homepage": "https://github.com/oorjalabs/newtab-pastel#readme",
+    "devDependencies": {
+        "@types/chrome": "^0.0.188",
+        "@types/jquery": "^3.5.8",
+        "@types/moment": "^2.13.0",
+        "@typescript-eslint/eslint-plugin": "^5.3.1",
+        "@typescript-eslint/parser": "^5.3.1",
+        "del": "^3.0.0",
+        "eslint": "^8.4.0",
+        "eslint-config-google": "^0.14.0",
+        "eslint-plugin-import": "^2.26.0",
+        "gulp": "^4.0.0",
+        "gulp-cli": "^2.0.1",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-uglify": "^3.0.1",
+        "gulp-zip": "^4.2.0",
+        "pump": "^3.0.0",
+        "terser": "^5.10.0",
+        "typescript": "^4.3.5",
+        "uglify-es": "^3.3.9"
+    }
+}
