@@ -42,8 +42,8 @@ const TWELVE_HOUR_FORMAT = "h:mm A";
 const TOP_SITE_COUNT = 8;
 
 const ICON_URL = Object.freeze({
-    "CHANGES": chrome.extension.getURL("img/ic_history_black_24px.svg"),
-    "NOTIFICATION": chrome.extension.getURL("img/icon128.png"),
+    "CHANGES": chrome.runtime.getURL("img/ic_history_black_24px.svg"),
+    "NOTIFICATION": chrome.runtime.getURL("img/icon128.png"),
 });
 
 const URLS = Object.freeze({
