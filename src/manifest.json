@@ -32,7 +32,14 @@
     "permissions": [
         "storage",
         "alarms",
-        "chrome://favicon/"
+        "favicon"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["_favicon/*"],
+            "matches": ["chrome-extension://hjheoelfkeadifffbnfalekganbennde/*"],
+            "extension_ids": []
+        }
     ],
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'self'; img-src chrome://favicon;"

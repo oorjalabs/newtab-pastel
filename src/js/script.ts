@@ -175,7 +175,7 @@
         });
 
         $("#default_ntp_link").on("click", () => {
-            chrome.tabs.update({url: "chrome-search://local-ntp/local-ntp.html"});
+            chrome.tabs.update({url: "chrome://new-tab-page/"});
         });
 
         /**
@@ -501,15 +501,17 @@
         const st = await ls.get<TopSite[]>({
             "topSites": DEFAULTS.TOP_SITES,
         });
-
+        
         let topSitesString = st.topSites.reduce((acc, site) => {
+            const faviconUrl = createFaviconURL(site.url);
+            console.debug("favIcon:", faviconUrl);
             return `
                 ${acc}<a 
                     href="${site.url}" 
                     class="top_site_link" 
                     title="${site.title}"
-                ><img class="top_site_icon" src="chrome://favicon/size/16@2x/${site.url}">${site.title}</a>
-            `;
+                    ><img class="top_site_icon" src="${faviconUrl}">${site.title}</a>
+                    `;
         }, "");
 
         topSitesDiv.text("").append(topSitesString);// [toggle ? "slideToggle" : "hide"]();
@@ -543,6 +545,18 @@
         topSitesDiv.text("").append(topSitesString);
     }
 
+
+    /**
+     * Creates a favicon URL for a given url.
+     * @param siteUrl URL for the site whose favicon is needed.
+     * @returns string
+     */
+    function createFaviconURL(siteUrl: string) {
+        const url = new URL(chrome.runtime.getURL("/_favicon/"));
+        url.searchParams.set("pageUrl", siteUrl);
+        url.searchParams.set("size", "32");
+        return url.toString();
+    }
 
     /**
      * @param {string} colour
