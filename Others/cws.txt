@@ -46,6 +46,11 @@ UPDATE:
 
 (Full update notes: https://updatenotes.blog/category/pastel-new-tab/ ) 
 
+UPDATE 11 Aug 2024: 
+    1. Updated to Chrome manifest version 3
+    2. Added permission for favicons when viewing frequently opened sites    
+
+
 UPDATE 24 Jul 2020: 
     1. Button to open default Chrome new tab page
     
@@ -85,4 +90,3 @@ UPDATE 08 Feb 2019:
 
 UPDATE 02 Nov 2017: 
     1. Show frequently visited websites for easy access
-
